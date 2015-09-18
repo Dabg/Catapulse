@@ -1,3 +1,9 @@
 name: Catapulse
 
 default_view: TT
+
+Plugin::Inject:
+  debug: 1
+  path:
+    - share/modules/
+  modules:
