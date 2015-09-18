@@ -1,0 +1,5 @@
+name: CMS
+version: 2
+deps:
+catalyst_plugins:
+  - +CatalystX::SimpleLogin
