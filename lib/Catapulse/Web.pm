@@ -7,7 +7,7 @@ use Catalyst::Runtime 5.80;
 use Catalyst qw/
     ConfigLoader
     Static::Simple
-    Inject
+    +CatalystX::Inject
 /;
 
 extends 'Catalyst';

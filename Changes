@@ -1,4 +1,10 @@
 Revision history for Catapulse
 
+0.02  2015-09-18
+      - add CatalystX::Inject
+      - add CMS module ( use CatalystX::SimpleLogin )
+      - add TT view
+      - update dependencies
+
 0.01  2015-09-17
       - initiale release
