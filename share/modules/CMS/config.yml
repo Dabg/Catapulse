@@ -1,5 +1,7 @@
 name: CMS
 version: 2
 deps:
+  - DBIC
+
 catalyst_plugins:
   - +CatalystX::SimpleLogin
