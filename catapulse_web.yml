@@ -2,9 +2,10 @@ name: Catapulse
 
 default_view: TT
 
-Plugin::Inject:
+CatalystX::Inject:
   debug: 1
   path:
     - share/modules/
-  modules:
+#    - __INC__
+  inject:
     - CMS
