@@ -4,9 +4,6 @@ deps:
   - DBIC
 
 catalyst_plugins:
-  - Session
-  - Session::State::Cookie
-  - Session::Store::File
   - +CatalystX::SimpleLogin
 
 authentication:
