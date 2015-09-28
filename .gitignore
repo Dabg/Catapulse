@@ -13,3 +13,5 @@ pod2htm*.tmp
 Catapulse-*
 MYMETA.yml
 MYMETA.json
+share/catapulse-schema/*
+share/catapulse-schema.db
