@@ -1,0 +1,25 @@
+name: Auth
+version: 2
+deps:
+  - DBIC
+
+catalyst_plugins:
+  - Session
+  - Session::State::Cookie
+  - Session::Store::File
+  - +CatalystX::SimpleLogin
+
+authentication:
+  default_realm: 'members'
+  realms:
+    members:
+      credential:
+        class: 'Password'
+        password_field: 'password'
+        password_type: 'self_check'
+      store:
+        class: 'DBIx::Class'
+        user_model: 'DBIC::User'
+        role_relation: 'user_roles'
+        role_field: 'name'
+        use_userdata_from_session: 1
