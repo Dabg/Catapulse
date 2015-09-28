@@ -1,25 +1,2 @@
 name: DBIC
 version: 1
-
-# - Database Model -
-# Model::DBIC:
-#  schema_class: Catapulse::Schema
-#  connect_info:
-#    dsn: dbi:mysql:database=catapulse;host=localhost
-#    user: root
-#    password: root
-
-Model::DBIC:
-  traits:
-    - FromMigration
-  schema_class: Catapulse::Schema
-  install_if_needed:
-    default_fixture_sets:
-      - all_tables
-  # connect_info:
-  #      dsn: 'DBI:SQLite:__path_to(share,catapulse.db)__'
-  #      user: ''
-  #      password: ''
-  # extra_migration_args:
-  #   db_sandbox_builder_class: 'DBIx::Class::Migration::TempDirSandboxBuilder'
-  # db_sandbox_class: 'DBIx::Class::Migration::MySQLSandbox'
