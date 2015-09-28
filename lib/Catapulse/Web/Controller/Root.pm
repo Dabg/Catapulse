@@ -1,4 +1,5 @@
 package Catapulse::Web::Controller::Root;
+
 use Moose;
 use namespace::autoclean;
 

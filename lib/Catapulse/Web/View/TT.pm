@@ -1,4 +1,5 @@
 package Catapulse::Web::View::TT;
+
 use Moose;
 use namespace::autoclean;
 

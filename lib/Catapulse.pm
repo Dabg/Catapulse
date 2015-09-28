@@ -8,15 +8,6 @@ use warnings;
 
 Catapulse - The great new Catapulse!
 
-=head1 VERSION
-
-Version 0.01
-
-=cut
-
-our $VERSION = '0.01';
-
-
 =head1 SYNOPSIS
 
 Quick summary of what the module does.

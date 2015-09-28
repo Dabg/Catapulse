@@ -1,4 +1,5 @@
 package Catapulse::Web;
+
 use Moose;
 use namespace::autoclean;
 
@@ -15,8 +16,6 @@ use Catalyst qw /
 /;
 
 extends 'Catalyst';
-
-our $VERSION = '0.01';
 
 __PACKAGE__->config(
     name => 'Catapulse::Web',
