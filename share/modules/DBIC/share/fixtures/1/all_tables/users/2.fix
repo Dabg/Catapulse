@@ -1,0 +1,11 @@
+$HASH1 = {
+           active   => 1,
+           created  => '2015-09-28T12:53:01',
+           email    => 'anonymous.coward@localhost',
+           id       => 2,
+           name     => 'Anonymous',
+           password => '$2a$14$lLKrdw2wZOBcDjs3BlgHteScwGUJktCeT7XUlwr5yLJfS1XVPgnk2',
+           tzone    => '',
+           username => 'anonymous',
+           website  => undef
+         };

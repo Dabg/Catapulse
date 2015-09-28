@@ -1,0 +1,4 @@
+$HASH1 = {
+           inherits_from_id => 5,
+           role_id          => 3
+         };

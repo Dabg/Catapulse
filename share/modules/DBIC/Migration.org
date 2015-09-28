@@ -1,0 +1,73 @@
+#+TITLE: README
+#+OPTIONS: toc:3
+#+LANGUAGE: fr
+#+STARTUP: showeverything
+
+* DBIx::Class::Migration::Tutorial::FirstMigration
+** Using the dbic-migration commandline tool
+
+: dbic-migration version --schema_class Catapulse::Schema -Ilib
+Application version is 0.057
+
+export DBIC_MIGRATION_SCHEMA_CLASS=Catapulse::Schema
+: dbic-migration -Ilib version
+Application version is 0.057
+
+mkdir share/
+: dbic-migration -Ilib status
+Schema is 1
+Database is not currently installed
+
+** Prepare migration files
+: dbic-migration -Ilib prepare
+There is no current database deployed, so I can't prepare upgrades
+or downgrades
+
+
+: dbic-migration -Ilib prepare --database MySQL --database SQLite --database PostgreSQL
+There is no current database deployed, so I can't prepare upgrades
+or downgrades
+
+** Customizing the Migration
+: cat share/migrations/_common/deploy/1/002-demo.pl
+
+** Installing the migration
+: dbic-migration -Ilib install
+Since this database is not versioned, we will assume version 1
+Reading configurations from /home/dab/dev/perl/Catapulse/share/modules/DBIC/share/fixtures/1/conf
+
+** Make your first fixtures and test them
+: dbic-migration -Ilib dump_all_sets
+Reading configurations from /home/dab/dev/perl/Catapulse/share/modules/DBIC/share/fixtures/1/conf
+
+Delete datas
+: dbic-migration -Ilib delete_table_rows
+
+Populate datas
+: dbic-migration -Ilib populate
+Reading configurations from /home/dab/dev/perl/Catapulse/share/modules/DBIC/share/fixtures/1/conf
+Restored set /home/dab/dev/perl/Catapulse/share/modules/DBIC/share/fixtures/1/all_tables to database
+
+
+* DBIx::Class::Migration::Tutorial::SecondMigration
+
+** Changing Requirements
+Change, add or delete some result file.
+
+Alter file lib/Catapulse/Schema.pm
+: our $VERSION = 2;
+
+** Prepare the new migration
+: dbic-migration -Ilib status
+Schema is 2
+Deployed database is 1
+
+: dbic-migration -Ilib prepare
+Lets take a closer look at /upgrade:
+share/migrations/SQLite/upgrade/1-2
+share/migrations/SQLite/upgrade/1-2/001-auto.sql
+
+same with 'downgrade'
+
+
+: dbic-migration -Ilib install

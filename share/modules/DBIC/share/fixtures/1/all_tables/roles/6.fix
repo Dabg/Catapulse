@@ -1,0 +1,5 @@
+$HASH1 = {
+           active => 0,
+           id     => 6,
+           name   => 'inactive_role'
+         };

@@ -1,0 +1,11 @@
+$HASH1 = {
+           active   => 1,
+           created  => '2015-09-28T12:53:01',
+           email    => 'joe@dalton.eu',
+           id       => 3,
+           name     => 'Joe Dalton',
+           password => '$2a$14$5/jGOXjp3hOgpoPSviYxFuZxZ9dam7AR2NfMpZpC4T7qHAYeZzEQ2',
+           tzone    => 'America/Chicago',
+           username => 'joe',
+           website  => undef
+         };
