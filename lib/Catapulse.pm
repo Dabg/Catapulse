@@ -26,20 +26,6 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
-
-=cut
-
-sub function1 {
-}
-
-=head2 function2
-
-=cut
-
-sub function2 {
-}
-
 =head1 AUTHOR
 
 Daniel Brosseau, C<< <dab at catapulse.org> >>
@@ -49,9 +35,6 @@ Daniel Brosseau, C<< <dab at catapulse.org> >>
 Please report any bugs or feature requests to C<bug-catapulse at rt.cpan.org>, or through
 the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Catapulse>.  I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
-
-
-
 
 =head1 SUPPORT
 
