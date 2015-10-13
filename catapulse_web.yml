@@ -17,3 +17,12 @@ Model::DBIC:
   install_if_needed:
     default_fixture_sets:
       - all_tables
+
+
+# - Database Model -
+# Model::DBIC:
+#  schema_class: Catapulse::Schema
+#  connect_info:
+#    dsn: dbi:mysql:database=catapulse;host=localhost
+#    user: root
+#    password: root
