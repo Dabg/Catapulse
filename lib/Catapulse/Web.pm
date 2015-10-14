@@ -54,7 +54,9 @@ Catapulse::Web - Catalyst based CMS
        password: secret
 
     # Populate database
-    ./script/populate_db.pl
+    ./script/manage_db.pl install
+    ./script/manage_db.pl populate
+    [ ./script/manage_db.pl help]
 
     # Start standalone server
     ./script/catapulse_web.pl

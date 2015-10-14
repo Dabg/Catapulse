@@ -1,8 +1,0 @@
-#!/usr/bin/env perl
-
-use Catapulse::Web;
-use DBIx::Class::Migration::Script;
-
-DBIx::Class::Migration::Script
-  ->run_with_options(
-    schema => Catapulse::Web->model('Schema')->schema);
