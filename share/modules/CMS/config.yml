@@ -1,5 +1,6 @@
 name: CMS
-version: 2
+version: 1
 deps:
-  - DBIC
+  - Session
   - Auth
+  - I18N
