@@ -19,15 +19,24 @@ use base 'DBIx::Class::Core';
 
 =over 4
 
+=item * L<DBIx::Class::InflateColumn::DateTime>
+
 =item * L<DBIx::Class::DateTime::Epoch>
 
 =item * L<DBIx::Class::TimeStamp>
+
+=item * L<DBIx::Class::EncodedColumn>
 
 =back
 
 =cut
 
-__PACKAGE__->load_components("DateTime::Epoch", "TimeStamp");
+__PACKAGE__->load_components(
+  "InflateColumn::DateTime",
+  "DateTime::Epoch",
+  "TimeStamp",
+  "EncodedColumn",
+);
 
 =head1 TABLE: C<user_roles>
 
@@ -105,8 +114,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07042 @ 2015-09-18 19:29:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bt/MWDRMHiYF1Y8ahlIcZg
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-10-19 18:59:01
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4rIrJKmZ0P/thENVGfb3xw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

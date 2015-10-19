@@ -19,15 +19,24 @@ use base 'DBIx::Class::Core';
 
 =over 4
 
+=item * L<DBIx::Class::InflateColumn::DateTime>
+
 =item * L<DBIx::Class::DateTime::Epoch>
 
 =item * L<DBIx::Class::TimeStamp>
+
+=item * L<DBIx::Class::EncodedColumn>
 
 =back
 
 =cut
 
-__PACKAGE__->load_components("DateTime::Epoch", "TimeStamp");
+__PACKAGE__->load_components(
+  "InflateColumn::DateTime",
+  "DateTime::Epoch",
+  "TimeStamp",
+  "EncodedColumn",
+);
 
 =head1 TABLE: C<roles>
 
@@ -94,36 +103,6 @@ __PACKAGE__->add_unique_constraint("name_unique", ["name"]);
 
 =head1 RELATIONS
 
-# =head2 page_roles
-
-# Type: has_many
-
-# Related object: L<Catapulse::Schema::Result::PageRole>
-
-# =cut
-
-# __PACKAGE__->has_many(
-#   "page_roles",
-#   "Catapulse::Schema::Result::PageRole",
-#   { "foreign.role_id" => "self.id" },
-#   { cascade_copy => 0, cascade_delete => 0 },
-# );
-
-# =head2 permissions
-
-# Type: has_many
-
-# Related object: L<Catapulse::Schema::Result::Permission>
-
-# =cut
-
-# __PACKAGE__->has_many(
-#   "permissions",
-#   "Catapulse::Schema::Result::Permission",
-#   { "foreign.role_id" => "self.id" },
-#   { cascade_copy => 0, cascade_delete => 0 },
-# );
-
 =head2 role_roles_inherits_from
 
 Type: has_many
@@ -179,16 +158,6 @@ Composing rels: L</role_roles_roles> -> inherit_from
 
 __PACKAGE__->many_to_many("inherits_from", "role_roles_roles", "inherit_from");
 
-# =head2 pages
-
-# Type: many_to_many
-
-# Composing rels: L</page_roles> -> page
-
-# =cut
-
-# __PACKAGE__->many_to_many("pages", "page_roles", "page");
-
 =head2 roles
 
 Type: many_to_many
@@ -210,8 +179,8 @@ Composing rels: L</user_roles> -> user
 __PACKAGE__->many_to_many("users", "user_roles", "user");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07042 @ 2015-09-18 19:29:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oJpMasa0XdPsI3Q/mQl6fQ
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-10-19 18:59:01
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7w3Mto1RDkMG3VXaaYrtwA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

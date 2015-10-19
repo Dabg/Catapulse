@@ -11,13 +11,12 @@ use base 'DBIx::Class::Schema';
 
 __PACKAGE__->load_namespaces;
 
+
+# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-10-19 18:59:01
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1OEmPGpoyvMXMiEiLIF8cA
+
 BEGIN { $ENV{DBIC_OVERWRITE_HELPER_METHODS_OK} = 1 }
 
-# Created by DBIx::Class::Schema::Loader v0.07042 @ 2015-09-18 19:29:50
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:U+4mXxxEodDhJa4qVAxqTQ
 
 our $VERSION = 1;
-
-
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
 1;
