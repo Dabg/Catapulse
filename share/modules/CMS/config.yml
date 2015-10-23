@@ -3,4 +3,3 @@ version: 1
 deps:
   - Session
   - Auth
-  - I18N
