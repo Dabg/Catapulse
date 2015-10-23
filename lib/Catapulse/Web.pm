@@ -8,11 +8,9 @@ use Catalyst::Runtime 5.80;
 use Catalyst qw /
     ConfigLoader
     Static::Simple
-    Session
-    Session::State::Cookie
-    Session::Store::File
     +CatalystX::Inject
     Authentication
+    I18N
 /;
 
 extends 'Catalyst';
