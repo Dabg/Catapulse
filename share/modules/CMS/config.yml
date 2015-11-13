@@ -1,5 +1,6 @@
 name: CMS
 version: 1
 deps:
+  - ViewTT
   - Session
   - Auth
