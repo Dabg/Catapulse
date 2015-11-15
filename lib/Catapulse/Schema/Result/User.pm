@@ -208,6 +208,18 @@ __PACKAGE__->many_to_many(user_roles => 'map_user_roles', 'role',
                           { where => { 'active' => 1 } });
 
 
+=head1 METHODS
+
+=over 4
+
+=item * L<activate>
+
+=item * L<deactivate>
+
+=back
+
+=cut
+
 sub activate   { $_[0]->active(1); $_[0]->update(); };
 sub deactivate { $_[0]->active(0); $_[0]->update(); };
 
