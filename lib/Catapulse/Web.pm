@@ -7,7 +7,6 @@ use Catalyst::Runtime 5.80;
 
 use Catalyst qw /
     ConfigLoader
-    Static::Simple
     +CatalystX::Inject
     Authentication
     I18N

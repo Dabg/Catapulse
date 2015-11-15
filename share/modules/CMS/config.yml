@@ -1,6 +1,7 @@
 name: CMS
 version: 1
 deps:
+  - Static
   - TT
   - Session
   - Auth
