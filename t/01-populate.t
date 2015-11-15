@@ -9,7 +9,7 @@ use Test::DBIx::Class
 plan skip_all => 'not correct schema version'
   if Schema->schema_version != 1;
 
-fixtures_ok ['all_tables'];
+fixtures_ok ['all_tables', 'all_tests'];
 
 is User->count, 5, 'Correct Number of Users';
 is Role->first->name, 'admin', 'Role name is admin';
