@@ -3,3 +3,8 @@ version: 1
 
 deps:
   - TT
+  - Plack
+
+Plugin::EnableMiddleware:
+  - Debug
+  - Debug::CatalystLog
