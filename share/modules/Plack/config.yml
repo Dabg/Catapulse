@@ -1,0 +1,6 @@
+name: Plack
+version: 1
+
+catalyst_plugins:
+  - EnableMiddleware
+
