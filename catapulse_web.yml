@@ -9,7 +9,11 @@ CatalystX::Inject:
 #    - __INC__
   inject:
     - CMS
+#    - Debug
+#    - CatapulseModuleTest
 
+
+# - Database Model -
 Model::DBIC:
   traits:
     - FromMigration
@@ -18,8 +22,11 @@ Model::DBIC:
     default_fixture_sets:
       - all_tables
 
+# Model::DBIC:
+#   schema_class: Catapulse::Schema
+#   connect_info:
+#     dsn: dbi:SQLite:__path_to(db/catapulse.db)__
 
-# - Database Model -
 # Model::DBIC:
 #  schema_class: Catapulse::Schema
 #  connect_info:
