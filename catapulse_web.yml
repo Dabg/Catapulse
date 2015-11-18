@@ -9,7 +9,7 @@ CatalystX::Inject:
 #    - __INC__
   inject:
     - CMS
-#    - Debug
+    - Debug
 #    - CatapulseModuleTest
 
 
