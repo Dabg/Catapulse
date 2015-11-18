@@ -2,6 +2,8 @@ name: Auth
 version: 2
 deps:
   - DBIC
+  - Session
+  - TT
 
 catalyst_plugins:
   - +CatalystX::SimpleLogin
