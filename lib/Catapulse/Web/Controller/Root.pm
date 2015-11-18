@@ -33,7 +33,7 @@ sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
     # Hello World
-    $c->response->body( $c->welcome_message );
+    $c->response->body( $c->loc('welcome_message') );
 }
 
 =head2 default
