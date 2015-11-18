@@ -7,6 +7,11 @@ deps:
 
 catalyst_plugins:
   - +CatalystX::SimpleLogin
+Controller::Login:
+  traits:
+    - Logout
+    - WithRedirect
+    - -RenderAsTTTemplate
 
 authentication:
   default_realm: 'members'

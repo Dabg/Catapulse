@@ -1,0 +1,21 @@
+<form id="login_form" method="post">
+<div class="form_messages">
+</div>
+<div>
+<label for="username">[% c.loc("ui.login.text.username") | html %]</label>
+<input type="text" name="username" id="username" value="" tabindex="1" />
+</div>
+<div>
+<label for="password">[% c.loc("ui.login.text.password") | html %]</label>
+<input type="password" name="password" id="password" value="" tabindex="2" />
+</div>
+<div>
+<label for="remember">[% c.loc("ui.login.text.remember") | html %]</label>
+<label class="checkbox" for="remember"><input type="checkbox" name="remember" id="remember" value="1" tabindex="3" />
+
+</label>
+</div>
+<div>
+<input type="submit" name="submit" id="submit" value="[% c.loc("ui.login.text.login") | html %]" tabindex="4" />
+</div>
+</form>
