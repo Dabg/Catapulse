@@ -1,8 +1,7 @@
 package Catapulse::Web::Form::Register;
 
 use HTML::FormHandler::Moose;
-extends 'HTML::FormHandler::Model::DBIC';
-with 'HTML::FormHandler::Render::Table';
+extends 'Catapulse::Web::Form::Base';
 
 has '+item_class'            => ( default => 'User' );
 
