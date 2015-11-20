@@ -6,4 +6,5 @@ deps:
   - TT
   - Session
   - Auth
+  - FormBase
   - Register
