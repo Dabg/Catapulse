@@ -6,3 +6,4 @@ deps:
   - TT
   - Session
   - Auth
+  - Register
