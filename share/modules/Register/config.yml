@@ -1,4 +1,4 @@
 name: Register
 version: 1
 deps:
-  - DBIC
+  - Auth
