@@ -1,0 +1,9 @@
+name: Base
+version: 1
+deps:
+  - Plack
+  - Static
+  - TT
+  - Session
+  - Auth
+  - FormBase

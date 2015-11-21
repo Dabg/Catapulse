@@ -1,10 +1,5 @@
 name: CMS
 version: 1
 deps:
-  - Plack
-  - Static
-  - TT
-  - Session
-  - Auth
-  - FormBase
+  - Base
   - Register
