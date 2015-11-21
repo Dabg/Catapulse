@@ -8,9 +8,11 @@ extends 'HTML::FormHandler::Model::DBIC';
 with 'HTML::FormHandlerX::Form::JQueryValidator';
 with 'HTML::FormHandler::Widget::Theme::Bootstrap';
 
+has '+language_handle' => ( builder => 'get_language_handle_from_ctx' );
+
+
 sub get_language_handle_from_ctx {
     my $self = shift;
-
     return HTML::FormHandler::I18N->get_handle(
          @{ $self->ctx->languages } );
 }

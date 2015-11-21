@@ -19,17 +19,13 @@ Controller with register related actions:
 =cut
 
 
-has 'register_form' => (
-    isa     => 'Catapulse::Web::Form::Register',
-    is      => 'rw',
-    lazy    => 1,
-    default => sub { Catapulse::Web::Form::Register->new },
-);
-
 sub register : Global {
     my ($self, $c) = @_;
 
-    my $form = $self->register_form;
+    my $form = Catapulse::Web::Form::Register->new (
+        ctx => $c,
+    );
+
     $c->stash(
         template => 'form/register/index.tt',
         form     => $form,
