@@ -7,13 +7,11 @@ has '+item_class'            => ( default => 'User' );
 
 has_field 'username' => ( type => 'Text',
                           label => 'Username',
-                          required => 1,
-                          required_message => 'You must enter a username' );
+                          required => 1 );
 
 has_field 'name'     => ( type => 'Text',
                           label => 'Name',
-                          required => 0,
-                          required_message => 'You must enter a name' );
+                          required => 0 );
 
 has_field 'email'    => (
                          type     => 'Email',
@@ -24,8 +22,7 @@ has_field 'website'  => ( type => 'Text' );
 has_field 'password' => ( type => 'Password',
                           label => 'Password',
                           minlength => 6,
-                          required => 1,
-                          required_message => 'You must enter a password' );
+                          required => 1);
 
 has_field 'password_confirm' => ( type => 'PasswordConf' );
 has_field 'submit'   => ( type => 'Submit', value => 'Register' );
