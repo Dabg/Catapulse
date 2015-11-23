@@ -1,0 +1,7 @@
+name: Messages
+version: 1
+deps:
+  - Session
+  - TT
+catalyst_plugins:
+  - FlashMethods

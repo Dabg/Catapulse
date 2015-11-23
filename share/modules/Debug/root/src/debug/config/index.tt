@@ -4,8 +4,13 @@
     <meta charset="utf-8">
   </head>
   <body>
+
 [% USE Dumper %]
-Debug::Config
+<span class="message">[% Dumper.dump_html(c.flash.messages) %]</span>
+<span class="error">[% Dumper.dump_html(c.flash.errors) %]</span>
+
+
+Debug::Config<br/>
 
 [% Dumper.dump_html(c.config) %]
 config [% config %]
