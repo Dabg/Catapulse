@@ -1,10 +1,31 @@
 -- 
 -- Created by SQL::Translator::Producer::SQLite
--- Created on Mon Sep 28 14:52:19 2015
+-- Created on Tue Nov 24 22:56:52 2015
 -- 
 
 ;
 BEGIN TRANSACTION;
+--
+-- Table: blocks
+--
+CREATE TABLE blocks (
+  id INTEGER PRIMARY KEY NOT NULL,
+  name varchar(32) NOT NULL,
+  file varchar(255) NOT NULL,
+  parent_id int NOT NULL DEFAULT 0,
+  position int,
+  active tinyint NOT NULL DEFAULT 1
+);
+CREATE UNIQUE INDEX blockname_unique ON blocks (name);
+--
+-- Table: pagetype
+--
+CREATE TABLE pagetype (
+  id INTEGER PRIMARY KEY NOT NULL,
+  name VARCHAR(40) NOT NULL,
+  path VARCHAR(100) NOT NULL,
+  active tinyint NOT NULL DEFAULT 0
+);
 --
 -- Table: roles
 --
@@ -15,6 +36,31 @@ CREATE TABLE roles (
 );
 CREATE UNIQUE INDEX name_unique ON roles (name);
 --
+-- Table: template_blocks
+--
+CREATE TABLE template_blocks (
+  template_id integer NOT NULL,
+  block_id integer NOT NULL,
+  PRIMARY KEY (template_id, block_id),
+  FOREIGN KEY (block_id) REFERENCES blocks(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (template_id) REFERENCES templates(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE INDEX template_blocks_idx_block_id ON template_blocks (block_id);
+CREATE INDEX template_blocks_idx_template_id ON template_blocks (template_id);
+--
+-- Table: templates
+--
+CREATE TABLE templates (
+  id INTEGER PRIMARY KEY NOT NULL,
+  name varchar(32) NOT NULL,
+  file varchar(255) NOT NULL,
+  wrapper varchar(32) NOT NULL,
+  parent_id int NOT NULL DEFAULT 0,
+  position int,
+  active tinyint NOT NULL DEFAULT 1
+);
+CREATE UNIQUE INDEX templatename_unique ON templates (name);
+--
 -- Table: users
 --
 CREATE TABLE users (
@@ -22,7 +68,7 @@ CREATE TABLE users (
   username varchar(40) NOT NULL,
   name varchar(40),
   website varchar(100),
-  password varchar(100) NOT NULL,
+  password VARCHAR(100) NOT NULL,
   email varchar(100) NOT NULL,
   tzone varchar(100),
   created timestamp NOT NULL,
@@ -41,6 +87,27 @@ CREATE TABLE role_roles (
 );
 CREATE INDEX role_roles_idx_inherits_from_id ON role_roles (inherits_from_id);
 CREATE INDEX role_roles_idx_role_id ON role_roles (role_id);
+--
+-- Table: pages
+--
+CREATE TABLE pages (
+  id INTEGER PRIMARY KEY NOT NULL,
+  title varchar(255),
+  name varchar,
+  parent_id integer NOT NULL DEFAULT 0,
+  type integer NOT NULL,
+  template integer NOT NULL,
+  created timestamp NOT NULL,
+  active tinyint NOT NULL DEFAULT 0,
+  version INTEGER,
+  FOREIGN KEY (parent_id) REFERENCES pages(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (template) REFERENCES templates(id),
+  FOREIGN KEY (type) REFERENCES pagetype(id)
+);
+CREATE INDEX pages_idx_parent_id ON pages (parent_id);
+CREATE INDEX pages_idx_template ON pages (template);
+CREATE INDEX pages_idx_type ON pages (type);
+CREATE UNIQUE INDEX name_parent_unique ON pages (name, parent_id);
 --
 -- Table: user_roles
 --

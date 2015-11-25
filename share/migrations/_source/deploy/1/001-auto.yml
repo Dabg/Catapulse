@@ -2,6 +2,335 @@
 schema:
   procedures: {}
   tables:
+    blocks:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - name
+          match_type: ''
+          name: blockname_unique
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: UNIQUE
+      fields:
+        active:
+          data_type: tinyint
+          default_value: 1
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: active
+          order: 6
+          size:
+            - 0
+        file:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: file
+          order: 3
+          size:
+            - 255
+        id:
+          data_type: integer
+          default_value: ~
+          is_auto_increment: 1
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 0
+        name:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 1
+          name: name
+          order: 2
+          size:
+            - 32
+        parent_id:
+          data_type: int
+          default_value: 0
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: parent_id
+          order: 4
+          size:
+            - 0
+        position:
+          data_type: int
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: position
+          order: 5
+          size:
+            - 0
+      indices: []
+      name: blocks
+      options: []
+      order: 1
+    pages:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - name
+            - parent_id
+          match_type: ''
+          name: name_parent_unique
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: UNIQUE
+        - deferrable: 1
+          expression: ''
+          fields:
+            - parent_id
+          match_type: ''
+          name: pages_fk_parent_id
+          on_delete: CASCADE
+          on_update: CASCADE
+          options: []
+          reference_fields:
+            - id
+          reference_table: pages
+          type: FOREIGN KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - template
+          match_type: ''
+          name: pages_fk_template
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields:
+            - id
+          reference_table: templates
+          type: FOREIGN KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - type
+          match_type: ''
+          name: pages_fk_type
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields:
+            - id
+          reference_table: pagetype
+          type: FOREIGN KEY
+      fields:
+        active:
+          data_type: tinyint
+          default_value: 0
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: active
+          order: 8
+          size:
+            - 0
+        created:
+          data_type: timestamp
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created
+          order: 7
+          size:
+            - 0
+        id:
+          data_type: integer
+          default_value: ~
+          is_auto_increment: 1
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 0
+        name:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 1
+          name: name
+          order: 3
+          size:
+            - 0
+        parent_id:
+          data_type: integer
+          default_value: 0
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 1
+          name: parent_id
+          order: 4
+          size:
+            - 0
+        template:
+          data_type: integer
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: template
+          order: 6
+          size:
+            - 0
+        title:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: title
+          order: 2
+          size:
+            - 255
+        type:
+          data_type: integer
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: type
+          order: 5
+          size:
+            - 0
+        version:
+          data_type: INTEGER
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: version
+          order: 9
+          size:
+            - 0
+      indices:
+        - fields:
+            - parent_id
+          name: pages_idx_parent_id
+          options: []
+          type: NORMAL
+        - fields:
+            - template
+          name: pages_idx_template
+          options: []
+          type: NORMAL
+        - fields:
+            - type
+          name: pages_idx_type
+          options: []
+          type: NORMAL
+      name: pages
+      options: []
+      order: 8
+    pagetype:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+      fields:
+        active:
+          data_type: tinyint
+          default_value: 0
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: active
+          order: 4
+          size:
+            - 0
+        id:
+          data_type: INTEGER
+          default_value: ~
+          is_auto_increment: 1
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 0
+        name:
+          data_type: VARCHAR
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: name
+          order: 2
+          size:
+            - 40
+        path:
+          data_type: VARCHAR
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: path
+          order: 3
+          size:
+            - 100
+      indices: []
+      name: pagetype
+      options: []
+      order: 2
     role_roles:
       constraints:
         - deferrable: 1
@@ -77,7 +406,7 @@ schema:
           type: NORMAL
       name: role_roles
       options: []
-      order: 3
+      order: 7
     roles:
       constraints:
         - deferrable: 1
@@ -139,7 +468,185 @@ schema:
       indices: []
       name: roles
       options: []
-      order: 1
+      order: 3
+    template_blocks:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - template_id
+            - block_id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - block_id
+          match_type: ''
+          name: template_blocks_fk_block_id
+          on_delete: CASCADE
+          on_update: CASCADE
+          options: []
+          reference_fields:
+            - id
+          reference_table: blocks
+          type: FOREIGN KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - template_id
+          match_type: ''
+          name: template_blocks_fk_template_id
+          on_delete: CASCADE
+          on_update: CASCADE
+          options: []
+          reference_fields:
+            - id
+          reference_table: templates
+          type: FOREIGN KEY
+      fields:
+        block_id:
+          data_type: integer
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: block_id
+          order: 2
+          size:
+            - 0
+        template_id:
+          data_type: integer
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: template_id
+          order: 1
+          size:
+            - 0
+      indices:
+        - fields:
+            - block_id
+          name: template_blocks_idx_block_id
+          options: []
+          type: NORMAL
+        - fields:
+            - template_id
+          name: template_blocks_idx_template_id
+          options: []
+          type: NORMAL
+      name: template_blocks
+      options: []
+      order: 4
+    templates:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - id
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - name
+          match_type: ''
+          name: templatename_unique
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: UNIQUE
+      fields:
+        active:
+          data_type: tinyint
+          default_value: 1
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: active
+          order: 7
+          size:
+            - 0
+        file:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: file
+          order: 3
+          size:
+            - 255
+        id:
+          data_type: integer
+          default_value: ~
+          is_auto_increment: 1
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: id
+          order: 1
+          size:
+            - 0
+        name:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 1
+          name: name
+          order: 2
+          size:
+            - 32
+        parent_id:
+          data_type: int
+          default_value: 0
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: parent_id
+          order: 5
+          size:
+            - 0
+        position:
+          data_type: int
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: position
+          order: 6
+          size:
+            - 0
+        wrapper:
+          data_type: varchar
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: wrapper
+          order: 4
+          size:
+            - 32
+      indices: []
+      name: templates
+      options: []
+      order: 5
     user_roles:
       constraints:
         - deferrable: 1
@@ -215,7 +722,7 @@ schema:
           type: NORMAL
       name: user_roles
       options: []
-      order: 4
+      order: 9
     users:
       constraints:
         - deferrable: 1
@@ -295,7 +802,7 @@ schema:
           size:
             - 40
         password:
-          data_type: varchar
+          data_type: VARCHAR
           default_value: ~
           is_nullable: 0
           is_primary_key: 0
@@ -337,7 +844,7 @@ schema:
       indices: []
       name: users
       options: []
-      order: 2
+      order: 6
   triggers: {}
   views: {}
 translator:
@@ -346,8 +853,13 @@ translator:
   no_comments: 0
   parser_args:
     sources:
+      - Block
+      - Page
+      - Pagetype
       - Role
       - RoleRole
+      - Template
+      - TemplateBlock
       - User
       - UserRole
   parser_type: SQL::Translator::Parser::DBIx::Class
