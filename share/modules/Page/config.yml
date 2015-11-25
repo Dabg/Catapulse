@@ -1,0 +1,7 @@
+name: Page
+version: 1
+catalyst_plugins:
+  - Page
+
+Plugin::Page:
+  debug: 1

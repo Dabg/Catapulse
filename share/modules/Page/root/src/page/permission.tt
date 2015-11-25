@@ -1,0 +1,92 @@
+[% IF page.name != '/' %]<h4>[% loc('Inherited permissions') %]:</h4>[% END %]
+
+[% FOREACH obj IN page.all_nodes %]
+   [% NEXT IF ! obj.permissions %]
+   [% NEXT IF ( obj.name == page.name ) %]
+
+   <h5>[% loc('From page') %]: [% obj.parent.name _ '/' _ obj.name %]</h5>
+
+   <table id="inherited_permissions" class="table table-bordered">
+   <thead>
+   <tr>
+     <th></th>
+     [% FOREACH op IN operations %]
+     <th>[% op.name %]</th>
+     [% END %]
+   </tr>
+   </thead>
+     [% FOREACH role IN roles %]
+     [% NEXT IF ! obj.get_permissions(role) %]
+     <tr>
+       <td>[% role.name %]</td>
+
+       [% FOREACH op IN operations %]
+         [% SET perm = obj.get_permissions(role,op) %]
+           [% Value=perm.value %]
+           [% Inherited=perm.inheritable %]
+           [% IF Value == 1 && Inherited %]
+           <td class="text-centered"><i class="icon-fixed-width cb_on"></i></td>
+           [% ELSIF Value == 0 %]
+           <td class="text-centered"><i class="icon-fixed-width cb_off"></i></td>
+           [% ELSE %]
+           <td></td>
+           [% END %]
+       [% END %]
+     </tr>
+     [% END %]
+  </table>
+[% END %]
+
+
+
+<h4>[% loc('Edit permissions for this page') %]:</h4>
+<table  id="permissions_editor" class="table table-striped table-header-rotated">
+<thead>
+<tr>
+<th></th>
+[% FOREACH op IN operations %]
+<th class="rotate-45"><div><span>[% op.name %]</span></div></th>
+[% END %]
+<th>actions</th>
+</tr>
+</thead>
+
+[% FOREACH role IN roles %]
+[% SET r=role.name %]
+
+<tr>
+ <td>[% r %]</td>
+ [% FOREACH op IN operations %]
+   [% SET perm = page.get_permissions(role,op) %]
+   [% Value=perm.value %]
+   [% Inherited=perm.inheritable %]
+   [% o = op.name %]
+  <td>
+  [% IF Value == 1 %]
+
+  	 <input name="[% o %]" value="1" disabled="" type="button" class="perm_op cb_on"  onload="toggleState(this)" onclick="toggleState(this)" />
+
+  [% ELSIF Value == 0 %]
+	 <input name="[% o %]" value="0" disabled="" type="button" class="perm_op cb_off"  onload="toggleState(this)" onclick="toggleState(this)" />
+  [% ELSE %]
+	 <input name="[% o %]" value=""  disabled="" type="button" class="perm_op cb_mute" onload="toggleState(this)" onclick="toggleState(this)" />
+  [% END %]
+     <label title="Apply to children"><input name="inheritable_[% o %]" disabled=""  type="checkbox" class="perm_op checkbox" [% IF Inherited %]checked[% END %]/></label>
+     </td>
+ [% END %]
+
+        <td>
+            <input type="hidden" name="typeobj_id" value="1"/>
+            <input type="hidden" name="role_id"    value="[% role.id %]"/>
+            <input type="hidden" name="page_id"    value="[% page.id %]"/>
+
+            <a class="clickable enable_edit">[% loc('Edit') %]</a>
+            <a class="clickable save_changes hide" href="[% c.uri_for('/page/jsrpc/set_permissions') %]">[% loc('Save') %]</a>
+            <span[% UNLESS page.permissions %] class="hide"[% END %]>
+            /
+            <a class="clickable clear_permissions[% UNLESS page.permissions %] hide[% END %]" href="[% c.uri_for('/page/jsrpc/clear_permissions') %]">[% loc('Clear permissions') %]</a></span>
+        </td>
+</tr>
+[% END %]
+
+</table>

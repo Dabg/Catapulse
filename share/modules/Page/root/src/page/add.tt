@@ -1,0 +1,7 @@
+<div id="nonexistent_pages">
+    <p>[% loc('The following pages in the requested path do not exist:') %]</p>
+    <p><a class="protoPage" href="[% url_do_add | html %]" rel="nofollow">[% path | html %]</a></p>
+    <p>
+        [% loc('Click on a link above to create that page.') %]
+    </p>
+</div>

@@ -1,0 +1,33 @@
+    <h2>[% loc('Pages') %]</h2>
+
+    <form class="form-search">
+    <input type="text" class="input-medium search-query" placeholder="Enter text" name="q">
+    <button type="submit" class="btn">[% loc('Search for paths') %]</button>
+    </form>
+    [% PROCESS site/pager.tt %]
+    <p class="pull-right">
+        <a href="[% c.uri_for('toggle') %]" class="page_name_action any btn">[% loc('Toggle active') %]</a>
+        <a href="[% c.uri_for('_value_/edit') %]" class="page_name_action single btn">[% loc('Edit') %]</a>
+        <a href="[% c.uri_for('delete') %]" class="page_name_action any btn">[% loc('Delete') %]</a>
+    </p>
+    <table id="pages" class="table table-bordered table-striped table-hover tablesorter">
+      <thead>
+        <tr>
+          <th><input type="checkbox" class="toggle" id="page_name" /></th><th>[% loc('Parent') %]/[% loc('Name') %]</th><th>[% loc('Type') %]</th><th>[% loc('Title') %]</th><th>[% loc('Template') %]</th><th>[% loc('Active') %]</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+      [%- WHILE (page=pages.next) %]
+        <tr[% IF ! page.active %] class="error"[% END %]>
+          <td><input type="checkbox" name="page_name" value="[% page.id %]" /></td>
+          <td><span><a href="[% c.uri_for('/page/') %][% page.id %]/edit">[% page.parent.name _ '/' _ page.name | html %]</a></span></td>
+          <td><span>[% page.type.name | html %]</span></td>
+          <td><span>[% page.title | html %]</span></td>
+          <td><a href="/admin/template/[% page.template.id %]/edit"[% IF ! page.template.active %] class="btn btn-danger"[% END %]>[% page.template.name | html %]</a></td>
+          <td><span>[% IF page.active %][% loc('yes') %][% ELSE %][% loc('no') %][% END %]</span></td>
+          <td><span><a href="[% c.uri_for('/' _ page.name) %]">Go</a></span></td>
+        </tr>
+      [% END -%]
+      </tbody>
+    </table>
+    [% PROCESS site/pager.tt %]
