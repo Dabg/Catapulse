@@ -10,8 +10,8 @@ migrate {
   #-------------------------------------#
   #           Templates
   #-------------------------------------#
-  my @templates = $schema->populate('Template', [
-        [ qw/  name     file                    wrapper      active/ ],
+  $schema->populate('Template', [
+        [ qw/ name      file                    wrapper      active/ ],
         [    'Main',    'templates/main.tt',    'html',      1       ],
         [    'Blog',    'templates/blog.tt',    'nowrapper', 1       ],
         [    'Article', 'templates/article.tt', 'nowrapper', 1       ],
@@ -20,16 +20,17 @@ migrate {
   #-------------------------------------#
   #           Pagetype
   #-------------------------------------#
-    my @pagetype = $schema->populate('Pagetype', [
-        [ qw/  name               path active/ ],
-        [      'from_controller', '',  1       ],
+  $schema->populate('Pagetype', [
+        [ qw/  name               path     active/ ],
+        [      'from_controller', '',      1       ],
+        [      'wiki',            '/wiki', 1       ],
     ]);
 
   #-------------------------------------#
   #            Page
   #-------------------------------------#
   my $dtnow = DateTime->now;
-  my @page = $schema->populate('Page', [
+  $schema->populate('Page', [
         [ qw/  id title            name           parent_id  type template created version  active/ ],
         [      1, 'index',         '/',           0,         2,   1,       $dtnow, undef,   1       ],
         [      2, 'default',       'default',     1,         2,   1,       $dtnow, undef,   1       ],
