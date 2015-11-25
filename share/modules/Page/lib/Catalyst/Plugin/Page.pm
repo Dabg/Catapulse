@@ -226,6 +226,15 @@ sub new_page{
   }
 }
 
+sub redirect_to_action {
+    my ($c, $controller, $action, @params) =@_;
+
+    $c->res->redirect($c->uri_for($c->controller($controller)->action_for($action), @params));
+    $c->detach;
+}
+
+
+
 1;
 
 __END__
