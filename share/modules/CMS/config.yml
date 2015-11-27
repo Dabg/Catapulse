@@ -4,3 +4,6 @@ deps:
   - Base
   - Register
   - Page
+  - TemplateTT
+  - Admin
+  - DefaultTheme
