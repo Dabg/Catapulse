@@ -1,0 +1,7 @@
+[% PROCESS site/navbar.tt %]
+[% PROCESS site/breadcrumbs.tt %]
+[% PROCESS site/content.tt %]
+[% PROCESS site/sidebar.tt %]
+      <hr>
+[%- IF c.config.debug.querylog %][% PROCESS querylog.tt %][% END -%]
+[% PROCESS site/footer.tt %]

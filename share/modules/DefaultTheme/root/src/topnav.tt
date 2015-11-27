@@ -1,0 +1,45 @@
+[% VIEW Menu %]
+  <ul class="megamenu" id="menu">
+
+  [% BLOCK hash %]
+    [% FOREACH tab_name IN item.keys %]
+      [% SET tab = item.$tab_name %]
+      [% SET has_children = tab.children.keys.0 %]
+      [% SET class = 'other_li' %]
+
+      [% IF tab_name == 'home' %][% class = 'menu_start' %]
+      [% ELSIF first_pass %]
+        [% class = 'first_pass' %]
+      [% END %]
+
+      [% IF first_pass && has_children %]
+         [% class = 'drop' %]
+      [% END %]
+
+      <li class="[% class %]" title="[% tab.menutitle %]"><a href="[% tab.url %]">[% tab_name %]</a>
+      [% IF has_children %]
+         <div class="dropdown_1column">
+            <div class="col_1">
+            [% Menu.print(tab.children) %]
+            </div>
+        </div>
+      [% END %]
+      </li>
+      [% SET has_children = 0 %]
+  [% END %]
+  [% END %]
+  </ul>
+[% END %]
+
+
+
+[% IF tree_ordered %]
+  FIRST PASS ????????????????
+[% Menu.print(tree_ordered) %]
+[% END %]
+
+
+Menu: [% menu %]
+<br />
+Hierarchy Menu:
+<pre>[% h_menu %]</pre>

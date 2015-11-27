@@ -1,0 +1,13 @@
+[% IF c.user %]
+Welcome [% c.user.username %]<br />
+[% IF c.user.roles %]
+Roles:
+<ul>
+[% FOR r IN c.user.user_roles %]
+  <li>[% r.name %]</li>
+[% END %]
+</ul>
+[% END %]
+
+<br />
+[% END %]
