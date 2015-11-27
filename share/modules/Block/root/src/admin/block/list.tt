@@ -1,0 +1,29 @@
+    <h2>[% loc('Blocks') %] <a href="[% c.uri_for( 'add' ) %]" class="create" title="[% loc('Add block') %]">+</a></h2>
+
+    <p class="pull-right">
+        <a href="[% c.uri_for('toggle') %]" class="block_name_action any btn">[% loc('Toggle active') %]</a>
+        <a href="[% c.uri_for('_value_/edit') %]" class="block_name_action single btn">[% loc('Edit') %]</a>
+        <a href="[% c.uri_for('delete') %]" class="block_name_action any btn">[% loc('Delete') %]</a>
+    </p>
+    <table id="blocks" class="table table-bordered table-striped table-hover tablesorter">
+      <thead>
+        <tr>
+          <th><input type="checkbox" class="toggle" id="block_name" /></th><th>[% loc('Name') %]</th><th>[% loc('Template') %]</th><th>[% loc('Active') %]</th>
+        </tr>
+      </thead>
+      <tbody>
+      [%- WHILE (block=blocks.next) %]
+        <tr[% IF ! block.active %] class="error"[% END %]>
+          <td><input type="checkbox" name="block_name" value="[% block.id %]" /></td>
+          <td><span class="name"><a href="[% c.uri_for('/admin/block/') %][% block.id %]/edit">[% block.name %]</a></span></td>
+          <td>
+          [%- FOREACH template IN block.templates %]
+            <a href="[% c.uri_for('/admin/template/') %][% template.id %]/edit"[% IF ! template.active %] class="btn btn-danger"[% END %]>[% template.name %]</a>
+          [% END -%]
+          </td>
+          <td><span class="active">[% IF block.active %][% loc('yes') %][% ELSE %][% loc('no') %][% END %]</span></td>
+        </tr>
+      [% END -%]
+      </tbody>
+    </table>
+    [% PROCESS site/pager.tt %]

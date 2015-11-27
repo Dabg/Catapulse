@@ -1,0 +1,6 @@
+<div class="span1"></div>
+<div class="span9">
+<h3>Block Form</h3>
+[% form.render %]
+</div>
+
