@@ -94,6 +94,182 @@ schema:
       name: blocks
       options: []
       order: 1
+    content:
+      constraints:
+        - deferrable: 1
+          expression: ''
+          fields:
+            - version
+            - page
+          match_type: ''
+          name: ''
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields: []
+          reference_table: ''
+          type: PRIMARY KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - creator
+          match_type: ''
+          name: content_fk_creator
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields:
+            - id
+          reference_table: users
+          type: FOREIGN KEY
+        - deferrable: 1
+          expression: ''
+          fields:
+            - page
+          match_type: ''
+          name: content_fk_page
+          on_delete: ''
+          on_update: ''
+          options: []
+          reference_fields:
+            - id
+          reference_table: pages
+          type: FOREIGN KEY
+      fields:
+        abstract:
+          data_type: TEXT
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: abstract
+          order: 9
+          size:
+            - 4000
+        body:
+          data_type: TEXT
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: body
+          order: 11
+          size:
+            - 0
+        comments:
+          data_type: TEXT
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: comments
+          order: 10
+          size:
+            - 4000
+        created:
+          data_type: BIGINT
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: created
+          order: 4
+          size:
+            - 100
+        creator:
+          data_type: INTEGER
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: creator
+          order: 3
+          size:
+            - 0
+        page:
+          data_type: INTEGER
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: page
+          order: 1
+          size:
+            - 0
+        precompiled:
+          data_type: TEXT
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: precompiled
+          order: 12
+          size:
+            - 0
+        release_date:
+          data_type: BIGINT
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: release_date
+          order: 6
+          size:
+            - 100
+        remove_date:
+          data_type: BIGINT
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: remove_date
+          order: 7
+          size:
+            - 100
+        status:
+          data_type: VARCHAR
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 0
+          is_unique: 0
+          name: status
+          order: 5
+          size:
+            - 20
+        type:
+          data_type: VARCHAR
+          default_value: ~
+          is_nullable: 1
+          is_primary_key: 0
+          is_unique: 0
+          name: type
+          order: 8
+          size:
+            - 200
+        version:
+          data_type: INTEGER
+          default_value: ~
+          is_nullable: 0
+          is_primary_key: 1
+          is_unique: 0
+          name: version
+          order: 2
+          size:
+            - 0
+      indices:
+        - fields:
+            - creator
+          name: content_idx_creator
+          options: []
+          type: NORMAL
+        - fields:
+            - page
+          name: content_idx_page
+          options: []
+          type: NORMAL
+      name: content
+      options: []
+      order: 10
     pages:
       constraints:
         - deferrable: 1
@@ -854,6 +1030,7 @@ translator:
   parser_args:
     sources:
       - Block
+      - Content
       - Page
       - Pagetype
       - Role

@@ -2,15 +2,17 @@
    "belongs_to" : {
       "fetch" : 0
    },
-   "might_have" : {
-      "fetch" : 0
-   },
-   "has_many" : {
-      "fetch" : 0
-   },
    "sets" : [
       {
-         "class" : "RoleRole",
+         "quantity" : "all",
+         "class" : "Template"
+      },
+      {
+         "quantity" : "all",
+         "class" : "RoleRole"
+      },
+      {
+         "class" : "Page",
          "quantity" : "all"
       },
       {
@@ -19,11 +21,33 @@
       },
       {
          "quantity" : "all",
-         "class" : "User"
+         "class" : "TemplateBlock"
       },
       {
          "quantity" : "all",
-         "class" : "UserRole"
+         "class" : "Pagetype"
+      },
+      {
+         "quantity" : "all",
+         "class" : "Content"
+      },
+      {
+         "class" : "UserRole",
+         "quantity" : "all"
+      },
+      {
+         "quantity" : "all",
+         "class" : "User"
+      },
+      {
+         "class" : "Block",
+         "quantity" : "all"
       }
-   ]
+   ],
+   "might_have" : {
+      "fetch" : 0
+   },
+   "has_many" : {
+      "fetch" : 0
+   }
 }

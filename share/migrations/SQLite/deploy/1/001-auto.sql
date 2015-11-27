@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::SQLite
--- Created on Tue Nov 24 22:56:52 2015
+-- Created on Thu Nov 26 19:42:36 2015
 -- 
 
 ;
@@ -120,4 +120,26 @@ CREATE TABLE user_roles (
 );
 CREATE INDEX user_roles_idx_role_id ON user_roles (role_id);
 CREATE INDEX user_roles_idx_user_id ON user_roles (user_id);
+--
+-- Table: content
+--
+CREATE TABLE content (
+  page INTEGER NOT NULL,
+  version INTEGER NOT NULL,
+  creator INTEGER NOT NULL,
+  created BIGINT(100) NOT NULL,
+  status VARCHAR(20) NOT NULL,
+  release_date BIGINT(100) NOT NULL,
+  remove_date BIGINT(100),
+  type VARCHAR(200),
+  abstract TEXT(4000),
+  comments TEXT(4000),
+  body TEXT NOT NULL,
+  precompiled TEXT,
+  PRIMARY KEY (page, version),
+  FOREIGN KEY (creator) REFERENCES users(id),
+  FOREIGN KEY (page) REFERENCES pages(id)
+);
+CREATE INDEX content_idx_creator ON content (creator);
+CREATE INDEX content_idx_page ON content (page);
 COMMIT;
