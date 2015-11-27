@@ -1,2 +1,8 @@
 name: TT
 version: 1
+
+View::TT:
+  PRE_PROCESS: config/main
+  WRAPPER: site/wrapper
+  TEMPLATE_EXTENSION: '.tt'
+  render_die: 1

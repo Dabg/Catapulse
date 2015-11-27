@@ -4,11 +4,6 @@ use namespace::autoclean;
 
 extends 'Catalyst::View::TT';
 
-__PACKAGE__->config(
-    TEMPLATE_EXTENSION => '.tt',
-    render_die => 1,
-);
-
 =head1 NAME
 
 MyApp::View::TT - TT View for MyApp
