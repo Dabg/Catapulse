@@ -1,0 +1,5 @@
+name: TemplateTT
+version: 1
+
+deps:
+  - Admin

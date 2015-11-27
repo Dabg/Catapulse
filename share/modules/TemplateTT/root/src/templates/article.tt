@@ -1,0 +1,5 @@
+Page [% page.title %] template: article.tt
+[% FOREACH block IN page.template.blocks %]
+[% SET body_key='body_' _ block.name %]
+[% $body_key %]
+[% END %]

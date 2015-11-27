@@ -1,0 +1,30 @@
+<div class="container">
+[% body_navbar %]
+	<div class="row clearfix">
+		<div class="span12 column">
+			<div class="row clearfix">
+             [% body_breadcrumbs %]
+            </div>
+			<div class="row clearfix">
+             [% body_messages %]
+            </div>
+        </div>
+		<div class="span12 column">
+			<div class="row clearfix">
+				<div class="span9 column">
+                 [% body_content %]
+                 [% body_comment %]
+                </div>
+				<div class="span3 column">
+                 [% body_sidebar %]
+                </div
+            </div>
+			<div class="row clearfix">
+             [% body_footer %]
+            </div>
+			<div class="row clearfix">
+             [% body_querylog %]
+            </div>
+        </div>
+    </div>
+</div>
