@@ -4,7 +4,8 @@ package Catapulse::Web;
 use Moose;
 use namespace::autoclean;
 
-use Catalyst::Runtime 5.80;
+extends 'Catalyst';
+
 
 use Catalyst qw /
     ConfigLoader
