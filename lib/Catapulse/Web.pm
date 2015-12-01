@@ -1,20 +1,22 @@
 use utf8;
 package Catapulse::Web;
-
 use Moose;
 use namespace::autoclean;
 
-extends 'Catalyst';
+use Catalyst::Runtime 5.80;
 
-
-use Catalyst qw /
+use Catalyst qw/
     ConfigLoader
+    I18N
     +CatalystX::Inject
     Authentication
-    I18N
+    Session
+    Session::State::Cookie
+    Session::Store::File
 /;
 
 extends 'Catalyst';
+
 
 __PACKAGE__->config(
     name => 'Catapulse::Web',
@@ -28,8 +30,15 @@ __PACKAGE__->config(
     enable_catalyst_header => 0,
 );
 
+__PACKAGE__->config->{session} = {
+    expires        => 3600,
+    flash_to_stash => 1,
+};
+
+
 # Start the application
 __PACKAGE__->setup();
+
 
 =encoding utf8
 

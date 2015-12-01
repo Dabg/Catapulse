@@ -2,7 +2,6 @@ name: Auth
 version: 2
 deps:
   - DBIC
-  - Session
   - TT
 
 catalyst_plugins:
@@ -12,7 +11,10 @@ Controller::Login:
   traits:
     - Logout
     - WithRedirect
-    - -RenderAsTTTemplate
+    - RenderAsTTTemplate
+  login_form_args:
+    authenticate_args:
+      active: 1
 
 authentication:
   default_realm: 'members'
