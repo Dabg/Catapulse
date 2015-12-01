@@ -4,7 +4,7 @@ deps:
   - Plack
   - Static
   - TT
-  - Session
-  - Messages
   - Auth
   - FormBase
+  - Page
+  - TemplateTT

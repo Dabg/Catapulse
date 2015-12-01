@@ -3,7 +3,7 @@ version: 1
 deps:
   - Base
   - Register
-  - Page
-  - TemplateTT
   - Admin
   - DefaultTheme
+  - Wiki
+  - Comment
