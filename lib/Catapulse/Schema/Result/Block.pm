@@ -108,15 +108,8 @@ __PACKAGE__->set_primary_key("id");
 
 =cut
 
-__PACKAGE__->add_unique_constraint("blockname_unique", ["name"]);
+__PACKAGE__->add_unique_constraint("name_unique", ["name"]);
 
-=head2 block_templates
-
-Type: has_many
-
-Related object: L<Catapulse::Schema::Result::TemplateBlock>
-
-=cut
 
 __PACKAGE__->has_many(
   "block_templates",
@@ -125,30 +118,10 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-
-=head2 templates
-
-Type: many_to_many
-
-Composing rels: L</block_templates> -> template
-
-=cut
-
 __PACKAGE__->many_to_many("templates", "block_templates", "template");
 
 
-=head2 activate
-
-active Block
-
-=cut
 sub activate   { $_[0]->active(1); $_[0]->update(); };
-
-=head2 desactivate
-
-desactive Block
-
-=cut
 sub deactivate { $_[0]->active(0); $_[0]->update(); };
 
 __PACKAGE__->meta->make_immutable;
