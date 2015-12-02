@@ -36,8 +36,6 @@ after 'setup_finalize' => sub {
 around 'dispatch' => sub {
   my $orig = shift;
   my $c    = shift;
-# before 'dispatch' => sub {
-#   my $c = shift;
 
   # Return if excluded
   my @path = split m{/}, uri_unescape($c->req->uri->path);
@@ -80,8 +78,8 @@ around 'dispatch' => sub {
   }
 
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  # Plutot que de crer un utilisateur 'anonymous' serait-il
-  # intéressant d'utiliser simplement les roles.
+  # Plutot que de crer un utilisateur 'anonymous'
+  # utiliser simplement les roles.
   # Si user_exists alors roles = map $_->name user->roles
   # sinon roles = [ 'anonymous' ]
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -106,16 +104,17 @@ around 'dispatch' => sub {
   # Returns all objects representing the path
   my $pages = $c->model('DBIC::Page')->retrieve_pages_from_path( $ctp_path );
 
+
   # the last node of page
   my $page = $$pages[-1];
-
   # Add opeartions adds we need to check
   my $additional_operations =[];
 
   # Test if redirection exist in config file
   if ( $c->stash->{action} ){
     # Get the 'redirection' on the config file.
-    $internalpath = $c->config->{'Plugin::Page'}->{typepage}->{$page->type->name}->{$c->stash->{action}};
+      $internalpath = $c->config->{'Plugin::Page'}->{typepage}->{$page->type->name}->{$c->stash->{action}};
+
     if ( ! $internalpath ) {
       $c->stash->{page} = $page;
       $c->redispatch('/access_denied', $ctp_path);
@@ -136,25 +135,23 @@ around 'dispatch' => sub {
         }
   # Can access to page
   else {
-
     # Page exist in db
     if ( ref ($page) ) {
       $c->stash->{page} = $page;
-
       # if an action is required on the page (+edit/+permission/...)
       if ( $c->stash->{action} ) {
         $c->redispatch($internalpath, $ctp_path);
       }
       elsif ( $page->type->name eq 'from_controller' ) {
-        # Nothing ... continue
+          # Nothing ... continue
       }
       else {
-        my $internalpath = $page->type->path;
-        $c->redispatch($internalpath, $ctp_path);
+          my $internalpath = $page->type->path;
+          $c->redispatch($internalpath, $ctp_path);
       }
     }
     # Page doesnot exist on db
-    else {
+      else {
       $c->new_page($user, $ctp_path, $pages);
     }
   }
@@ -203,17 +200,16 @@ sub ctp_path{
 sub new_page{
   my ( $c, $user, $path, $pages ) = @_;
 
-    if ( $c->can('rbac') && $c->rbac && ! $c->can_access($pages, ['add_Page'])){
+  if ( $c->can('rbac') && $c->rbac && ! $c->can_access($pages, ['add_Page'])){
           $c->request->path('/access_denied');
           $c->dispatcher->prepare_action($c);
 
           $c->stash->{page} = $$pages[0];
-     }
+      }
   # action eq 'default' ?
   if ( $c->action eq 'default') {
-
-    $c->stash->{template} = "page/add.tt";
-    my $url_do_add = $c->uri_for("/page/add",{
+      $c->stash->{template} = "page/add.tt";
+      my $url_do_add = $c->uri_for("/page/add",{
                                type    => '2', # 2 => wiki
                                name    => $$pages[-1],
                                path    => $path,
@@ -221,8 +217,8 @@ sub new_page{
                                template => 1,
                              });
 
-    $c->stash->{url_do_add} = $url_do_add;
-    $c->stash->{path}       = $path;
+      $c->stash->{url_do_add} = $url_do_add;
+      $c->stash->{path}       = $path;
   }
 }
 
