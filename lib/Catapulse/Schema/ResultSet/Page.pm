@@ -4,7 +4,7 @@ package Catapulse::Schema::ResultSet::Page;
 use Moose;
 use namespace::autoclean;
 use MooseX::NonMoose;
-extends 'DBIx::Class::ResultSet';
+extends 'Catapulse::Schema::ResultSet';
 
 =head1 NAME
 
