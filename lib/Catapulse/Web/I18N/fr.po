@@ -33,5 +33,5 @@ msgid "ui.login.text.username"
 msgstr "Nom d'utilisateur"
 
 #: lib/Catapulse/Web/Controller/Root.pm:36
-msgid "welcome_message"
+msgid "ui.page.welcome.message"
 msgstr "Bienvenue"

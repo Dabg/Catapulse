@@ -24,8 +24,8 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->add_message($c->loc('welcome_message'));
-    $c->add_error($c->loc('test error message'));
+    $c->add_message( message => $c->loc('ui.page.welcome.message'));
+    $c->add_message( error => $c->loc('test.error.message'));
 
     $c->stash(config => $c->config);
 }
