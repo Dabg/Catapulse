@@ -3,3 +3,8 @@ version: 1
 
 deps:
   - Formatter
+
+Formatter::Dir:
+  prefix_url: /myfiles
+  whitelisting:
+    - /home/dab/dev/perl/Catapulse/t/var/files/
