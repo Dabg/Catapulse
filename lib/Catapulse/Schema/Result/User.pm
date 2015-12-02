@@ -10,10 +10,11 @@ Catapulse::Schema::Result::User
 
 =cut
 
-use strict;
-use warnings;
-
-use base 'DBIx::Class::Core';
+use Moose;
+use MooseX::NonMoose;
+use MooseX::MarkAsMethods autoclean => 1;
+#extends 'DBIx::Class::Core';
+extends qw /DBIx::Class::Core Catalyst::Authentication::User /;
 
 =head1 COMPONENTS LOADED
 
@@ -61,31 +62,19 @@ __PACKAGE__->table("users");
 =head2 name
 
   data_type: 'varchar'
-  is_nullable: 1
+  is_nullable: 0
   size: 40
-
-=head2 website
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 100
 
 =head2 password
 
-  data_type: 'varchar'
+  data_type: 'char'
   is_nullable: 0
-  size: 100
+  size: 40
 
 =head2 email
 
   data_type: 'varchar'
   is_nullable: 0
-  size: 100
-
-=head2 tzone
-
-  data_type: 'varchar'
-  is_nullable: 1
   size: 100
 
 =head2 created
@@ -97,7 +86,7 @@ __PACKAGE__->table("users");
 
   data_type: 'tinyint'
   default_value: 0
-  is_nullable: 1
+  is_nullable: 0
 
 =cut
 
@@ -111,13 +100,13 @@ __PACKAGE__->add_columns(
   "website",
   { data_type => "varchar", is_nullable => 1, size => 100 },
   "password",
-  { data_type => "varchar", is_nullable => 0, size => 100 },
+  { data_type => "char", is_nullable => 0, size => 40 },
   "email",
   { data_type => "varchar", is_nullable => 0, size => 100 },
   "tzone",
   { data_type => "varchar", is_nullable => 1, size => 100 },
   "created",
-  { data_type => "timestamp", is_nullable => 0 },
+  { data_type => "timestamp", is_nullable => 1 },
   "active",
   { data_type => "tinyint", default_value => 0, is_nullable => 1 },
 );
@@ -165,6 +154,7 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
+
 =head2 roles
 
 Type: many_to_many
@@ -176,9 +166,8 @@ Composing rels: L</user_roles> -> role
 __PACKAGE__->many_to_many("roles", "user_roles", "role");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-10-19 18:59:01
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:f7EOToCrj1jbVAlFhASauw
-
+# Created by DBIx::Class::Schema::Loader v0.07017 @ 2012-03-04 11:52:28
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rqMnaqBaunyFZFAs/D29pg
 
 __PACKAGE__->add_columns(
         "password", {
@@ -205,22 +194,12 @@ __PACKAGE__->has_many(map_user_roles => 'Catapulse::Schema::Result::UserRole', '
                       { cascade_copy => 0, cascade_delete => 0 });
 
 __PACKAGE__->many_to_many(user_roles => 'map_user_roles', 'role',
-                          { where => { 'active' => 1 } });
+			  { where => { 'active' => 1 } });
 
-
-=head1 METHODS
-
-=over 4
-
-=item * L<activate>
-
-=item * L<deactivate>
-
-=back
-
-=cut
 
 sub activate   { $_[0]->active(1); $_[0]->update(); };
 sub deactivate { $_[0]->active(0); $_[0]->update(); };
+
+__PACKAGE__->meta->make_immutable;
 
 1;
