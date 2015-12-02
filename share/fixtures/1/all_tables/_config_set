@@ -7,23 +7,11 @@ $VAR1 = {
                           },
           'sets' => [
                       {
-                        'class' => 'Attachment',
-                        'quantity' => 'all'
-                      },
-                      {
                         'class' => 'TemplateBlock',
                         'quantity' => 'all'
                       },
                       {
-                        'class' => 'Token',
-                        'quantity' => 'all'
-                      },
-                      {
                         'class' => 'Operation',
-                        'quantity' => 'all'
-                      },
-                      {
-                        'class' => 'Photo',
                         'quantity' => 'all'
                       },
                       {
@@ -37,10 +25,6 @@ $VAR1 = {
                       {
                         'quantity' => 'all',
                         'class' => 'User'
-                      },
-                      {
-                        'class' => 'MenuLink',
-                        'quantity' => 'all'
                       },
                       {
                         'class' => 'RoleRole',
@@ -59,15 +43,7 @@ $VAR1 = {
                         'quantity' => 'all'
                       },
                       {
-                        'class' => 'Menu',
-                        'quantity' => 'all'
-                      },
-                      {
                         'class' => 'Block',
-                        'quantity' => 'all'
-                      },
-                      {
-                        'class' => 'Link',
                         'quantity' => 'all'
                       },
                       {
@@ -76,19 +52,7 @@ $VAR1 = {
                       },
                       {
                         'quantity' => 'all',
-                        'class' => 'Plugin'
-                      },
-                      {
-                        'quantity' => 'all',
                         'class' => 'UserRole'
-                      },
-                      {
-                        'quantity' => 'all',
-                        'class' => 'TemplateMenu'
-                      },
-                      {
-                        'quantity' => 'all',
-                        'class' => 'Preference'
                       },
                       {
                         'quantity' => 'all',

@@ -1,4 +1,0 @@
-$HASH1 = {
-           prefkey   => 'anonymous_user',
-           prefvalue => 'anonymous'
-         };
