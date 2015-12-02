@@ -1,0 +1,5 @@
+name: Wiki
+version: 1
+
+deps:
+  - Formatter
