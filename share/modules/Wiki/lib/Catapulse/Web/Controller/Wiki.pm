@@ -64,7 +64,7 @@ sub edit :PathPart('edit') :Args(0) {
   my $valid = $form->params;
 
 
-  $valid->{creator} = defined $c->user ? $c->user->id : 'anonymous';
+  $valid->{creator} = defined $c->user ? $c->user->id : $c->pref('anonymous_id');
   $stash->{content} = $page->content;
 
   my $redirect = $c->stash->{path};

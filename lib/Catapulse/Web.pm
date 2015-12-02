@@ -47,6 +47,7 @@ sub pref {
     return unless $setting;
 
     my $result = {
+        anonymous_id     => 2,
         anonymous_user   => 'Anonymous',
         enable_emoticons => 0,
         default_lang     => 'en',
