@@ -9,10 +9,11 @@ use Catalyst qw/
     ConfigLoader
     I18N
     +CatalystX::Inject
+    Cache
     Authentication
     Session
     Session::State::Cookie
-    Session::Store::File
+    Session::Store::Cache
 /;
 
 extends 'Catalyst';
