@@ -1,0 +1,4 @@
+$HASH1 = {
+           prefkey   => 'open_registration',
+           prefvalue => 1
+         };

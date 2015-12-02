@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::SQLite
--- Created on Thu Nov 26 19:42:36 2015
+-- Created on Wed Dec  2 18:33:07 2015
 -- 
 
 ;
@@ -16,7 +16,41 @@ CREATE TABLE blocks (
   position int,
   active tinyint NOT NULL DEFAULT 1
 );
-CREATE UNIQUE INDEX blockname_unique ON blocks (name);
+CREATE UNIQUE INDEX name_unique ON blocks (name);
+--
+-- Table: obj_operation
+--
+CREATE TABLE obj_operation (
+  typeobj_id integer NOT NULL,
+  obj_id integer NOT NULL,
+  operation_id integer NOT NULL,
+  FOREIGN KEY (operation_id) REFERENCES operation(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (typeobj_id) REFERENCES typeobj(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE INDEX obj_operation_idx_operation_id ON obj_operation (operation_id);
+CREATE INDEX obj_operation_idx_typeobj_id ON obj_operation (typeobj_id);
+CREATE UNIQUE INDEX typeobj_obj_op_unique ON obj_operation (typeobj_id, obj_id, operation_id);
+--
+-- Table: operation
+--
+CREATE TABLE operation (
+  id INTEGER PRIMARY KEY NOT NULL,
+  name varchar(100) NOT NULL,
+  active tinyint NOT NULL DEFAULT 1
+);
+CREATE UNIQUE INDEX name ON operation (name);
+--
+-- Table: page_roles
+--
+CREATE TABLE page_roles (
+  page_id integer NOT NULL,
+  role_id integer NOT NULL,
+  PRIMARY KEY (page_id, role_id),
+  FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE INDEX page_roles_idx_page_id ON page_roles (page_id);
+CREATE INDEX page_roles_idx_role_id ON page_roles (role_id);
 --
 -- Table: pagetype
 --
@@ -27,6 +61,73 @@ CREATE TABLE pagetype (
   active tinyint NOT NULL DEFAULT 0
 );
 --
+-- Table: permission
+--
+CREATE TABLE permission (
+  id INTEGER PRIMARY KEY NOT NULL,
+  role_id integer NOT NULL,
+  typeobj_id integer NOT NULL,
+  obj_id integer NOT NULL,
+  operation_id integer NOT NULL,
+  value integer,
+  inheritable integer,
+  FOREIGN KEY (operation_id) REFERENCES operation(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (typeobj_id) REFERENCES typeobj(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE INDEX permission_idx_operation_id ON permission (operation_id);
+CREATE INDEX permission_idx_role_id ON permission (role_id);
+CREATE INDEX permission_idx_typeobj_id ON permission (typeobj_id);
+CREATE UNIQUE INDEX object_role_operation_unique ON permission (typeobj_id, obj_id, role_id, operation_id);
+--
+-- Table: photo
+--
+CREATE TABLE photo (
+  id INTEGER PRIMARY KEY NOT NULL,
+  position INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  camera TEXT,
+  taken INTEGER,
+  iso INTEGER,
+  lens TEXT,
+  aperture TEXT,
+  flash TEXT,
+  height INT,
+  width INT
+);
+--
+-- Table: plugins
+--
+CREATE TABLE plugins (
+  id INTEGER PRIMARY KEY NOT NULL,
+  categorie varchar(40) NOT NULL,
+  name varchar(40) NOT NULL,
+  required tinyint NOT NULL DEFAULT 0,
+  active tinyint NOT NULL DEFAULT 0
+);
+CREATE UNIQUE INDEX categorie_name_unique ON plugins (categorie, name);
+--
+-- Table: preference
+--
+CREATE TABLE preference (
+  prefkey VARCHAR(100) NOT NULL,
+  prefvalue VARCHAR(100),
+  PRIMARY KEY (prefkey)
+);
+--
+-- Table: role_roles
+--
+CREATE TABLE role_roles (
+  role_id integer NOT NULL,
+  inherits_from_id integer NOT NULL,
+  PRIMARY KEY (role_id, inherits_from_id),
+  FOREIGN KEY (inherits_from_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE INDEX role_roles_idx_inherits_from_id ON role_roles (inherits_from_id);
+CREATE INDEX role_roles_idx_role_id ON role_roles (role_id);
+--
 -- Table: roles
 --
 CREATE TABLE roles (
@@ -34,7 +135,15 @@ CREATE TABLE roles (
   name varchar(100) NOT NULL,
   active tinyint NOT NULL DEFAULT 1
 );
-CREATE UNIQUE INDEX name_unique ON roles (name);
+CREATE UNIQUE INDEX name_unique02 ON roles (name);
+--
+-- Table: tag
+--
+CREATE TABLE tag (
+  id INTEGER PRIMARY KEY NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  active tinyint NOT NULL DEFAULT 0
+);
 --
 -- Table: template_blocks
 --
@@ -59,7 +168,28 @@ CREATE TABLE templates (
   position int,
   active tinyint NOT NULL DEFAULT 1
 );
-CREATE UNIQUE INDEX templatename_unique ON templates (name);
+CREATE UNIQUE INDEX name_unique03 ON templates (name);
+--
+-- Table: typeobj
+--
+CREATE TABLE typeobj (
+  id INTEGER PRIMARY KEY NOT NULL,
+  name varchar NOT NULL,
+  active integer NOT NULL
+);
+CREATE UNIQUE INDEX name_unique04 ON typeobj (name);
+--
+-- Table: user_roles
+--
+CREATE TABLE user_roles (
+  user_id integer NOT NULL,
+  role_id integer NOT NULL,
+  PRIMARY KEY (user_id, role_id),
+  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+CREATE INDEX user_roles_idx_role_id ON user_roles (role_id);
+CREATE INDEX user_roles_idx_user_id ON user_roles (user_id);
 --
 -- Table: users
 --
@@ -75,51 +205,6 @@ CREATE TABLE users (
   active tinyint DEFAULT 0
 );
 CREATE UNIQUE INDEX username_unique ON users (username);
---
--- Table: role_roles
---
-CREATE TABLE role_roles (
-  role_id integer NOT NULL,
-  inherits_from_id integer NOT NULL,
-  PRIMARY KEY (role_id, inherits_from_id),
-  FOREIGN KEY (inherits_from_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-CREATE INDEX role_roles_idx_inherits_from_id ON role_roles (inherits_from_id);
-CREATE INDEX role_roles_idx_role_id ON role_roles (role_id);
---
--- Table: pages
---
-CREATE TABLE pages (
-  id INTEGER PRIMARY KEY NOT NULL,
-  title varchar(255),
-  name varchar,
-  parent_id integer NOT NULL DEFAULT 0,
-  type integer NOT NULL,
-  template integer NOT NULL,
-  created timestamp NOT NULL,
-  active tinyint NOT NULL DEFAULT 0,
-  version INTEGER,
-  FOREIGN KEY (parent_id) REFERENCES pages(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (template) REFERENCES templates(id),
-  FOREIGN KEY (type) REFERENCES pagetype(id)
-);
-CREATE INDEX pages_idx_parent_id ON pages (parent_id);
-CREATE INDEX pages_idx_template ON pages (template);
-CREATE INDEX pages_idx_type ON pages (type);
-CREATE UNIQUE INDEX name_parent_unique ON pages (name, parent_id);
---
--- Table: user_roles
---
-CREATE TABLE user_roles (
-  user_id integer NOT NULL,
-  role_id integer NOT NULL,
-  PRIMARY KEY (user_id, role_id),
-  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-CREATE INDEX user_roles_idx_role_id ON user_roles (role_id);
-CREATE INDEX user_roles_idx_user_id ON user_roles (user_id);
 --
 -- Table: content
 --
@@ -142,4 +227,54 @@ CREATE TABLE content (
 );
 CREATE INDEX content_idx_creator ON content (creator);
 CREATE INDEX content_idx_page ON content (page);
+--
+-- Table: pages
+--
+CREATE TABLE pages (
+  id INTEGER PRIMARY KEY NOT NULL,
+  title varchar(255),
+  name varchar,
+  parent_id integer NOT NULL DEFAULT 0,
+  type integer NOT NULL,
+  template integer NOT NULL,
+  created timestamp NOT NULL,
+  active tinyint NOT NULL DEFAULT 0,
+  version INTEGER,
+  FOREIGN KEY (parent_id) REFERENCES pages(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (id, version) REFERENCES content(page, version) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (template) REFERENCES templates(id),
+  FOREIGN KEY (type) REFERENCES pagetype(id)
+);
+CREATE INDEX pages_idx_parent_id ON pages (parent_id);
+CREATE INDEX pages_idx_id_version ON pages (id, version);
+CREATE INDEX pages_idx_template ON pages (template);
+CREATE INDEX pages_idx_type ON pages (type);
+CREATE UNIQUE INDEX name_parent_unique ON pages (name, parent_id);
+--
+-- Table: attachment
+--
+CREATE TABLE attachment (
+  id INTEGER PRIMARY KEY NOT NULL,
+  uploaded BIGINT NOT NULL,
+  page INTEGER NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  size INTEGER,
+  contenttype VARCHAR(100),
+  FOREIGN KEY (page) REFERENCES pages(id)
+);
+CREATE INDEX attachment_idx_page ON attachment (page);
+--
+-- Table: comment
+--
+CREATE TABLE comment (
+  id INTEGER PRIMARY KEY NOT NULL,
+  poster INTEGER NOT NULL,
+  page INTEGER NOT NULL,
+  posted BIGINT NOT NULL,
+  body TEXT NOT NULL,
+  FOREIGN KEY (page) REFERENCES pages(id),
+  FOREIGN KEY (poster) REFERENCES users(id)
+);
+CREATE INDEX comment_idx_page ON comment (page);
+CREATE INDEX comment_idx_poster ON comment (poster);
 COMMIT;

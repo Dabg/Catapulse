@@ -1,10 +1,10 @@
 $HASH1 = {
            active   => 1,
-           created  => '2015-09-28T12:53:01',
+           created  => '2014-06-20T22:14:20',
            email    => 'joe@dalton.eu',
            id       => 3,
            name     => 'Joe Dalton',
-           password => '$2a$14$5/jGOXjp3hOgpoPSviYxFuZxZ9dam7AR2NfMpZpC4T7qHAYeZzEQ2',
+           password => '$2a$14$i7JZeNmDSyPUONMQT3K2zu0t/eX9laGHPIi1575Tqk0gfPDarHrTa',
            tzone    => 'America/Chicago',
            username => 'joe',
            website  => undef

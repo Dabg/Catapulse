@@ -1,0 +1,20 @@
+$HASH1 = {
+           abstract
+                   => '',
+           body    => "# Admin User.\n\nThis is the default home node for the admin user. You can".
+	" change this text by pressing the _Edit_ link at the bottom.",
+           comments
+                   => '',
+           created => 0,
+           creator => 2,
+           page    => 2,
+           precompiled
+                   => undef,
+           release_date
+                   => 1,
+           remove_date
+                   => 1,
+           status  => 'released',
+           type    => '',
+           version => 1
+         };

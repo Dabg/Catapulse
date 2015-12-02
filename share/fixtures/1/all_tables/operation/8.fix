@@ -1,0 +1,5 @@
+$HASH1 = {
+           active => 1,
+           id     => 8,
+           name   => 'view_Comment'
+         };

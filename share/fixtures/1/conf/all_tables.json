@@ -1,18 +1,72 @@
 {
+   "might_have" : {
+      "fetch" : 0
+   },
    "belongs_to" : {
+      "fetch" : 0
+   },
+   "has_many" : {
       "fetch" : 0
    },
    "sets" : [
       {
          "quantity" : "all",
-         "class" : "Template"
+         "class" : "Block"
       },
       {
-         "quantity" : "all",
-         "class" : "RoleRole"
+         "class" : "Template",
+         "quantity" : "all"
       },
       {
          "class" : "Page",
+         "quantity" : "all"
+      },
+      {
+         "class" : "UserRole",
+         "quantity" : "all"
+      },
+      {
+         "quantity" : "all",
+         "class" : "ObjOperation"
+      },
+      {
+         "quantity" : "all",
+         "class" : "Typeobj"
+      },
+      {
+         "quantity" : "all",
+         "class" : "Preference"
+      },
+      {
+         "class" : "User",
+         "quantity" : "all"
+      },
+      {
+         "class" : "Operation",
+         "quantity" : "all"
+      },
+      {
+         "quantity" : "all",
+         "class" : "TemplateBlock"
+      },
+      {
+         "class" : "PageRole",
+         "quantity" : "all"
+      },
+      {
+         "class" : "Comment",
+         "quantity" : "all"
+      },
+      {
+         "class" : "RoleRole",
+         "quantity" : "all"
+      },
+      {
+         "class" : "Attachment",
+         "quantity" : "all"
+      },
+      {
+         "class" : "Plugin",
          "quantity" : "all"
       },
       {
@@ -21,33 +75,23 @@
       },
       {
          "quantity" : "all",
-         "class" : "TemplateBlock"
+         "class" : "Photo"
+      },
+      {
+         "class" : "Content",
+         "quantity" : "all"
+      },
+      {
+         "class" : "Permission",
+         "quantity" : "all"
+      },
+      {
+         "class" : "Tag",
+         "quantity" : "all"
       },
       {
          "quantity" : "all",
          "class" : "Pagetype"
-      },
-      {
-         "quantity" : "all",
-         "class" : "Content"
-      },
-      {
-         "class" : "UserRole",
-         "quantity" : "all"
-      },
-      {
-         "quantity" : "all",
-         "class" : "User"
-      },
-      {
-         "class" : "Block",
-         "quantity" : "all"
       }
-   ],
-   "might_have" : {
-      "fetch" : 0
-   },
-   "has_many" : {
-      "fetch" : 0
-   }
+   ]
 }

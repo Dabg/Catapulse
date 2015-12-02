@@ -1,0 +1,6 @@
+$HASH1 = {
+           active => 1,
+           id     => 2,
+           name   => 'wiki',
+           path   => '/wiki'
+         };

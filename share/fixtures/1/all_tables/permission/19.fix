@@ -1,0 +1,12 @@
+$HASH1 = {
+           id       => 19,
+           inheritable
+                    => 1,
+           obj_id   => 73,
+           operation_id
+                    => 2,
+           role_id  => 2,
+           typeobj_id
+                    => 1,
+           value    => 1
+         };

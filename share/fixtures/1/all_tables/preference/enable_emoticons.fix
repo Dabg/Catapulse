@@ -1,0 +1,4 @@
+$HASH1 = {
+           prefkey   => 'enable_emoticons',
+           prefvalue => 0
+         };

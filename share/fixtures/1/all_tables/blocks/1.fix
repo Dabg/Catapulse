@@ -1,0 +1,10 @@
+$HASH1 = {
+           active => 1,
+           file   => 'blocks/navbar.tt',
+           id     => 1,
+           name   => 'navbar',
+           parent_id
+                  => 0,
+           position
+                  => undef
+         };

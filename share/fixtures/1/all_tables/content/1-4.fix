@@ -1,0 +1,55 @@
+$HASH1 = {
+           abstract
+                   => '',
+           body    => "<h1>Help Index</h1>\n{{toc 2-}}<h2>Creating Pages</h2>\n\n<h3>Create and Fo".
+	"llow a Wiki Link</h3>\nOne way to create a new page is by creating a wiki".
+	" link to it from another page.  For example, suppose I was working on a ".
+	"page about spoken languages and I want to link to a new page about Norwe".
+	"gian as type of spoken language.  Then I could create the link:\n<pre lan".
+	"g=\"Bash\">[[Norwegian]]</pre>\nSubsequently, clicking on the link would ta".
+	"ke me into edit mode for the new page.\n<h3>Browse to a URL</h3>\nYou can ".
+	"also initiate a new page by browsing to the URL that you would like the ".
+	"page to reside at.  It's probably worth taking a moment to decide the hi".
+	"erarchy one would like.  Suppose for example, you want to write about th".
+	"e Catalan Language.  You may create a page at:\n<pre lang=\"Bash\">/Languag".
+	"es/Spoken/Catalan</pre>\nOn the other hand, you may want to write about t".
+	"he Perl computer programming language.  This could be done at:\n<pre lang".
+	"=\"Bash\">/Languages/Programming/Perl</pre>\nIn either case, simply type in".
+	" the URL of the page you want to create, then you will be prompted to cr".
+	"eate it.\n<h2>Wiki Syntax</h2>\nYou can choose one of two wiki sytnax for ".
+	"you wiki.  Either <em>textile</em> or <em>markdown</em>.  See the Site S".
+	"ettings for the option to choose.    When in edit mode, one can access a".
+	" help link to either wiki syntax.  One can also use or mixin HTML. ",
+           comments
+                   => '',
+           created => 0,
+           creator => 2,
+           page    => 4,
+           precompiled
+                   => "<h1>Help Index</h1>\n{{toc 2-}}<h2>Creating Pages</h2>\n\n<h3>Create and Fo".
+	"llow a Wiki Link</h3>\nOne way to create a new page is by creating a wiki".
+	" link to it from another page.  For example, suppose I was working on a ".
+	"page about spoken languages and I want to link to a new page about Norwe".
+	"gian as type of spoken language.  Then I could create the link:\n<pre lan".
+	"g=\"Bash\">[[Norwegian]]</pre>\nSubsequently, clicking on the link would ta".
+	"ke me into edit mode for the new page.\n<h3>Browse to a URL</h3>\nYou can ".
+	"also initiate a new page by browsing to the URL that you would like the ".
+	"page to reside at.  It's probably worth taking a moment to decide the hi".
+	"erarchy one would like.  Suppose for example, you want to write about th".
+	"e Catalan Language.  You may create a page at:\n<pre lang=\"Bash\">/Languag".
+	"es/Spoken/Catalan</pre>\nOn the other hand, you may want to write about t".
+	"he Perl computer programming language.  This could be done at:\n<pre lang".
+	"=\"Bash\">/Languages/Programming/Perl</pre>\nIn either case, simply type in".
+	" the URL of the page you want to create, then you will be prompted to cr".
+	"eate it.\n<h2>Wiki Syntax</h2>\nYou can choose one of two wiki sytnax for ".
+	"you wiki.  Either <em>textile</em> or <em>markdown</em>.  See the Site S".
+	"ettings for the option to choose.    When in edit mode, one can access a".
+	" help link to either wiki syntax.  One can also use or mixin HTML. ",
+           release_date
+                   => 1,
+           remove_date
+                   => 1,
+           status  => 'released',
+           type    => '',
+           version => 1
+         };

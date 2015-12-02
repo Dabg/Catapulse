@@ -1,0 +1,10 @@
+$HASH1 = {
+           active => 1,
+           file   => 'blocks/content.tt',
+           id     => 4,
+           name   => 'content',
+           parent_id
+                  => 0,
+           position
+                  => undef
+         };

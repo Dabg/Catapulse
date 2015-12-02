@@ -1,0 +1,12 @@
+$HASH1 = {
+           active => 1,
+           file   => 'templates/blog.tt',
+           id     => 2,
+           name   => 'Blog',
+           parent_id
+                  => 0,
+           position
+                  => undef,
+           wrapper
+                  => 'nowrapper'
+         };

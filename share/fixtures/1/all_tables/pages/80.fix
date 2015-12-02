@@ -1,0 +1,15 @@
+$HASH1 = {
+           active => 1,
+           created
+                  => 1448799131,
+           id     => 80,
+           name   => 'permission',
+           parent_id
+                  => 16,
+           template
+                  => 1,
+           title  => 'permission',
+           type   => 1,
+           version
+                  => undef
+         };

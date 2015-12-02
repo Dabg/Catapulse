@@ -1,29 +1,117 @@
 $VAR1 = {
-          'might_have' => {
-                            'fetch' => 0
-                          },
-          'belongs_to' => {
-                            'fetch' => 0
-                          },
           'has_many' => {
                           'fetch' => 0
                         },
+          'might_have' => {
+                            'fetch' => 0
+                          },
           'sets' => [
                       {
-                        'class' => 'RoleRole',
+                        'class' => 'Attachment',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'TemplateBlock',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'Token',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'Operation',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'Photo',
                         'quantity' => 'all'
                       },
                       {
                         'quantity' => 'all',
-                        'class' => 'Role'
+                        'class' => 'Page'
+                      },
+                      {
+                        'quantity' => 'all',
+                        'class' => 'Permission'
                       },
                       {
                         'quantity' => 'all',
                         'class' => 'User'
                       },
                       {
-                        'class' => 'UserRole',
+                        'class' => 'MenuLink',
                         'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'RoleRole',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'Content',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'Role',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'Typeobj',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'Menu',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'Block',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'Link',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'quantity' => 'all',
+                        'class' => 'Template'
+                      },
+                      {
+                        'quantity' => 'all',
+                        'class' => 'Plugin'
+                      },
+                      {
+                        'quantity' => 'all',
+                        'class' => 'UserRole'
+                      },
+                      {
+                        'quantity' => 'all',
+                        'class' => 'TemplateMenu'
+                      },
+                      {
+                        'quantity' => 'all',
+                        'class' => 'Preference'
+                      },
+                      {
+                        'quantity' => 'all',
+                        'class' => 'Pagetype'
+                      },
+                      {
+                        'quantity' => 'all',
+                        'class' => 'PageRole'
+                      },
+                      {
+                        'class' => 'Comment',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'class' => 'Tag',
+                        'quantity' => 'all'
+                      },
+                      {
+                        'quantity' => 'all',
+                        'class' => 'ObjOperation'
                       }
-                    ]
+                    ],
+          'belongs_to' => {
+                            'fetch' => 0
+                          }
         };

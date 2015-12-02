@@ -1,0 +1,29 @@
+$HASH1 = {
+           abstract
+                   => '',
+           body    => "# Bienvenue sur Catapulse!\n\nThis is your front page. To start administer".
+	"ing your wiki, please log in with\nusername admin/password admin. Once yo".
+	"u login you will be able to configure your\nnew wiki. If you want to play".
+	" around a little, just create\na [[New Page]] or edit this one through th".
+	"e edit link at the top of the page.\n\n## Need some assistance?\n\nCheck out".
+	" our [[/Help]] section.",
+           comments
+                   => '',
+           created => 0,
+           creator => 2,
+           page    => 1,
+           precompiled
+                   => "# Bienvenue sur Catapulse!\n\nThis is your front page. To start administer".
+	"ing your wiki, please log in with\nusername admin/password admin. Once yo".
+	"u login you will be able to configure your\nnew wiki. If you want to play".
+	" around a little, just create\na [[New Page]] or edit this one through th".
+	"e edit link at the top of the page.\n\n## Need some assistance?\n\nCheck out".
+	" our [[/Help]] section.",
+           release_date
+                   => 1,
+           remove_date
+                   => 1,
+           status  => 'released',
+           type    => '',
+           version => 1
+         };

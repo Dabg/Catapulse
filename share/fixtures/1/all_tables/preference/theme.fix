@@ -1,0 +1,4 @@
+$HASH1 = {
+           prefkey   => 'theme',
+           prefvalue => 'default'
+         };

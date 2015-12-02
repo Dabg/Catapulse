@@ -1,0 +1,10 @@
+$HASH1 = {
+           active => 1,
+           file   => 'blocks/querylog.tt',
+           id     => 10,
+           name   => 'querylog',
+           parent_id
+                  => 0,
+           position
+                  => undef
+         };

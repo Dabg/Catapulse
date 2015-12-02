@@ -1,0 +1,4 @@
+$HASH1 = {
+           block_id    => 5,
+           template_id => 1
+         };
