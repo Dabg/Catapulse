@@ -1,7 +1,18 @@
 name: Page
 version: 1
+
+deps:
+  - Block
+
 catalyst_plugins:
   - Page
 
 Plugin::Page:
-  debug: 1
+  debug: 0
+  typepage:
+    wiki:
+      edit: /wiki
+      permission: /page/permission
+
+    from_controller:
+      permission: /page/permission
