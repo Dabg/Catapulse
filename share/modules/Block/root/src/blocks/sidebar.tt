@@ -1,0 +1,29 @@
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li><a href="/">Home</a></li>
+              [% IF c.user %]
+              <li><a href="/logout">Logout</a></li>
+              <li><a href="/change_password">Change password</a></li>
+              [% ELSE %]
+              <li[% ' class="active"' IF (c.req.path.match("^login")) %]><a href="[% c.uri_for('/login') %]">Login</a></li>
+              <li><a href="/register">Register</a></li>
+              [%- END -%]
+            </ul>
+          </div><!--/.well -->
+
+
+          [% IF c.user.username == 'admin' %]
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li[% ' class="active"' IF (c.req.path.match("^admin")) %]><a href="[% c.uri_for('/admin') %]">Administration</a></li>
+            </ul>
+
+              [% IF pagelinks %]
+            <ul>
+              [%- FOREACH link IN pagelinks %]
+              <li><a href="[% link.href %]">[% link.label %]</a></li>
+              [%- END -%]
+              [% END %]
+            </ul>
+          </div><!--/.well -->
+          [%- END -%]

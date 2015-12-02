@@ -1,0 +1,11 @@
+        [% FOREACH level IN feedback.keys -%]
+        <div class="alert alert-block alert-[% level %]">
+          <a class="close" data-dismiss="alert">×</a>
+          <ul>
+          [% FOREACH message IN feedback.$level %]
+          <li><span>[% message | html %]</span></li>
+          [% END -%]
+          </ul>
+        </div>
+        [% END -%]
+MESSAGESSSSSSSSSSSSSSSSSSSSSssssssssssssssssssssssss
