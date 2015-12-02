@@ -2,6 +2,7 @@ package Catapulse::Web::Controller::Root;
 
 use Moose;
 use namespace::autoclean;
+use Catapulse::Web::PageFactory;
 
 BEGIN { extends 'Catalyst::Controller' }
 
@@ -44,7 +45,27 @@ Standard 404 error page
 
 sub default :Path {
     my ( $self, $c ) = @_;
-    $c->response->body( 'Page not found' );
+}
+
+=head2 access_denied
+
+access_denied page
+
+=cut
+
+sub access_denied :Path('access_denied') {
+    my ( $self, $c ) = @_;
+    $c->response->status(401);
+}
+
+=head2 not_found
+
+Page not_found
+
+=cut
+
+sub not_found :Path('not_found') {
+    my ( $self, $c ) = @_;
     $c->response->status(404);
 }
 
@@ -52,9 +73,72 @@ sub default :Path {
 
 Attempt to render a view, if needed.
 
+Calculate content of controller, blocks and build page
+
 =cut
 
-sub end : ActionClass('RenderView') {}
+sub end : ActionClass('RenderView') {
+  my ( $self, $c) = @_;
+
+  return 1 if $c->req->method eq 'HEAD';
+  return  if $c->response->status =~ /^(?:204|3\d\d)$/;
+  return $c->res->output if ( $c->res->output && ! $c->stash->{template} );
+
+  my $zoom_in = $c->req->param('zoom_in');
+
+  # If page exist in db
+  if ( my $page = $c->stash->{page} ) {
+
+    # Build 'content' If page is a controller
+    # Render controller with TTBlock
+    if ( ! $c->stash->{template} && $c->action ne 'default' && ! $c->res->body) {
+      $c->stash->{template} = $c->action . '.tt';
+    }
+
+    if ( $c->stash->{template} ) {
+      $c->stash->{content} = $c->view('TTBlock')->render($c, $c->stash->{template}) or die "Error: $!";
+    }
+
+    # process Blocks
+    my $pagefactory = Catapulse::Web::PageFactory->new( ctx => $c, template => $page->template);
+    $pagefactory->process;
+
+    # Build TTPage
+    # Delete parent template if zoom_in
+    $c->stash->{template} = $page->template->file
+        if ( $page->template->active && ! $zoom_in );
+
+    $c->forward( $c->view('TTPage') );
+  }
+  # KO page is not in stash
+  # Forward to TT View
+  else {
+    $c->forward( $c->view ) if ! $c->res->body;
+
+    # If we are in debug mode alert appears
+    my $body   = $c->res->body;
+    my $action = $c->action;
+    if ( $action ne 'default') {
+        my $path = "/$action";
+        $path =~ s|^/index$|/|;
+        $path =~ s|/index$||;
+
+        my $url_do_add = $c->uri_for("/page/add",{
+                               type    => '2', # 2 => wiki
+                               name    => 'XXX',
+                               path    => $path,
+                               title   => $path,
+                               template => 1,
+                             });
+
+
+      my $alert = "<h3>This page is not saved !</h3> use this link to save the page : <a href=\"$url_do_add\">Add page</a><hr />";
+      $body =~ s/^/$alert/;
+      $c->res->body($body);
+    }
+  }
+}
+
 
 =head1 AUTHOR
 
