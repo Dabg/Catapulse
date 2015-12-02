@@ -10,10 +10,10 @@ Catapulse::Schema::Result::Role
 
 =cut
 
-use strict;
-use warnings;
-
-use base 'DBIx::Class::Core';
+use Moose;
+use MooseX::NonMoose;
+use MooseX::MarkAsMethods autoclean => 1;
+extends 'DBIx::Class::Core';
 
 =head1 COMPONENTS LOADED
 
@@ -103,6 +103,7 @@ __PACKAGE__->add_unique_constraint("name_unique", ["name"]);
 
 =head1 RELATIONS
 
+
 =head2 role_roles_inherits_from
 
 Type: has_many
@@ -145,8 +146,9 @@ __PACKAGE__->has_many(
   "user_roles",
   "Catapulse::Schema::Result::UserRole",
   { "foreign.role_id" => "self.id" },
-  { cascade_copy => 0, cascade_delete => 0 },
+  { cascade_copy => 0, cascade_delete => 1 },
 );
+
 
 =head2 inherits_from
 
@@ -162,11 +164,11 @@ __PACKAGE__->many_to_many("inherits_from", "role_roles_roles", "inherit_from");
 
 Type: many_to_many
 
-Composing rels: L</role_roles_inherits_from> -> role
+Composing rels: L</role_roles_roles> -> role
 
 =cut
 
-__PACKAGE__->many_to_many("roles", "role_roles_inherits_from", "role");
+__PACKAGE__->many_to_many("roles", "role_roles_roles", "role");
 
 =head2 users
 
@@ -182,6 +184,22 @@ __PACKAGE__->many_to_many("users", "user_roles", "user");
 # Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-10-19 18:59:01
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7w3Mto1RDkMG3VXaaYrtwA
 
+__PACKAGE__->has_many(map_role_roles => 'Catapulse::Schema::Result::RoleRole', 'role_id',
+                      { cascade_copy => 0, cascade_delete => 0 });
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+
+ __PACKAGE__->has_many(map_role_parents => 'Catapulse::Schema::Result::RoleRole', 'inherits_from_id',
+                      { cascade_copy => 0, cascade_delete => 0 });
+
+__PACKAGE__->many_to_many(roles   => 'map_role_roles',   'role' );
+
+__PACKAGE__->many_to_many(parents => 'map_role_parents', 'parent');
+
+__PACKAGE__->many_to_many("users", "user_roles", "user" );
+
+
+sub activate   { $_[0]->active(1); $_[0]->update(); };
+sub deactivate { $_[0]->active(0); $_[0]->update(); };
+
+__PACKAGE__->meta->make_immutable;
 1;

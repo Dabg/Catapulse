@@ -128,9 +128,7 @@ __PACKAGE__->set_primary_key("id");
 
 =over 4
 
-=item * L</name>
-
-=item * L</parent_id>
+=item * L</username>
 
 =back
 
@@ -169,25 +167,100 @@ __PACKAGE__->belongs_to(
 );
 
 
-=head2 type
-
-Type: belong_to
-
-Related object: L<Catapulse::Schema::Result::PageType>
-
-=cut
-
 __PACKAGE__->belongs_to(
   "type",
   "Catapulse::Schema::Result::Pagetype",
   { id => "type" },
 );
 
+__PACKAGE__->belongs_to(
+    "content",
+    "Catapulse::Schema::Result::Content",
+    { page => "id", version => "version" }
+);
+
+# __PACKAGE__->belongs_to(
+#     "page_version",
+#     "Catapulse::Schema::Result::PageVersion",
+#     { page => "id", version => "version" }
+# );
+
+
+=head2 comments
+
+Type: has_many
+
+Related object: L<Catapulse::Schema::Result::Comment>
+
+=cut
+
+__PACKAGE__->has_many(
+  "comments",
+  "Catapulse::Schema::Result::Comment",
+  { "foreign.page" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 ops_to_accesss
+
+Type: has_many
+
+Related object: L<Catapulse::Schema::Result::ObjOperation>
+
+=cut
+
+__PACKAGE__->has_many(
+  "obj_operations",
+  "Catapulse::Schema::Result::ObjOperation",
+  { "foreign.obj_id"     => "self.id"} ,
+  {  where => { typeobj_id => 1 }},
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 permissions
+
+Type: has_many
+
+Related object: L<Catapulse::Schema::Result::Permission>
+
+=cut
+
+__PACKAGE__->has_many(
+  "permissions",
+  "Catapulse::Schema::Result::Permission",
+  { "foreign.obj_id"     => "self.id"} ,
+  {  where => { typeobj_id => 1 }},
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 ops_to_access
+
+Type: many_to_many
+
+=cut
+
+__PACKAGE__->many_to_many( ops_to_access => 'obj_operations', 'operation',);
 
 
 =head1 METHODS
 
 =cut
+
+=head2 get_permissions
+
+Returns the permissions for a role and an operation
+
+=cut
+
+
+sub get_permissions {
+  my ($self, $role, $operation ) = @_;
+
+  my $args = {};
+  $args->{role_id} = $role->id if ( $role );
+  $args->{operation_id} = $operation->id if ( $operation );
+  return $self->permissions->search( $args );
+}
 
 
 =head2 all_nodes
@@ -210,20 +283,45 @@ sub all_nodes {
 }
 
 
-=head2 activate
+=head2 update_content <%args>
 
-active Page
+Create a new content version for this page.
+
+%args is each column of L<Catapulse::Schema::Result::Content>.
 
 =cut
+
+# update_content: this whole method may need work to deal with workflow.
+# maybe it can't even be called if the site uses workflow...
+# may need fixing for better conflict handling, too. maybe use a transaction?
+
+sub update_content {
+    my ( $self, %args ) = @_;
+
+    my $content_version = (
+          $self->content
+        ? $self->content->max_version()
+        : undef
+    );
+    my %content_data =
+      map { $_ => $args{$_} }
+      $self->result_source->related_source('content')->columns;
+    my $now = DateTime->now;
+    @content_data{qw/page version status release_date/} = (
+        $self->id, ( $content_version ? $content_version + 1 : 1 ),
+        'released', $now,
+    );
+
+    my $content =
+      $self->result_source->related_source('content')
+      ->resultset->find_or_create( \%content_data );
+
+    $self->version($content->version);
+    $self->update;
+}    # end sub update_content
+
 
 sub activate   { $_[0]->active(1); $_[0]->update(); };
-
-=head2 desactivate
-
-desactive Page
-
-=cut
-
 sub deactivate { $_[0]->active(0); $_[0]->update(); };
 
 __PACKAGE__->meta->make_immutable;
