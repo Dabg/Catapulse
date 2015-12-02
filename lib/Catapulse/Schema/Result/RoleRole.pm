@@ -10,10 +10,10 @@ Catapulse::Schema::Result::RoleRole
 
 =cut
 
-use strict;
-use warnings;
-
-use base 'DBIx::Class::Core';
+use Moose;
+use MooseX::NonMoose;
+use MooseX::MarkAsMethods autoclean => 1;
+extends 'DBIx::Class::Core';
 
 =head1 COMPONENTS LOADED
 
@@ -95,7 +95,7 @@ __PACKAGE__->belongs_to(
   "inherit_from",
   "Catapulse::Schema::Result::Role",
   { id => "inherits_from_id" },
-  { is_deferrable => 0, on_delete => "CASCADE", on_update => "CASCADE" },
+  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 =head2 role
@@ -110,13 +110,19 @@ __PACKAGE__->belongs_to(
   "role",
   "Catapulse::Schema::Result::Role",
   { id => "role_id" },
-  { is_deferrable => 0, on_delete => "CASCADE", on_update => "CASCADE" },
+  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
 # Created by DBIx::Class::Schema::Loader v0.07043 @ 2015-10-19 18:59:01
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BHAOFGRCTGcb34XuEfmVjg
 
+__PACKAGE__->belongs_to('parent' => 'Catapulse::Schema::Result::Role', 'role_id',
+                        { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" });
+
+__PACKAGE__->belongs_to('role' => 'Catapulse::Schema::Result::Role', 'inherits_from_id',
+                        { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" });
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+__PACKAGE__->meta->make_immutable;
 1;
