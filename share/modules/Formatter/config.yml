@@ -1,0 +1,5 @@
+name: Formatter
+version: 1
+
+catalyst_plugins:
+  - FormatterPlugins
