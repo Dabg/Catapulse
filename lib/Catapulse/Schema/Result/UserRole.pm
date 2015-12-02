@@ -10,10 +10,10 @@ Catapulse::Schema::Result::UserRole
 
 =cut
 
-use strict;
-use warnings;
-
-use base 'DBIx::Class::Core';
+use Moose;
+use MooseX::NonMoose;
+use MooseX::MarkAsMethods autoclean => 1;
+extends 'DBIx::Class::Core';
 
 =head1 COMPONENTS LOADED
 
@@ -95,7 +95,7 @@ __PACKAGE__->belongs_to(
   "role",
   "Catapulse::Schema::Result::Role",
   { id => "role_id" },
-  { is_deferrable => 0, on_delete => "CASCADE", on_update => "CASCADE" },
+  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 =head2 user
@@ -110,7 +110,7 @@ __PACKAGE__->belongs_to(
   "user",
   "Catapulse::Schema::Result::User",
   { id => "user_id" },
-  { is_deferrable => 0, on_delete => "CASCADE", on_update => "CASCADE" },
+  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
@@ -119,4 +119,5 @@ __PACKAGE__->belongs_to(
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+__PACKAGE__->meta->make_immutable;
 1;
