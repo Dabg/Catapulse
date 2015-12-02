@@ -1,0 +1,8 @@
+name: CacheFastMmap
+version: 1
+
+
+Plugin::Cache:
+  backend:
+    namespace: 'catapulse'
+    class: 'Cache::FastMmap'
