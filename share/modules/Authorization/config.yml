@@ -1,0 +1,21 @@
+name: Authorization
+version: 1
+deps:
+  - DBIC
+  - TT
+
+catalyst_plugins:
+  - Authorization::Roles
+  - Authorization::RBAC
+
+Authorization::RBAC:
+  debug: 0
+  cache: 0
+  backend:
+    name: DBIx
+  model: Model::DBIC
+  typeobj:
+    Page:
+      parent_field: parent
+    Comment:
+      parent_field: page
