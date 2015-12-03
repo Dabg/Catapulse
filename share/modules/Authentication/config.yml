@@ -1,5 +1,5 @@
-name: Auth
-version: 2
+name: Authentication
+version: 1
 deps:
   - DBIC
   - TT
