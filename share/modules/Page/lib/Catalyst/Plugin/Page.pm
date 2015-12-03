@@ -262,7 +262,7 @@ L<Catalyst>.
 
 =head1 AUTHORS
 
-Daniel Brosseau, 2012, <dab@catapulse.org>
+Daniel Brosseau, 2015, <dab@catapulse.org>
 
 =head1 LICENSE
 

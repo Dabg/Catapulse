@@ -13,7 +13,7 @@
    # define a data structure to hold sitewide data
    site = {
      title     => 'Catapulse',
-     copyright => '2012 Your Name Here',
+     copyright => '2015 Your Name Here',
    };
 
    # load up any other configuration items
