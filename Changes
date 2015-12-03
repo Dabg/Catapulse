@@ -1,5 +1,8 @@
 Revision history for Catapulse
 
+0.03 2015-12-03
+      - add modules to publish Wiki pages ( see share/modules/ )
+
 0.02  2015-09-18
       - add CatalystX::Inject
       - add CMS module ( use CatalystX::SimpleLogin )
