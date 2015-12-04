@@ -2,7 +2,7 @@
 <form action="[% c.uri_for('/comment') %]" method="post" id="commentForm">
     <textarea id="comment" name="body" ></textarea>
     <!-- poster and page must be provide by controller -->
-    <input type="hidden" name="poster" value="[% c.user.id %]" />
+    <input type="hidden" name="poster" value="[% c.user.id || anonymous_user.id %]" />
     <input type="hidden" name="page" value="[% page.id %]" />
     <input type="submit" name="submit" value="[% loc('Post') %]"/> [% loc('as ') _ c.user.username %]
     (<a href="[% c.uri_for('/logout') %]">[% loc('forget me') %]</a>)
