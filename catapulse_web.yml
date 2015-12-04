@@ -2,7 +2,7 @@ name: Catapulse
 
 default_view: TT
 
-CatalystX::Inject:
+CatalystX::InjectModule:
   debug: 0
   path:
     - share/modules/

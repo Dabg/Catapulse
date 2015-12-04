@@ -8,7 +8,7 @@ use Catalyst::Runtime 5.80;
 use Catalyst qw/
     ConfigLoader
     I18N
-    +CatalystX::Inject
+    +CatalystX::InjectModule
     Cache
     Authentication
     Session
