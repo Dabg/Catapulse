@@ -17,5 +17,3 @@ Authorization::RBAC:
   typeobj:
     Page:
       parent_field: parent
-    Comment:
-      parent_field: page

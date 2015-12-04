@@ -1,2 +1,10 @@
 name: Comment
 version: 1
+
+deps:
+  - Authorization
+
+Authorization::RBAC:
+  typeobj:
+    Comment:
+      parent_field: page
