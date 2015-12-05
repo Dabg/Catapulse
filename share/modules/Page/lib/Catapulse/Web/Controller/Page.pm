@@ -174,7 +174,9 @@ sub save : Private {
                                           : $c->loc('saved');
     $c->stash->{template} = 'page/form.tt';
     $c->add_message( success => "Page " . $c->stash->{item}->name . " $up_or_sav" );
-  }
+
+    $c->res->redirect($c->stash->{path} . '/+edit');
+}
 
 
 =head2 del
