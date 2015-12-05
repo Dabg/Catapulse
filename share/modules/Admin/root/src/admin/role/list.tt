@@ -1,0 +1,29 @@
+    <h2>[% loc('Roles') %] <a href="[% c.uri_for( 'add' ) %]" class="create" title="[% loc('Add role') %]">+</a></h2>
+
+    <p class="pull-right">
+        <a href="[% c.uri_for('toggle') %]" class="role_name_action any btn">[% loc('Toggle active') %]</a>
+        <a href="[% c.uri_for('_value_/edit') %]" class="role_name_action single btn">[% loc('Edit') %]</a>
+        <a href="[% c.uri_for('delete') %]" class="role_name_action any btn">[% loc('Delete') %]</a>
+    </p>
+    <table id="roles" class="table table-bordered table-striped table-hover tablesorter">
+      <thead>
+        <tr>
+          <th><input type="checkbox" class="toggle" id="role_name" /></th><th>[% loc('Name') %]</th><th>[% loc('Roles') %]</th><th>[% loc('Active') %]</th>
+        </tr>
+      </thead>
+      <tbody>
+      [%- WHILE (role=roles.next) %]
+        <tr[% IF ! role.active %] class="error"[% END %]>
+          <td><input type="checkbox" name="role_name" value="[% role.id %]" /></td>
+          <td><span class="name"><a href="[% c.uri_for('/admin/role/') %][% role.id %]/edit">[% role.name %]</a></span></td>
+          <td>
+          [%- FOREACH role IN role.roles %]
+            <a href="[% c.uri_for('/admin/role/') %][% role.id %]/edit">[% role.name %]</a>
+          [% END -%]
+          </td>
+          <td><span class="active">[% IF role.active %][% loc('yes') %][% ELSE %][% loc('no') %][% END %]</span></td>
+        </tr>
+      [% END -%]
+      </tbody>
+    </table>
+    [% PROCESS site/pager.tt %]
