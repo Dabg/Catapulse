@@ -13,7 +13,7 @@ use Catalyst qw/
     Authentication
     Session
     Session::State::Cookie
-    Session::Store::Cache
+    Session::Store::File
 /;
 
 extends 'Catalyst';
