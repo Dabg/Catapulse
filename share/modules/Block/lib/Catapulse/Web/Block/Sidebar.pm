@@ -18,26 +18,14 @@ sub process {
                    { href => '/page',
                      label => 'Pages'
                    },
-                   { href => '/admin/plugin',
-                     label => 'Plugins'
-                   },
                    { href => '/admin/template',
                      label => 'Templates'
                    },
                    { href => '/admin/block',
                      label => 'Blocks'
                    },
-                   { href => '/admin/menu',
-                     label => 'Menus'
-                   },
-                   { href => '/admin/link',
-                     label => 'Links'
-                   },
-                   { href => '/admin/system/info',
-                     label => 'System/Infos'
-                   },
-                   { href => '/admin/system/modules',
-                     label => 'System/Modules'
+                   { href => '/debug/config',
+                     label => 'Debug/config'
                    },
                   ];
 
