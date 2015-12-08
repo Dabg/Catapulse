@@ -1,6 +1,8 @@
 name: CacheFastMmap
 version: 1
 
+catalyst_plugins:
+  - Cache
 
 Plugin::Cache:
   backend:

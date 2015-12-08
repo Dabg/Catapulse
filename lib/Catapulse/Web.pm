@@ -9,7 +9,6 @@ use Catalyst qw/
     ConfigLoader
     I18N
     +CatalystX::InjectModule
-    Cache
     Authentication
     Session
     Session::State::Cookie
