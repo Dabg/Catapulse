@@ -87,12 +87,6 @@ Catapulse::Web - Catalyst based CMS
 
 =head1 SYNOPSIS
 
-    # use autocreated database  share/catapulse-schema.db
-    script/catapulse_server.pl
-
-    # or another DBIX dsn in share/etc/catapulse_web.yml
-    # and populate this database
-
     # change Database Model in share/etc/catapulse_web.yml
     # - Database Model -
     Model::DBIC:

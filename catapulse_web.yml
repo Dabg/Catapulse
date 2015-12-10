@@ -10,17 +10,15 @@ CatalystX::InjectModule:
   inject:
     - CMS
     - Debug
-#    - CatapulseModuleTest
-
 
 # - Database Model -
 Model::DBIC:
-  traits:
-    - FromMigration
   schema_class: Catapulse::Schema
   install_if_needed:
     default_fixture_sets:
       - all_tables
+  connect_info:
+    dsn: dbi:SQLite:share/catapulse-schema.db
 
 # Model::DBIC:
 #   schema_class: Catapulse::Schema
