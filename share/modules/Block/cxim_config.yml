@@ -1,2 +1,5 @@
 name: Block
 version: 1
+
+deps:
+  - FormBase
