@@ -5,6 +5,7 @@ deps:
   - Static
   - TT
   - Authentication
+  - Authorization
   - FormBase
   - Page
   - TemplateTT
