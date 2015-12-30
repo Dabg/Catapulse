@@ -4,7 +4,7 @@ use warnings;
 use Test::More;
 
 BEGIN{
-    $ENV{CATALYST_CONFIG} = 't/conf/users.yml';
+    $ENV{CATALYST_CONFIG} = 't/conf/admin.yml';
 }
 
 use Catalyst::Test 'Catapulse::Web';
