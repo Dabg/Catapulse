@@ -1,7 +1,8 @@
 package Admin;
 
 use Moose;
-with 'Catapulse::Module';
+#with 'Catapulse::Module';
+with 'CatalystX::InjectModule::Fixture';
 
 sub install {
     my ($self, $module, $mi) = @_;
