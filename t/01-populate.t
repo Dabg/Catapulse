@@ -11,7 +11,7 @@ plan skip_all => 'not correct schema version'
 
 fixtures_ok ['all_tables', 'all_tests'];
 
-is User->count, 5, 'Correct Number of Users';
-is Role->first->name, 'admin', 'Role name is admin';
+is User->count, 3, 'Correct Number of Users for tests (without admin and anonymous)';
+is Role->first->name, 'user', 'Role name is admin';
 
 done_testing;
