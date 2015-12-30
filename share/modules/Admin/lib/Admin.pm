@@ -3,7 +3,6 @@ package Admin;
 use Moose;
 use Authen::Passphrase::BlowfishCrypt;
 use DateTime;
-with 'CatalystX::InjectModule::Fixture';
 
 my $default_user = $ENV{USER} || 'unknown';
 
