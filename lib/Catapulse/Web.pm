@@ -87,7 +87,10 @@ Catapulse::Web - Catalyst based CMS
 
 =head1 SYNOPSIS
 
-    # change Database Model in share/etc/catapulse_web.yml
+    # use the database self created
+    ./script/catapulse_web.pl
+
+    # OR change Database Model in share/etc/catapulse_web.yml
     # - Database Model -
     Model::DBIC:
      schema_class: Catapulse::Schema
