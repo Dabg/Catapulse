@@ -55,16 +55,6 @@ my $blocks = [
         },
     {
         active => 1,
-        file   => 'blocks/comment.tt',
-        id     => 5,
-        name   => 'comment',
-        parent_id
-            => 0,
-        position
-            => undef
-        },
-    {
-        active => 1,
         file   => 'blocks/sidebar.tt',
         id     => 6,
         name   => 'sidebar',
@@ -93,17 +83,6 @@ my $blocks = [
         position
             => undef
         },
-    {
-        active => 1,
-        file   => 'blocks/last_comments.tt',
-        id     => 9,
-        name   => 'last_comments',
-        parent_id
-            => 0,
-        position
-            => undef
-        },
-
 ];
 
 sub install {
