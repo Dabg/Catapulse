@@ -9,3 +9,13 @@ Plugin::EnableMiddleware:
   - Debug
   - Debug::CatalystLog
   - StackTrace
+
+Model::DBIC:
+  traits:
+    - QueryLog
+    - FromMigration
+  querylog_args:
+    passthrough: 0
+
+debug:
+  querylog: 1
