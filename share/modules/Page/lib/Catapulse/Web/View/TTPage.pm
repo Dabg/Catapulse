@@ -8,8 +8,7 @@ extends 'Catalyst::View::TT';
 
 __PACKAGE__->config({
     INCLUDE_PATH => [
-        Catapulse::Web->path_to( 'root', 'src' ),
-        Catapulse::Web->path_to( 'root', 'lib' ),
+	'root/src', 'root/lib'
     ],
     PRE_PROCESS  => 'config/main',
     WRAPPER      => 'site/wrapper2',

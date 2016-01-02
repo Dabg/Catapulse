@@ -6,7 +6,7 @@ use MooseX::Types::LoadableClass qw/ClassName/;
 
 
 has ctx   =>  (is => 'rw',
-               isa => 'Catapulse::Web',
+#               isa => 'Catapulse::Web',
               );
 
 has class   =>  (is => 'rw',

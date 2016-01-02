@@ -4,9 +4,10 @@ use Moose;
 extends 'Catalyst::Model::DBIC::Schema';
 
 __PACKAGE__->config(
-   ( Catapulse::Web->config->{debug}->{querylog} ) ? ( traits => ['QueryLog'] ) : (),
-    on_connect_do => sub { tie %{shift->_dbh->{CachedKids}}, 'Tie::Cache', 100 },
-);
+#    ( Catapulse::Web->config->{debug}->{querylog} ) ? ( traits => ['QueryLog'] ) : (),
+#     on_connect_do => sub { tie %{shift->_dbh->{CachedKids}}, 'Tie::Cache', 100 },
+ );
+
 
 
 

@@ -5,13 +5,13 @@ use namespace::autoclean;
 use Catapulse::Web::Block;
 
 has template   =>  (is => 'rw',
-                    isa => 'Catapulse::Web::Model::DBIC::Template',
+#                    isa => 'Catapulse::Web::Model::DBIC::Template',
                     lazy_build => 1,
                     required => 1,
                  );
 
 has ctx   =>  (is => 'rw',
-               isa => 'Catapulse::Web',
+#               isa => 'Catapulse::Web',
                required => 1,
               );
 

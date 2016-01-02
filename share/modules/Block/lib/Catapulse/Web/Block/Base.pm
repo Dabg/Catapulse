@@ -5,11 +5,11 @@ use namespace::autoclean;
 
 
 has ctx   =>  (is => 'rw',
-               isa => 'Catapulse::Web',
+#               isa => 'Catapulse::Web',
               );
 
 has block   =>  (is => 'rw',
-                 isa => 'Catapulse::Web::Model::DBIC::Block',
+#                 isa => 'Catapulse::Web::Model::DBIC::Block',
               );
 
 
