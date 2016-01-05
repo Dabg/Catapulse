@@ -111,16 +111,16 @@ around 'dispatch' => sub {
   my $additional_operations =[];
 
   # Test if redirection exist in config file
-  if ( $c->stash->{action} ){
-    # Get the 'redirection' on the config file.
+  if ( $c->stash->{action} && ref($page) ){
+      # Get the 'redirection' on the config file.
       $internalpath = $c->config->{'Plugin::Page'}->{typepage}->{$page->type->name}->{$c->stash->{action}};
 
-    if ( ! $internalpath ) {
-      $c->stash->{page} = $page;
-      $c->redispatch('/access_denied', $ctp_path);
-      return $c->$orig(@_);
-    }
-    push(@$additional_operations, $c->stash->{action} . '_Page');
+      if ( ! $internalpath ) {
+          $c->stash->{page} = $page;
+          $c->redispatch('/access_denied', $ctp_path);
+          return $c->$orig(@_);
+      }
+      push(@$additional_operations, $c->stash->{action} . '_Page');
   }
 
   # Can not access to page
