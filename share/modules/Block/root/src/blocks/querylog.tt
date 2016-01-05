@@ -1,4 +1,4 @@
-[% IF c.config.debug.querylog %]
+[% IF c.config.Debug.querylog %]
 <div class="row-fluid">
   <div class="span9 hero-unit">
     <h3>Query Log Report</h3>

@@ -17,5 +17,5 @@ Model::DBIC:
   querylog_args:
     passthrough: 0
 
-debug:
+Debug:
   querylog: 1
