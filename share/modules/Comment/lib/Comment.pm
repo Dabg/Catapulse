@@ -2,52 +2,35 @@ package Comment;
 
 use Moose;
 
-my $blocks = [
-    {
+my $block = {
         active => 1,
         file   => 'blocks/comment.tt',
-        id     => 5,
         name   => 'comment',
         parent_id
             => 0,
         position
             => undef
-        },
-    {
-        active => 1,
-        file   => 'blocks/last_comments.tt',
-        id     => 9,
-        name   => 'last_comments',
-        parent_id
-            => 0,
-        position
-            => undef
-        },
-
-];
+        };
 
 sub install {
     my ($self, $module, $mi) = @_;
 
     my $schema = $mi->ctx->model->schema;
 
-    $mi->log("  - populate comment blocks");
-    # Add Blocks
-    foreach my $block ( @$blocks ) {
-        my $b = $schema->resultset('Block')->find_or_create($block);
-    }
+    # Add Comment block to template Main
+    $mi->log("  - add Comment block to Main template");
+    my $main_template = $schema->resultset('Template')->search( { name => 'Main' } )->first;
+    $main_template->add_to_blocks( $block )
+        or die "Cannot add Comment block to Main Template";
 }
 
 sub uninstall {
     my ($self, $module, $mi) = @_;
 
     my $schema = $mi->ctx->model->schema;
-    $mi->log("  - delete comment blocks");
-
-    # Delete blocks
-    foreach my $block ( @$blocks ) {
-        my $b = $schema->resultset('Block')->search({ name => $block->{name} })->delete_all;
-    }
+    $mi->log("  - delete Comment block");
+    $schema->resultset('Block')->search({ name => $block->{name} })->delete_all
+        or die "Cannot delete Comment block";
 }
 
 1;
