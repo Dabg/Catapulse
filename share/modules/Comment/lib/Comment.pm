@@ -2,6 +2,11 @@ package Comment;
 
 use Moose;
 
+my $typeobj = {
+           active => 1,
+           name   => 'Comment'
+         };
+
 my $block = {
         active => 1,
         file   => 'blocks/comment.tt',
@@ -32,13 +37,17 @@ sub install {
 
     my $schema = $mi->ctx->model->schema;
 
+
+    $schema->resultset('Typeobj')->find_or_create($typeobj)
+        or die "Cannot create Comment tyeobj";
+
     # Add Comment block to template Main
     $mi->log("  - add Comment block to Main template");
     my $main_template = $schema->resultset('Template')->search( { name => 'Main' } )->first;
     $main_template->add_to_blocks( $block )
         or die "Cannot add Comment block to Main Template";
 
-
+    # Add Operation ( add_Comment, view_Comment, delete_Comment)
     foreach my $op ( @$operations ) {
         $schema->resultset('Operation')->find_or_create($op);
     }
@@ -50,6 +59,9 @@ sub uninstall {
 
     my $schema = $mi->ctx->model->schema;
     $mi->log("  - delete Comment block");
+    $schema->resultset('Typeobj')->search({ name => $typeobj->{name} })->delete_all
+        or die "Cannot delete Comment Typeobj";
+
     $schema->resultset('Block')->search({ name => $block->{name} })->delete_all
         or die "Cannot delete Comment block";
 }
