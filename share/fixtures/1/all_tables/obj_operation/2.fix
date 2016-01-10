@@ -1,0 +1,5 @@
+$HASH1 = {
+           obj_id       => 3,
+           operation_id => 2,
+           typeobj_id   => 1
+         };
