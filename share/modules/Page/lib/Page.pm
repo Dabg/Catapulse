@@ -47,15 +47,17 @@ sub install {
 
     $schema->resultset('Typeobj')->find_or_create($typeobj);
 
+    $mi->log("    - add $pagetype->{name} Pagetype");
     $schema->resultset('Pagetype')->find_or_create($pagetype);
 
     # Add Comment block to template Main
-    $mi->log("  - add Content block to Main template");
+    $mi->log("    - add Content block to Main template");
     my $main_template = $schema->resultset('Template')->search( { name => 'Main' } )->first;
     $main_template->add_to_blocks( $block );
 
     # Add Operation ( add_Comment, view_Comment, delete_Comment)
     foreach my $op ( @$new_operations ) {
+        $mi->log("    - add $op->{name} Operation");
         $schema->resultset('Operation')->find_or_create($op);
     }
 
