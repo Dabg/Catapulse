@@ -45,16 +45,6 @@ my $blocks = [
         },
     {
         active => 1,
-        file   => 'blocks/content.tt',
-        id     => 4,
-        name   => 'content',
-        parent_id
-            => 0,
-        position
-            => undef
-        },
-    {
-        active => 1,
         file   => 'blocks/sidebar.tt',
         id     => 6,
         name   => 'sidebar',
