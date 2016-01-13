@@ -1,3 +1,4 @@
+[% IF c.can_access( [page],['view_Comment'] ) %]
 <div id="comments">
 [% IF comments.count %]
 <h4>[%comments.count%] [% IF comments.count == 1; loc('Comment'); ELSE; loc('Comments'); END %]</h4>
@@ -30,3 +31,4 @@
             [% PROCESS blocks/comment/post.tt %]
 </div>
 </div>
+[% END %]
