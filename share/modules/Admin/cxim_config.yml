@@ -1,4 +1,4 @@
 name: Admin
 version: 1
 deps:
-  - TemplateTT
+  - Page
