@@ -3,6 +3,7 @@ version: 1
 
 deps:
   - Formatter
+  - Authorization
 
 Formatter::Dir:
   prefix_url: /myfiles
