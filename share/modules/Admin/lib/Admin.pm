@@ -32,10 +32,12 @@ sub install {
     my ($self, $module, $mi) = @_;
 
     my $schema = $mi->ctx->model->schema;
+
     # Add admin and anonymous users
     my $u1 = $schema->resultset('User')->find_or_create($admin);
     my $u2 = $schema->resultset('User')->find_or_create($anonymous);
 
+    # Add role admin to Admin and role anonymous to Anonymous
     $u1->add_to_roles( { name => 'admin'     } );
     $u2->add_to_roles( { name => 'anonymous' } );
 }
