@@ -2019,7 +2019,6 @@ translator:
       - ObjOperation
       - Operation
       - Page
-      - PageRole
       - Pagetype
       - Permission
       - Photo

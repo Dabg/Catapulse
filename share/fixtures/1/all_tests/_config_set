@@ -95,10 +95,6 @@ $VAR1 = {
                         'class' => 'Pagetype'
                       },
                       {
-                        'quantity' => 'all',
-                        'class' => 'PageRole'
-                      },
-                      {
                         'class' => 'Comment',
                         'quantity' => 'all'
                       },

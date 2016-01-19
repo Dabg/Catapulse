@@ -50,10 +50,6 @@
          "class" : "TemplateBlock"
       },
       {
-         "class" : "PageRole",
-         "quantity" : "all"
-      },
-      {
          "class" : "Comment",
          "quantity" : "all"
       },
