@@ -2,5 +2,6 @@ name: TemplateTT
 version: 1
 
 deps:
+  - TT
   - Block
   - DBIC

@@ -4,8 +4,6 @@ deps:
   - Plack
   - Static
   - TT
-  - Authentication
-  - Authorization
   - FormBase
   - Page
   - TemplateTT
