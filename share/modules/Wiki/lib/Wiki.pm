@@ -85,6 +85,7 @@ my $ops_to_access_pages = [
         typeobj_id   => 1
     },
 ];
+
 sub install {
     my ($self, $module, $mi) = @_;
 
@@ -149,6 +150,14 @@ sub install {
           obj_id => $pages->{index}->id,
           operation_id => $op_view_page->id,
           value => 1,
+          inheritable => 1
+      },
+        # Anonymous can not 'view' on page /admin (recursively)
+        { role_id => $role_anonymous->id,
+          typeobj_id => $typepage->id,
+          obj_id => $pages->{Administration}->id,
+          operation_id => $op_view_page->id,
+          value => 0,
           inheritable => 1
       },
     ];
