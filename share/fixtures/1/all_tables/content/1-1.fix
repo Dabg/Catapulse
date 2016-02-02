@@ -13,12 +13,19 @@ $HASH1 = {
            creator => 2,
            page    => 1,
            precompiled
-                   => "# Bienvenue sur Catapulse!\n\nThis is your front page. To start administer".
-	"ing your wiki, please log in with\nusername admin/password admin. Once yo".
-	"u login you will be able to configure your\nnew wiki. If you want to play".
-	" around a little, just create\na [[New Page]] or edit this one through th".
-	"e edit link at the top of the page.\n\n## Need some assistance?\n\nCheck out".
-	" our [[/Help]] section.",
+                   => '<div>
+   <h1>Welcome to Catapulse!</h1>
+
+<p>This is your front page. To start administering your wiki, please log in with
+username admin/password admin. Once you login you will be able to configure your
+new wiki. If you want to play around a little, just create
+a <span class="newWikiWord"><a href="/New_Page">New Page?</a></span> or edit this one through the edit link at the top of the page.</p>
+
+<h2>Need some assistance?</h2>
+
+<p>Check out our <a class="existingWikiWord" href="/Help">Help</a> section.</p>
+
+</div>',
            release_date
                    => 1,
            remove_date
