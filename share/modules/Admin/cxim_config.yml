@@ -2,3 +2,4 @@ name: Admin
 version: 1
 deps:
   - Page
+  - Authentication
