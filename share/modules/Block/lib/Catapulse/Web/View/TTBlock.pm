@@ -2,7 +2,7 @@ package Catapulse::Web::View::TTBlock;
 
 use Moose;
 use namespace::autoclean;
-use Template::Stash::ForceUTF8;
+#use Template::Stash::ForceUTF8;
 
 extends 'Catalyst::View::TT';
 
@@ -15,7 +15,7 @@ __PACKAGE__->config({
     TEMPLATE_EXTENSION => '.tt',
 #    COMPILE_DIR => '/tmp/catapulse_ttc',
     render_die   => 1,
-    STASH => Template::Stash::ForceUTF8->new,
+#    STASH => Template::Stash::ForceUTF8->new,
     ENCODING => 'utf-8',
     DEFAULT_ENCODING    => 'utf-8',
     PROVIDERS => [
