@@ -40,11 +40,11 @@ sub _build_blocks {
 sub process {
   my $self = shift;
 
-
    my $blocks = $self->blocks;
    foreach my $k (keys %$blocks) {
      $blocks->{$k}->_process;
-   }
+ }
 }
+
 
 1;
