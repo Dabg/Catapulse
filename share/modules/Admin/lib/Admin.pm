@@ -1,8 +1,8 @@
 package Admin;
 
 use Moose;
-use Authen::Passphrase::BlowfishCrypt;
 use DateTime;
+use Catapulse::Schema::Utils qw(add_user);
 
 my $default_user = $ENV{USER} || 'unknown';
 
@@ -33,27 +33,19 @@ sub install {
 
     my $schema = $mi->ctx->model->schema;
 
-    # Add admin and anonymous users
-    my $u1 = $schema->resultset('User')->find_or_create($admin);
-    my $u2 = $schema->resultset('User')->find_or_create($anonymous);
-
-    # Add role admin to Admin and role anonymous to Anonymous
-    $u1->add_to_roles( { name => 'admin'     } );
-    $u2->add_to_roles( { name => 'anonymous' } );
+    # Add admin and anonymous users (and roles)
+    add_user( $schema, $admin,     [ 'admin'    ] );
+    add_user( $schema, $anonymous, [ 'anonymous'] );
 }
 
 sub uninstall {
     my ($self, $module, $mi) = @_;
 
-     my $schema = $mi->ctx->model->schema;
+    my $schema = $mi->ctx->model->schema;
 
-    # Delete admin and anonymous users
-    $schema->resultset('User')->search( { username => 'admin'     })->delete_all;
-    $schema->resultset('User')->search( { username => 'anonymous' })->delete_all;
-
-    # Delete admin and anonymous roles
-    $schema->resultset('Role')->search( { name => 'admin'     })->delete_all;
-    $schema->resultset('Role')->search( { name => 'anonymous' })->delete_all;
+    # delete admin and anonymous users (and roles)
+    del_user( $schema, $admin,     [ 'admin'    ] );
+    del_user( $schema, $anonymous, [ 'anonymous'] );
 }
 
 1;
