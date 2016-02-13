@@ -1,6 +1,7 @@
 package TemplateTT;
 
 use Moose;
+with 'Catapulse::Schema::Utils';
 
 my $templates = [
     {
@@ -27,8 +28,7 @@ sub install {
 
     # Add Templates
     foreach my $template ( @$templates ) {
-        $mi->log("    - add $template Template");
-        my $b = $schema->resultset('Template')->find_or_create($template);
+        $self->foc_template($template);
     }
 
     # Add blocks to template Main
