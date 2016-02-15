@@ -11,6 +11,8 @@ use Params::Validate qw(:all);
 use vars qw($VERSION);
 $VERSION = '0.01';
 
+my $populated_path = '/page/.populated';
+
 =head2 cache_ie_list
 
 include/exclude list accessor
@@ -30,7 +32,11 @@ after 'setup_finalize' => sub {
     $ie = Algorithm::IncludeExclude->new;
     $ie->include();
     $ie->exclude('static');
-  };
+
+    $c->_populate_controllers_pages
+    #if ! $c->model('DBIC::Page')->search( { name => });
+
+};
 
 
 around 'dispatch' => sub {
@@ -173,11 +179,12 @@ sub redispatch{
 # path = c.action or c.req.args if default
 # replace 'index' by '/'
 sub ctp_path{
-  my ( $c ) = @_;
+  my ( $c, $action ) = @_;
 
-  my $path = $c->action;
+  $action ||= $c->action;
+  my $path = $action;
   $path    = uri_unescape( join '/', @{$c->req->args} )
-    if ( $c->action eq 'default');
+    if ( $action eq 'default');
   $path = "/$path";
   $path =~ s|//|/|g;
   $path =~ s/\?.*$//;
@@ -229,6 +236,41 @@ sub redirect_to_action {
     $c->detach;
 }
 
+sub _populate_controllers_pages {
+    my ($c, $force ) = @_;
+
+    my $nodes = $c->model('DBIC::Page')->retrieve_pages_from_path($populated_path);
+    if ( ! $force && ref ($$nodes[-1]) ) {
+        $c->mi->log("Page already populated");
+        return;
+    }
+    # Save info about dispatch_types
+    my $dispatcher = $c->dispatcher;
+    foreach my $c_name ($c->controllers(qr//)) {
+        my $controller = $c->controller($c_name);
+        my @actions = $dispatcher->get_containers($controller->action_namespace($c));
+        $c->mi->log("Looking at Controller $c_name for actions entries:");
+
+        foreach my $ac ($actions[-1]) {
+            my $acts = $ac->actions;
+            foreach my $key (keys(%$acts)) {
+                my $action = $acts->{$key};
+
+                next if ( $action->name =~/_BEGIN|_AUTO|_ACTION|_DISPATCH|_END|auto|begin|end$/ );
+
+                # find or create page row if doesnot exist
+                my $path = "/$action";
+                $path =~ s|^/index$|/|;
+                $path =~ s|/index$||;
+
+                $c->mi->log(" find or create page $path");
+                # build_pages_from_path($path, type_of_page) 1: from_controller, 2: wiki
+                $c->model('DBIC::Page')->build_pages_from_path($path, 1);
+            }
+        }
+    }
+    $c->model('DBIC::Page')->build_pages_from_path( $populated_path, 1);
+}
 
 
 1;
@@ -257,7 +299,7 @@ Catapulse::Schema::Result::Page
 =back
 
 =head1 SEE ALSO
-q
+
 L<Catalyst>.
 
 =head1 AUTHORS
