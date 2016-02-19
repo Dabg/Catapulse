@@ -17,46 +17,40 @@ Catapulse::Schema::ResultSet::Page - resultset methods on pages
 =cut
 
 sub build_pages_from_path {
-#  my ( $self, $path, $type ) = @_;
   my ( $self, $page ) = @_;
 
   my $path = $page->{path};
   my $type = $page->{type};
   my $nodes = $self->retrieve_pages_from_path($path);
 
-  my $pages = [];
+  my $pages   = [];
   my $page_id = 0; # page /
-  my ( $name, $title, $template, $version, $created, $active );
-  #  foreach my $node ( @$nodes ) {
   my $nbnodes = scalar @$nodes -1;
 
   for ( my $n = 0; $n <= $nbnodes; $n++) {
       my $node = $nodes->[$n];
-    # Build page
-    if ( ! ref($node) ){
-        $name     = $node;
-        $title    = $node;
-        $template = 1;
-        $active   = 1;
-        $version  = 1;
-        $created  = DateTime->now;
+      # Build page
+      my $P = {};
+      if ( ! ref($node) ){
 
+        $P->{type}      = $type;
+        $P->{name}      = $node;
+        $P->{title}     = $node;
+        $P->{template}  = 1;
+        $P->{active}    = 1;
+        $P->{parent_id} = $page_id;
+        $P->{created}   = DateTime->now;
+        $P->{version}   = 1;
+
+        # last node
         if ( $n == $nbnodes  ) {
-            $title    = $page->{title} if defined $page->{title};
-            $template = $page->{template} if defined $page->{template};
+            foreach my $k (keys %$P) {
+                $P->{$k} = $page->{$k}
+                if ( defined $page->{$k});
+            }
         }
 
-        my $page = $self->find_or_create({
-                                type      => $type, # 1 => from_controller, 2: wiki
-                                name      => $name,
-                                title     => $title,
-                                template  => $template,
-                                active    => $active,
-                                parent_id => $page_id,
-                                created   => $created,
-                                version   => $version,
-                            },
-                           );
+        my $page = $self->find_or_create( $P );
         $page_id = $page->id;
         push(@$pages, $page);
     }
