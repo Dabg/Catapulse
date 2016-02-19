@@ -110,7 +110,7 @@ sub add : Chained('pages') Args(0) {
 
     $c->stash->{path} = $path;
 
-    my $pages = $c->model('DBIC::Page')->build_pages_from_path($path, 2);
+    my $pages = $c->model('DBIC::Page')->build_pages_from_path({ path => $path, type => 2 });
     $c->stash->{item} = $$pages[-1];
 
     $c->forward('save');

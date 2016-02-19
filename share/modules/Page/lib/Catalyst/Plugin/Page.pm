@@ -263,13 +263,15 @@ sub _populate_controllers_pages {
                 $path =~ s|^/index$|/|;
                 $path =~ s|/index$||;
 
+                my $page = { path => $path,
+                             type => 1,
+                         };
                 $c->mi->log(" find or create page $path");
-                # build_pages_from_path($path, type_of_page) 1: from_controller, 2: wiki
-                $c->model('DBIC::Page')->build_pages_from_path($path, 1);
+                $c->model('DBIC::Page')->build_pages_from_path($page);
             }
         }
     }
-    $c->model('DBIC::Page')->build_pages_from_path( $populated_path, 1);
+    $c->model('DBIC::Page')->build_pages_from_path( { path => $populated_path, type => 1 });
 }
 
 
