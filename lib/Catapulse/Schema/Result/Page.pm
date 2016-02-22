@@ -201,7 +201,7 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 ops_to_accesss
+=head2 obj_operations
 
 Type: has_many
 
