@@ -318,8 +318,7 @@ sub format_link {
     # use the normalized path string returned by path_pages:
     #my $page = $c->model('DBIC::Page')->search({ path => $wikilink})->single;
 
-    my $pages = $c->model('DBIC::Page')->retrieve_pages_from_path( $wikilink );
-    my $page = $$pages[-1];
+    my $page = $c->model('DBIC::Page')->retrieve_pages_from_path( $wikilink );
 
     if ( defined $page and ref($page) ) {
       if ( $action) {
