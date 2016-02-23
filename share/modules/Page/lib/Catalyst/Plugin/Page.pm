@@ -108,7 +108,7 @@ around 'dispatch' => sub {
 
 
   # Returns all objects representing the path
-  my $pages = $c->model('DBIC::Page')->retrieve_pages_from_path( $ctp_path );
+  my $pages = $c->model('DBIC::Page')->retrieve_pages_from_path( $ctp_path, 1 );
 
 
   # the last node of page
@@ -239,8 +239,8 @@ sub redirect_to_action {
 sub _populate_controllers_pages {
     my ($c, $force ) = @_;
 
-    my $nodes = $c->model('DBIC::Page')->retrieve_pages_from_path($populated_path);
-    if ( ! $force && ref ($$nodes[-1]) ) {
+    my $node = $c->model('DBIC::Page')->retrieve_pages_from_path($populated_path);
+    if ( ! $force && ref ($node) ) {
         $c->mi->log("Page already populated");
         return;
     }
