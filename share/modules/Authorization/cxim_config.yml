@@ -2,6 +2,7 @@ name: Authorization
 version: 1
 deps:
   - DBIC
+  - UserRole
   - TT
 
 catalyst_plugins:

@@ -1,6 +1,7 @@
 package Comment;
 
 use Moose;
+with 'Catapulse::Schema::Utils';
 
 my $typeobj = {
            active => 1,
@@ -32,6 +33,22 @@ my $operations = [
     },
 ];
 
+my $permissions = [
+    # role, op, Page, path/*
+    { role    => 'admin',
+      op      => [ 'view_Comment', 'add_Comment', 'delete_Comment' ],
+      typeobj => 'Page',
+      obj     => '/*',
+      value   => 1,
+    },
+    { role    => 'anonymous',
+      op      => [ 'view_Comment' ],
+      typeobj => 'Page',
+      obj     => '/*',
+      value   => 1,
+    },
+];
+
 sub install {
     my ($self, $module, $mi) = @_;
 
@@ -52,6 +69,10 @@ sub install {
         $schema->resultset('Operation')->find_or_create($op);
     }
 
+    # Add some Permissions
+    foreach my $p ( @$permissions ) {
+        my $rs = $self->foc_permission($p);
+    }
 }
 
 sub uninstall {

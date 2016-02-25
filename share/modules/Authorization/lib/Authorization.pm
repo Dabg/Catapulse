@@ -1,36 +1,40 @@
 package Authorization;
 
 use Moose;
+with 'Catapulse::Schema::Utils';
 
 
 my $new_operations = [
     {
         active => 1,
         name   => 'permission_Page',
-        id => 5, # XXX : Change this !!!
     },
 ];
 
+my $new_typeobj =
+    {
+        active => 1,
+        name   => 'Page',
+    };
+
+
 sub install {
-    my ($self, $module, $mi) = @_;
+    my ($self, $module) = @_;
 
-    my $schema = $mi->ctx->model->schema;
-
-    # Add Operation ( add_Comment, view_Comment, delete_Comment)
+    # Add Operations (  edit_Page )
     foreach my $op ( @$new_operations ) {
-        $mi->log("    - add $op->{name} Operation");
-        $schema->resultset('Operation')->find_or_create($op);
+        $self->foc_operation($op);
     }
+
+    my $typeobj = $self->foc_typeobj( $new_typeobj );
 
 }
 
 sub uninstall {
     my ($self, $module, $mi) = @_;
 
-    my $schema = $mi->ctx->model->schema;
-
     foreach my $op ( @$new_operations ) {
-        $schema->resultset('Operation')->search({ name => $op->{name}})->delete_all;
+        $self->foc_typeobj( $op );
     }
 }
 

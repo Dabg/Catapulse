@@ -17,49 +17,47 @@ Catapulse::Schema::ResultSet::Page - resultset methods on pages
 =cut
 
 sub build_pages_from_path {
-  my ( $self, $page ) = @_;
+    my ( $self, $page ) = @_;
+    my $path = $page->{path};
+    my $type = $page->{type};
+    my $nodes = $self->retrieve_pages_from_path($path, 1);
 
-  my $path = $page->{path};
-  my $type = $page->{type};
-  my $nodes = $self->retrieve_pages_from_path($path);
+    my $pages   = [];
+    my $page_id = 0; # page /
+    my $nbnodes = scalar @$nodes -1;
 
-  my $pages   = [];
-  my $page_id = 0; # page /
-  my $nbnodes = scalar @$nodes -1;
+    for ( my $n = 0; $n <= $nbnodes; $n++) {
+        my $node = $nodes->[$n];
+        # Build page
+        if ( ! ref($node) ){
+            my $P = {
+                type      => $type,
+                name      => $node,
+                title     => $node,
+                template  => 1,
+                active    => 1,
+                parent_id => $page_id,
+                version   =>1,
+            };
 
-  for ( my $n = 0; $n <= $nbnodes; $n++) {
-      my $node = $nodes->[$n];
-      # Build page
-      my $P = {};
-      if ( ! ref($node) ){
-
-        $P->{type}      = $type;
-        $P->{name}      = $node;
-        $P->{title}     = $node;
-        $P->{template}  = 1;
-        $P->{active}    = 1;
-        $P->{parent_id} = $page_id;
-        $P->{created}   = DateTime->now;
-        $P->{version}   = 1;
-
-        # last node
-        if ( $n == $nbnodes  ) {
-            foreach my $k (keys %$P) {
-                $P->{$k} = $page->{$k}
-                if ( defined $page->{$k});
+            # last node
+            if ( $n == $nbnodes  ) {
+                foreach my $k (keys %$P) {
+                    $P->{$k} = $page->{$k}
+                        if ( defined $page->{$k});
+                }
             }
-        }
 
-        my $page = $self->find_or_create( $P );
-        $page_id = $page->id;
-        push(@$pages, $page);
+            my $page = $self->find_or_create( $P );
+            $page_id = $page->id;
+            push(@$pages, $page);
+        }
+        else {
+            $page_id = $node->id;
+            push(@$pages, $node);
+        }
     }
-    else {
-      $page_id = $node->id;
-      push(@$pages, $node);
-    }
-  }
-  return $pages;
+    return $pages;
 }
 
 
@@ -77,7 +75,7 @@ sub retrieve_pages_from_path {
   my (@not_found, @all_pages);
   my $parent_id = 0; # page /
   foreach my $node ( @$nodes ) {
-    my $page = $self->find({
+      my $page = $self->find({
                             name      => $node,
                             parent_id => $parent_id,
                            },
@@ -89,7 +87,7 @@ sub retrieve_pages_from_path {
       $lasted_obj=$page;
     }
     else {
-      push(@not_found, $node);
+        push(@not_found, $node);
     }
   }
 
@@ -98,8 +96,9 @@ sub retrieve_pages_from_path {
     $pages = [ @all_pages, @not_found ];
   }
   else {
-    $pages = [ $lasted_obj, @not_found ];
+      $pages = $not_found[-1] || $lasted_obj;
   }
+
   return $pages;
 }
 
