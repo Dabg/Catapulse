@@ -54,6 +54,24 @@ sub del_pagetype {
     $schema->resultset('Pagetype')->search( { name => $pagetype->{name} } )->delete_all;
 }
 
+sub foc_typeobj {
+    my $self      = shift;
+    my $typeobj  = shift;
+
+    $self->mi->log("find or create typeobj " . $typeobj->{name});
+    my $schema = $self->mi->ctx->model->schema;
+    $schema->resultset('Typeobj')->find_or_create($typeobj);
+}
+
+sub del_typeobj {
+    my $self      = shift;
+    my $typeobj  = shift;
+
+    $self->mi->log("del typeobj " . $typeobj->{name});
+    my $schema = $self->mi->ctx->model->schema;
+    $schema->resultset('Typeobj')->search( { name => $typeobj->{name} } )->delete_all;
+}
+
 sub foc_operation {
     my $self      = shift;
     my $operation  = shift;
@@ -78,11 +96,27 @@ sub foc_page {
     my $page  = shift;
 
     $self->mi->log("find or create page " . $page->{title});
-    $page->{created} = DateTime->now;
     my $schema = $self->mi->ctx->model->schema;
 
-    my $p = $schema->resultset('Page')->find_or_create($page);
-    return $p
+    my $template = $schema->resultset('Template')->search( { name => $page->{template} } )->first;
+    $page->{template}  = $template->id or die "Can not find template " . $page->{template};
+
+    my $pagetype = $schema->resultset('Pagetype')->search( { name => $page->{type} } )->first;
+    $page->{type}  = $pagetype->id or die "Can not find type " . $page->{type};
+
+    my $ops_to_access = delete $page->{ops_to_access};
+
+    my $pages = $schema->resultset('Page')->build_pages_from_path($page);
+    my $p = $$pages[-1];
+    my $typeobj = $schema->resultset('Typeobj')->search( { name => 'Page' } )->first;
+
+    foreach my $operation ( @$ops_to_access) {
+        my $op = $schema->resultset('Operation')->search( { name => $operation } )->first;
+        $p->add_to_ops_to_access( { name => $operation
+                                });
+    }
+
+    return $p;
 }
 
 sub del_page {
@@ -115,7 +149,63 @@ sub del_template {
     $schema->resultset('Template')->find( $template->id )->delete;
 }
 
+# find_or_create permission
+sub foc_permission {
+    my $self = shift;
+    my $perm = shift;
 
+    #$self->mi->log("find or create page " . $page->{title});
+    my $schema = $self->mi->ctx->model->schema;
+
+    my $typeobj = $schema->resultset('Typeobj')->search({ name => $perm->{typeobj}})->first
+        or die "can not find " .$perm->{typeobj} . " typeobj !";
+
+    my @roles;
+    ref($perm->{role}) eq 'ARRAY' ?
+        push( @roles, @{ $perm->{role} } ) :
+        push( @roles, $perm->{role} );
+
+    my @operations;
+    ref($perm->{op}) eq 'ARRAY' ?
+        push( @operations, @{ $perm->{op} } ) :
+        push( @operations, $perm->{op} );
+
+    foreach my $role ( @roles ) {
+        my $r = $schema->resultset('Role')->search({ name => $role})->first
+            or die "can not find $role role !";
+
+        foreach my $operation ( @operations ) {
+            my $op = $schema->resultset('Operation')->search({ name => $operation})->first
+                or die "can not find $operation operation !";
+
+            # search obj
+            if ( $typeobj->name eq 'Page' ) {
+                my $path = $perm->{obj};
+                my $inheritable = 0;
+                $inheritable = 1 if ( $path =~ s/\*$// );
+                $self->mi->log("find or create permission : $role -> $operation -> $path -> " . $perm->{value});
+
+                my $obj = $schema->resultset('Page')->retrieve_pages_from_path($path)
+                    or die "can not find $path Page !";
+
+                $schema->resultset('Permission')->find_or_create( { role_id      => $r->id,
+                                                                    typeobj_id   => $typeobj->id,
+                                                                    obj_id       => $obj->id,
+                                                                    operation_id => $op->id,
+                                                                    value        => $perm->{value},
+                                                                    inheritable  => $inheritable,
+                                                                })
+                    or die "Can not build permission !";
+
+            }
+            else {
+                die "typeobj " . $perm->{typeobj} . ' is unknown ... for moment'
+            }
+
+        }
+    }
+
+}
 
 no Moose::Role;
 
