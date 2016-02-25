@@ -1,4 +1,4 @@
-package Admin;
+package UserRole;
 
 use Moose;
 
@@ -33,11 +33,11 @@ sub install {
 }
 
 sub uninstall {
-    my ($self, $module, $mi) = @_;
+    my ($self, $module) = @_;
 
     # delete admin and anonymous users (and roles)
-    $self->del_user( $mi, $admin,     [ 'admin'    ] );
-    $self->del_user( $mi, $anonymous, [ 'anonymous'] );
+    $self->del_user( $admin,     [ 'admin'    ] );
+    $self->del_user( $anonymous, [ 'anonymous'] );
 }
 
 1;
