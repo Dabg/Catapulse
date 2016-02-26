@@ -3,19 +3,27 @@ package Comment;
 use Moose;
 with 'Catapulse::Schema::Utils';
 
+my $pages = [
+    {
+        path       => '/comment/del',
+        template   => 'Main',
+        title      => 'delete comment',
+        type       => 'from_controller',
+        ops_to_access => [ 'delete_Comment'],
+    },
+];
+
+
 my $typeobj = {
            active => 1,
            name   => 'Comment'
          };
 
 my $block = {
-        active => 1,
-        file   => 'blocks/comment.tt',
-        name   => 'comment',
-        parent_id
-            => 0,
-        position
-            => undef
+        active    => 1,
+        file      => 'blocks/comment.tt',
+        name      => 'comment',
+        parent_id => 0,
         };
 
 my $operations = [
@@ -47,6 +55,12 @@ my $permissions = [
       obj     => '/*',
       value   => 1,
     },
+    { role    => 'anonymous',
+      op      => [ 'delete_Comment' ],
+      typeobj => 'Page',
+      obj     => '/comment/del',
+      value   => 0,
+    },
 ];
 
 sub install {
@@ -54,6 +68,10 @@ sub install {
 
     my $schema = $mi->ctx->model->schema;
 
+    # Add page comment
+    foreach my $p ( @$pages ) {
+        my $rs = $self->foc_page($p);
+    }
 
     $schema->resultset('Typeobj')->find_or_create($typeobj)
         or die "Cannot create Comment tyeobj";
