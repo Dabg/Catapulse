@@ -1,10 +1,13 @@
 Revision history for Catapulse
 
-0.03 2015-12-03
+0.03 2016-02-15
       - add modules to publish Wiki pages ( see share/modules/ )
+      - update dependencies
+      - _populate_controllers_pages to populate all unsaved pages
+      - add helpers to populate db
 
 0.02  2015-09-18
-      - add CatalystX::Inject
+      - add CatalystX::InjectModule
       - add CMS module ( use CatalystX::SimpleLogin )
       - add TT view
       - update dependencies
