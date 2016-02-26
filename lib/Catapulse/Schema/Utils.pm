@@ -40,6 +40,7 @@ sub foc_pagetype {
     my $self      = shift;
     my $pagetype  = shift;
 
+    $self->is_exist('pagetype', $pagetype);
     $self->mi->log("find or create pagetype " . $pagetype->{name});
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('Pagetype')->find_or_create($pagetype);
@@ -58,6 +59,7 @@ sub foc_typeobj {
     my $self      = shift;
     my $typeobj  = shift;
 
+    $self->is_exist('typeobj', $typeobj);
     $self->mi->log("find or create typeobj " . $typeobj->{name});
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('Typeobj')->find_or_create($typeobj);
@@ -76,6 +78,7 @@ sub foc_operation {
     my $self      = shift;
     my $operation  = shift;
 
+    $self->is_exist('operation', $operation);
     $self->mi->log("find or create operation " . $operation->{name});
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('Operation')->find_or_create($operation);
@@ -98,7 +101,8 @@ sub foc_page {
     $self->mi->log("find or create page " . $page->{title});
     my $schema = $self->mi->ctx->model->schema;
 
-    my $template = $schema->resultset('Template')->search( { name => $page->{template} } )->first;
+    my $template = $self->foc_template( { name => $page->{template} } );
+
     $page->{template}  = $template->id or die "Can not find template " . $page->{template};
 
     my $pagetype = $schema->resultset('Pagetype')->search( { name => $page->{type} } )->first;
@@ -133,6 +137,7 @@ sub foc_template {
     my $self  = shift;
     my $template  = shift;
 
+    $self->is_exist('template', $template);
     $self->mi->log("find or create template " . $template->{name});
     my $schema = $self->mi->ctx->model->schema;
 
@@ -205,6 +210,15 @@ sub foc_permission {
         }
     }
 
+}
+
+sub is_exist{
+    my $self = shift;
+    my $name = shift;
+    my $var = shift;
+
+    die "'$name' is not a HASH !\n" if (! ref($var) eq 'HASH');
+    die "the $name' has no name !\n" if (! defined $var->{name});
 }
 
 no Moose::Role;
