@@ -6,7 +6,7 @@ $HASH1 = {
            comments
                    => '',
            created => 0,
-           creator => 2,
+           creator => 1,
            page    => 3,
            precompiled
                    => '<h1>Admin User.</h1>
