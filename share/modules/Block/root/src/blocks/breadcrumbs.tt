@@ -20,7 +20,7 @@
                     [% IF action == 'edit' %]
                     <li><a href="[% uri %]+edit&zoom_in=1"><i class="icon-fixed-width icon-zoom-in"></i></a></li>
                     [% END %]
-                    <li class="pull-right"><small>[% loc('Revision by') %] [% page.content.creator.name %] - [% c.tz(page.content.created).ymd %]</small></li>
+                    <li class="pull-right"><small>[% loc('Revision by') %] [% page.content.creator.name %] - [% c.tz(page.content.created).ymd %] v[% page.version %]</small></li>
                   [% END %]
 
                    [% IF c.can_access( [node],['permission_Page'] ) %]<li><a href="[% uri %]+permission"><i class="icon-fixed-width icon-lock"></i></a></li>[% END %]
