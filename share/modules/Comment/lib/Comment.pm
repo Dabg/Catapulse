@@ -73,8 +73,7 @@ sub install {
         my $rs = $self->foc_page($p);
     }
 
-    $schema->resultset('Typeobj')->find_or_create($typeobj)
-        or die "Cannot create Comment tyeobj";
+    $self->foc_typeobj($typeobj);
 
     # Add Comment block to template Main
     $mi->log("    - add Comment block to Main template");
@@ -83,8 +82,7 @@ sub install {
 
     # Add Operation ( add_Comment, view_Comment, delete_Comment)
     foreach my $op ( @$operations ) {
-        $mi->log("    - add $op->{name} Operation");
-        $schema->resultset('Operation')->find_or_create($op);
+        $self->foc_operation($op);
     }
 
     # Add some Permissions

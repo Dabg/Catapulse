@@ -1,6 +1,7 @@
 package Block;
 
 use Moose;
+with 'Catapulse::Schema::Utils';
 
 my $blocks = [
     {
@@ -78,24 +79,18 @@ my $blocks = [
 sub install {
     my ($self, $module, $mi) = @_;
 
-    my $schema = $mi->ctx->model->schema;
-
-    $mi->log("  - populate blocks");
     # Add Blocks
     foreach my $block ( @$blocks ) {
-        my $b = $schema->resultset('Block')->find_or_create($block);
+        $self->foc_block($block);
     }
 }
 
 sub uninstall {
     my ($self, $module, $mi) = @_;
 
-    my $schema = $mi->ctx->model->schema;
-    $mi->log("  - delete blocks");
-
     # Delete blocks
     foreach my $block ( @$blocks ) {
-        my $b = $schema->resultset('Block')->search({ name => $block->{name} })->delete_all;
+        die "not implemented";
     }
 }
 

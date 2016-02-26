@@ -36,6 +36,16 @@ sub del_user {
     $schema->resultset('User')->search( { username => $user->{username} } )->delete_all;
 }
 
+sub foc_block {
+    my $self  = shift;
+    my $block = shift;
+
+    $self->is_exist('block', $block);
+    $self->mi->log("find or create block " . $block->{name});
+    my $schema = $self->mi->ctx->model->schema;
+    $schema->resultset('Block')->find_or_create($block);
+}
+
 sub foc_pagetype {
     my $self      = shift;
     my $pagetype  = shift;
