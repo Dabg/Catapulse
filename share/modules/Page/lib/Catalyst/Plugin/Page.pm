@@ -244,6 +244,18 @@ sub _populate_controllers_pages {
         $c->mi->log("Page already populated");
         return;
     }
+
+    foreach my $path ( $c->_get_all_paths ){
+        $c->model('DBIC::Page')->build_pages_from_path({ path => $path, type => 1});
+    }
+
+    $c->model('DBIC::Page')->build_pages_from_path( { path => $populated_path, type => 1 });
+}
+
+sub _get_all_paths {
+    my $c = shift;
+
+    my @paths;
     # Save info about dispatch_types
     my $dispatcher = $c->dispatcher;
     foreach my $c_name ($c->controllers(qr//)) {
@@ -267,14 +279,13 @@ sub _populate_controllers_pages {
                              type => 1,
                          };
                 $c->mi->log(" find or create page $path");
-                $c->model('DBIC::Page')->build_pages_from_path($page);
+                push(@paths, $path);
+                #$c->model('DBIC::Page')->build_pages_from_path($page);
             }
         }
     }
-    $c->model('DBIC::Page')->build_pages_from_path( { path => $populated_path, type => 1 });
+    return @paths;
 }
-
-
 1;
 
 __END__
