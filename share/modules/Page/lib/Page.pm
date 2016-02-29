@@ -14,6 +14,23 @@ my $pagetype = {
            path   => '',
        };
 
+my $pages = [
+    {
+        path       => '/page/jsrpc/set_permissions',
+        template   => 'Main',
+        title      => 'set page permissions',
+        type       => 'from_controller',
+        ops_to_access => [ 'permission_Page'],
+    },
+    {
+        path       => '/page/jsrpc/clear_permissions',
+        template   => 'Main',
+        title      => 'clear page permissions',
+        type       => 'from_controller',
+        ops_to_access => [ 'permission_Page'],
+    },
+];
+
 my $block = {
         active => 1,
         file   => 'blocks/content.tt',
@@ -54,6 +71,10 @@ sub install {
         $self->foc_operation($op);
     }
 
+    # Add page comment
+    foreach my $p ( @$pages ) {
+        my $rs = $self->foc_page($p);
+    }
 }
 
 sub uninstall {

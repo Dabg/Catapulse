@@ -20,6 +20,8 @@ sub build_pages_from_path {
     my ( $self, $page ) = @_;
     my $path = $page->{path};
     my $type = $page->{type};
+
+    my $created = DateTime->now;
     my $nodes = $self->retrieve_pages_from_path($path, 1);
 
     my $pages   = [];
@@ -28,8 +30,10 @@ sub build_pages_from_path {
 
     for ( my $n = 0; $n <= $nbnodes; $n++) {
         my $node = $nodes->[$n];
+
         # Build page
         if ( ! ref($node) ){
+
             my $P = {
                 type      => $type,
                 name      => $node,
@@ -37,22 +41,32 @@ sub build_pages_from_path {
                 template  => 1,
                 active    => 1,
                 parent_id => $page_id,
-                version   =>1,
+                version   => 1,
             };
 
             # last node
             if ( $n == $nbnodes  ) {
                 foreach my $k (keys %$P) {
-                    $P->{$k} = $page->{$k}
-                        if ( defined $page->{$k});
+                    $P->{$k} = $page->{$k} || $P->{$k};
                 }
             }
 
-            my $page = $self->find_or_create( $P );
+            my $page = $self->update_or_create( $P );
             $page_id = $page->id;
             push(@$pages, $page);
         }
         else {
+            my $P = {};
+            # last node
+            if ( $n == $nbnodes && delete $page->{_force} ) {
+                my @cols = $node->result_source->columns;
+                foreach my $k (@cols) {
+                    $P->{$k} = $page->{$k} || $node->$k;
+                    $node->$k($page->{$k}) if defined $page->{$k};
+                }
+                $node->update;
+            }
+
             $page_id = $node->id;
             push(@$pages, $node);
         }

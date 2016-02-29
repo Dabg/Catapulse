@@ -6,6 +6,7 @@ with 'Catapulse::Schema::Utils';
 my $pagetype = {
            name   => 'wiki',
            path   => '/wiki',
+           active => 1,
        };
 
 
@@ -23,6 +24,14 @@ my $wiki_pages = [
         title      => 'index',
         type       => 'wiki',
         ops_to_access => [ 'view_Page'],
+        _force     => 1,
+    },
+    {
+        path       => '/default',
+        template   => 'Main',
+        title      => 'Default',
+        type       => 'from_controller',
+        ops_to_access => []
     },
     {
         path       => '/admin',
