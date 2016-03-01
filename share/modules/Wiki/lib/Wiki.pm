@@ -45,6 +45,14 @@ my $wiki_pages = [
         template   => 'Main',
         title      => 'Help',
         type       => 'wiki',
+        ops_to_access => [ 'edit_Page']
+    },
+    {
+        path       => '/wiki',
+        template   => 'Main',
+        title      => 'Help',
+        type       => 'from_controller',
+        ops_to_access => [ 'edit_Page']
     },
 ];
 

@@ -16,6 +16,34 @@ my $pagetype = {
 
 my $pages = [
     {
+        path       => '/page/add',
+        template   => 'Main',
+        title      => 'add page',
+        type       => 'from_controller',
+        ops_to_access => [ 'add_Page'],
+    },
+    {
+        path       => '/page/del',
+        template   => 'Main',
+        title      => 'delete page',
+        type       => 'from_controller',
+        ops_to_access => [ 'delete_Page'],
+    },
+    {
+        path       => '/page/edit',
+        template   => 'Main',
+        title      => 'edit page',
+        type       => 'from_controller',
+        ops_to_access => [ 'edit_Page'],
+    },
+    {
+        path       => '/page/list',
+        template   => 'Main',
+        title      => 'list pages',
+        type       => 'from_controller',
+        ops_to_access => [ 'edit_Page'],
+    },
+    {
         path       => '/page/jsrpc/set_permissions',
         template   => 'Main',
         title      => 'set page permissions',
@@ -34,12 +62,7 @@ my $pages = [
 my $block = {
         active => 1,
         file   => 'blocks/content.tt',
-        id     => 4,
         name   => 'content',
-        parent_id
-            => 0,
-        position
-            => undef
         };
 
 my $new_operations = [
