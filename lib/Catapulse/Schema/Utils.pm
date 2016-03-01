@@ -15,13 +15,13 @@ sub foc_user {
     my $user  = shift;
     my $roles = shift;
 
-    $self->mi->log("find or create user " . $user->{username});
+    $self->mi->log("  find or create user " . $user->{username});
     $user->{created} = DateTime->now;
     my $schema = $self->mi->ctx->model->schema;
 
     my $u = $schema->resultset('User')->find_or_create($user);
     foreach my $r (@$roles) {
-        $self->mi->log("add $r role to user " . $user->{username});
+        $self->mi->log("      add $r role to user " . $user->{username});
         $u->add_to_roles( { name => $r } );
     }
     return $u
@@ -41,7 +41,7 @@ sub foc_block {
     my $block = shift;
 
     $self->is_exist('block', $block);
-    $self->mi->log("find or create block " . $block->{name});
+    $self->mi->log("  find or create block " . $block->{name});
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('Block')->find_or_create($block);
 }
@@ -51,7 +51,7 @@ sub foc_pagetype {
     my $pagetype  = shift;
 
     $self->is_exist('pagetype', $pagetype);
-    $self->mi->log("find or create pagetype " . $pagetype->{name});
+    $self->mi->log("  find or create pagetype " . $pagetype->{name});
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('Pagetype')->find_or_create($pagetype);
 }
@@ -70,7 +70,7 @@ sub foc_typeobj {
     my $typeobj  = shift;
 
     $self->is_exist('typeobj', $typeobj);
-    $self->mi->log("find or create typeobj " . $typeobj->{name});
+    $self->mi->log("  find or create typeobj " . $typeobj->{name});
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('Typeobj')->find_or_create($typeobj);
 }
@@ -89,7 +89,7 @@ sub foc_operation {
     my $operation  = shift;
 
     $self->is_exist('operation', $operation);
-    $self->mi->log("find or create operation " . $operation->{name});
+    $self->mi->log("  find or create operation " . $operation->{name});
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('Operation')->find_or_create($operation);
 }
@@ -108,7 +108,7 @@ sub foc_page {
     my $self  = shift;
     my $page  = shift;
 
-    $self->mi->log("find or create page " . $page->{title});
+    $self->mi->log("  find or create page " . $page->{title});
     my $schema = $self->mi->ctx->model->schema;
 
     my $template = $self->foc_template( { name => $page->{template} } );
@@ -126,8 +126,8 @@ sub foc_page {
 
     foreach my $operation ( @$ops_to_access) {
         my $op = $schema->resultset('Operation')->search( { name => $operation } )->first;
-        $p->add_to_ops_to_access( { name => $operation
-                                });
+        $self->mi->log("    - protect page with $operation operation");
+        $p->add_to_ops_to_access( { name => $operation });
     }
 
     return $p;
@@ -148,11 +148,17 @@ sub foc_template {
     my $template  = shift;
 
     $self->is_exist('template', $template);
-    $self->mi->log("find or create template " . $template->{name});
+    $self->mi->log("  find or create template " . $template->{name});
+
+    my $blocks = delete $template->{blocks};
     my $schema = $self->mi->ctx->model->schema;
 
-    my $p = $schema->resultset('Template')->find_or_create($template);
-    return $p
+    my $t = $schema->resultset('Template')->find_or_create($template);
+
+    foreach my $block ( @$blocks ) {
+        $t->add_to_blocks( { name => $block });
+    }
+    return $t
 }
 
 sub del_template {
@@ -198,7 +204,7 @@ sub foc_permission {
                 my $path = $perm->{obj};
                 my $inheritable = 0;
                 $inheritable = 1 if ( $path =~ s/\*$// );
-                $self->mi->log("find or create permission : $role -> $operation -> $path -> " . $perm->{value});
+                $self->mi->log("  find or create permission : $role -> $operation -> $path -> " . $perm->{value});
 
                 my $obj = $schema->resultset('Page')->retrieve_pages_from_path($path)
                     or die "can not find $path Page !";

@@ -31,11 +31,11 @@ sub install {
         $self->foc_template($template);
     }
 
-    # Add blocks to template Main
+    # # Add blocks to template Main
     my $main_template = $self->foc_template({name => 'Main'});
 
     foreach my $block_name ( @$block_names ) {
-        $mi->log("    - add $block_name to Main template");
+        $mi->log("  - add $block_name to Main template");
         $main_template->add_to_blocks( { name => $block_name });
     }
 }
