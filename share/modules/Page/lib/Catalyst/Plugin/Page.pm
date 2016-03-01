@@ -278,9 +278,8 @@ sub _get_all_paths {
                 my $page = { path => $path,
                              type => 1,
                          };
-                $c->mi->log(" find or create page $path");
+                $c->mi->log("  find or create page $path");
                 push(@paths, $path);
-                #$c->model('DBIC::Page')->build_pages_from_path($page);
             }
         }
     }
