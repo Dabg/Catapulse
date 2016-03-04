@@ -24,6 +24,48 @@ Catapulse::Web::Controller::Root - Root Controller for Catapulse::Web
 
 =head1 METHODS
 
+=head2 begin
+
+run for all URLs (/)
+
+=cut
+
+sub begin :Private {
+    my ($self, $c) = @_;
+
+    $c->log->debug('Run for all URLs');
+    # default css
+    $c->assets->include("static/css/3states.css");
+    $c->assets->include("static/js/3states.js");
+
+    $c->assets->include("static/bootstrap/css/bootstrap.css");
+    $c->assets->include("static/bootstrap/css/bootstrap-responsive.css");
+    $c->assets->include("static/css/tablesorter.css");
+    $c->assets->include("static/css/wiki.css");
+    $c->assets->include("static/bootstrap/css/bootstrap-table-header-rotated.css");
+
+    $c->assets->include("static/js/jquery-1.7.1.min.js");
+    $c->assets->include("static/bootstrap/js/bootstrap.min.js");
+    $c->assets->include("static/js/jquery.pa.list_actions.js");
+    $c->assets->include("static/js/jquery.validate.js");
+    $c->assets->include("static/js/jquery.validate.bootstrap.js");
+    $c->assets->include("static/js/jquery.tablesorter.min.js");
+    $c->assets->include("static/js/app.js");
+
+    $c->assets->include("static/js/jquery.form.js");
+    $c->assets->include("static/js/jquery.livequery.js");
+    $c->assets->include("static/js/jquery.editinplace.js");
+    $c->assets->include("static/js/jquery.autocomplete.js");
+    $c->assets->include("static/js/jquery.cookies.2.0.1.min.js");
+    $c->assets->include("static/js/wiki.js");
+    $c->assets->include("static/js/swfupload.js");
+    $c->assets->include("static/js/swfupload.queue.js");
+    $c->assets->include("static/json/en.po.json");
+    $c->assets->include("static/js/edit.js");
+
+
+}
+
 =head2 index
 
 The root page (/)
@@ -45,6 +87,7 @@ Standard 404 error page
 
 sub default :Path {
     my ( $self, $c ) = @_;
+
 }
 
 =head2 access_denied

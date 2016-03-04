@@ -6,6 +6,7 @@ use namespace::autoclean;
 use Catalyst::Runtime 5.80;
 
 use Catalyst qw/
+    Assets
     ConfigLoader
     I18N
     +CatalystX::InjectModule
