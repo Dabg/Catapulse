@@ -1,0 +1,19 @@
+.cb_on  {
+      background: url(/static/images/3states/checked.gif) no-repeat;
+      cursor:pointer;
+      border: none;
+      display: block;
+ }
+
+.cb_off  {
+      background: url(/static/images/3states/unchecked.gif) no-repeat;
+      cursor:pointer;
+      border: none;
+      display: block;
+ }
+
+.cb_mute  {
+      background: url(/static/images/3states/intermediate.gif) no-repeat;
+      cursor:pointer;
+      border: none;
+      display: block;
