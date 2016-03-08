@@ -25,6 +25,23 @@ so we must be use parameters to dispatch actions
 
 =cut
 
+=head2 begin
+
+run at begin (/wiki)
+
+=cut
+
+sub auto :Private {
+    my ($self, $c) = @_;
+
+    $c->assets->include("static/css/wiki.css");
+    $c->assets->include("static/js/jquery.cookies.2.0.1.min.js");
+    $c->assets->include("static/js/wiki.js");
+    $c->assets->include("static/json/en.po.json");
+    $c->assets->include("static/js/edit.js");
+
+}
+
 
 sub index :Path :Args(0){
   my ( $self, $c ) = @_;

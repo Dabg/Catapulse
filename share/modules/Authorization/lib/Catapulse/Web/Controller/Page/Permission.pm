@@ -20,6 +20,20 @@ Catalyst Controller.
 
 =cut
 
+=head2 auto
+
+run at begin (page/permission)
+
+=cut
+
+sub auto :Private {
+    my ($self, $c) = @_;
+
+    $c->assets->include("static/js/permissionEditor.js");
+    $c->assets->include("static/css/3states.css");
+    $c->assets->include("static/js/3states.js");
+}
+
 =head2 index
 
 To list and change permissions
