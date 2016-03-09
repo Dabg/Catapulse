@@ -37,26 +37,15 @@ sub begin :Private {
     # default css
     $c->assets->include("static/bootstrap/css/bootstrap.css");
     $c->assets->include("static/bootstrap/css/bootstrap-responsive.css");
-    $c->assets->include("static/bootstrap/css/bootstrap-table-header-rotated.css");
 
+    # default js
     $c->assets->include("static/js/jquery-1.7.1.min.js");
     $c->assets->include("static/bootstrap/js/bootstrap.min.js");
-
-    $c->assets->include("static/js/jquery.tablesorter.min.js");
-
     $c->assets->include("static/js/app.js");
 
-
-    # used by commentForm
-    $c->assets->include("static/js/jquery.form.js");
-    $c->assets->include("static/js/jquery.autocomplete.js");
-    $c->assets->include("static/js/jquery.livequery.js");
-
     # used by toogle/edit/delete in lists
+    $c->assets->include("static/js/jquery.livequery.js");
     $c->assets->include("static/js/jquery.pa.list_actions.js");
-
-    #$c->assets->include("static/js/jquery.editinplace.js");
-
 }
 
 =head2 index

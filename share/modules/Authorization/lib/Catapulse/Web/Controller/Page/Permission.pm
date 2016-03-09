@@ -29,6 +29,7 @@ run at begin (page/permission)
 sub auto :Private {
     my ($self, $c) = @_;
 
+    $c->assets->include("static/bootstrap/css/bootstrap-table-header-rotated.css");
     $c->assets->include("static/js/permissionEditor.js");
     $c->assets->include("static/css/3states.css");
     $c->assets->include("static/js/3states.js");
