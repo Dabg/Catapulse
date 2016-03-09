@@ -14,6 +14,9 @@ var oneshot_preview = oneshot();
 var oneshot_pause = 1000;  // Time in milliseconds.
 var on_change_refresh_rate = 10000;
 
+jQuery.uri_for = function(path) { return 'http://localhost:3000' + path }
+jQuery.uri_for_static= function(path) { return '/static//' + path }
+
 $( function() {
 
     setupToggleMaximized();
@@ -23,6 +26,7 @@ $( function() {
        fetch_preview.only_every(on_change_refresh_rate);
        oneshot_preview(fetch_preview, oneshot_pause);
     });
+
 })
 
 function insertTags(txtarea,tagOpen, tagClose, sampleText) {
