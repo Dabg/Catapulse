@@ -80,6 +80,15 @@ sub add_message {
     return 1;
 }
 
+sub uri_for_static {
+    my ( $self, $asset ) = @_;
+     return
+        ( defined($self->config->{static_path} )
+     ?  $self->config->{static_path} . $asset
+     :  $self->uri_for('/static', $asset) );
+}
+
+
 =encoding utf8
 
 =head1 NAME
