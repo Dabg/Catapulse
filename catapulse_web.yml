@@ -25,7 +25,7 @@ Model::DBIC:
 preferences:
   anonymous_id: 2
   anonymous_user: 'Anonymous'
-  enable_emoticons: 0
+  enable_emoticons: 1
   default_lang: 'en'
   main_formatter: 'Catapulse::Formatter::Markdown'
 

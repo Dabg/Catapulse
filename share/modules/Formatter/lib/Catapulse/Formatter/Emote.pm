@@ -43,7 +43,7 @@ sub format_content {
     my ($class, $content, $c)=@_;
     return unless $class->module_loaded && $c->pref('enable_emoticons')||0;
     my $emoticon = Text::Emoticon::MSN->new(
-        imgbase => $c->req->base.'/.static/emote',
+        imgbase => $c->req->base.'/static/emote',
         xhtml => 1, strict => 1
     );
     # Let textile handle the rest
