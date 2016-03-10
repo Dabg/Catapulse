@@ -40,24 +40,19 @@ __PACKAGE__->config->{session} = {
 # Start the application
 __PACKAGE__->setup();
 
+=head1 pref
 
+=cut
 sub pref {
     my ( $c, $setting, $value ) = @_;
 
     return unless $setting;
 
-    my $result = {
-        anonymous_id     => 2,
-        anonymous_user   => 'Anonymous',
-        enable_emoticons => 0,
-        default_lang     => 'en',
-        main_formatter   => 'Catapulse::Formatter::Markdown',
-    };
+    my $pref = $c->config->{preferences};
+    die "Error : Setting $setting is unknown !!!" if ! defined $pref->{$setting};
 
-    die "Error : Setting $setting is unknown !!!" if ! defined $result->{$setting};
-    return $result->{$setting};
+    return $pref->{$setting};
 }
-
 
 =head1 add_message
 

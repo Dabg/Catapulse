@@ -22,6 +22,14 @@ Model::DBIC:
   # connect_info:
   #   dsn: dbi:SQLite:share/catapulse-schema.db
 
+preferences:
+  anonymous_id: 2
+  anonymous_user: 'Anonymous'
+  enable_emoticons: 0
+  default_lang: 'en'
+  main_formatter: 'Catapulse::Formatter::Markdown'
+
+
 # Model::DBIC:
 #   schema_class: Catapulse::Schema
 #   connect_info:
