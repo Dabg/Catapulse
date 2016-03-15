@@ -2,3 +2,5 @@ name: Static
 version: 1
 catalyst_plugins:
   - Static::Simple
+Plugin::Static::Simple:
+  logging: 0
