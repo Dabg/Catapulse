@@ -23,7 +23,6 @@ __PACKAGE__->config(
     name => 'Catapulse::Web',
     # Disable deprecated behavior needed by old applications
     disable_component_resolution_regex_fallback => 1,
-    enable_catalyst_header => 1, # Send X-Catalyst header
     # 'Plugin::ConfigLoader' => {
     #     file => __PACKAGE__->path_to('share', 'etc'),
     # },
