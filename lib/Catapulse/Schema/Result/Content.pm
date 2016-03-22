@@ -37,7 +37,6 @@ C<release_date> and C<remove_date> are used internally.
 use DateTime::Format::Mail;
 
 use Algorithm::Diff;
-use Algorithm::Merge qw/merge/;
 use HTML::Entities qw/encode_entities_numeric/;
 
 __PACKAGE__->load_components(qw/DateTime::Epoch TimeStamp Core/);
@@ -231,35 +230,6 @@ Return the content after being run through Catapulse::Formatter::*.
 sub formatted {
     my ( $self, $c ) = @_;
     return $self->result_source->resultset->format_content( $c, $self->body, $self );
-}
-
-=head2 merge_content
-
-Show the merge conflict of the content for two different edit sessions of the same page.
-
-=cut
-
-sub merge_content {
-    my ( $self, $saved, $content, $h1, $h2, $h3 ) = @_;
-
-    my $source = [ split /\n/, $self->encoded_body ];
-    my $a      = [ split /\n/, $saved->encoded_body ];
-    my $b      = [ split /\n/, $content ];
-    my @merged = merge(
-        $source, $a, $b,
-        {
-            CONFLICT => sub ($$) {
-                (
-                    "<!-- $h1  -->\n",
-                    ( @{ $_[0] } ),
-                    "<!-- $h2  -->\n",
-                    ( @{ $_[1] } ),
-                    "<!-- $h3 -->\n",
-                );
-              }
-        }
-    );
-    return join( '', @merged );
 }
 
 =head2 max_version
