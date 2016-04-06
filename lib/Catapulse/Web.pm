@@ -4,6 +4,7 @@ use Moose;
 use namespace::autoclean;
 
 use Catalyst::Runtime 5.80;
+use Term::ANSIColor qw(:constants);
 
 use Catalyst qw/
     Assets
@@ -80,6 +81,17 @@ sub uri_for_static {
         ( defined($self->config->{static_path} )
      ?  $self->config->{static_path} . $asset
      :  $self->uri_for('/static', $asset) );
+}
+
+sub trace {
+    my($self, $msg) = @_;
+
+    #if ( $self->debug > 1){
+        my $caller = ( caller(1) )[3];
+        $msg = YELLOW.BOLD.$caller.CLEAR.' '.$msg;
+        $self->log->debug( RED." TRACE".CLEAR.": $msg" );
+    #}
+
 }
 
 
