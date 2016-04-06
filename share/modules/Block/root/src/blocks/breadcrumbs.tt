@@ -1,31 +1,24 @@
 
-<div class="container-fluid">
-       <div class="row-fluid">
-          <div class="span9">
-              <ul class="breadcrumb">
+              <ol class="breadcrumb">
                   [% SET node = page || item %]
                   [% SET mypath = node.name %]
                   [% FOREACH node IN node.all_nodes %]
                     [% SET url = url _ node.name _ '/' %]
-                    <li><a href="[% c.uri_for(url) %]">[% node.name %]</a> <span class="divider">/</span></li>
+                    <li><a href="[% c.uri_for(url) %]">[% node.name %]</a></li>
                     [% mypath = url %]
                   [% END %]
 
                   [% IF page.type.name == 'wiki' %]
                     [% SET uri = c.uri_for(mypath) %]
-                    [% IF ! c.rbac || c.can_access( [node],['add_Page'] ) %]<li><a href="/page/[% node.id %]/edit"><i class="icon-fixed-width icon-adjust"></i></a></li>[% END %]
-                    [% IF ! c.rbac ||  c.can_access( [node],['edit_Page'] ) %]<li><a href="[% uri %]+edit"><i class="icon-fixed-width icon-pencil"></i></a></li>[% END %]
-                    [% IF ! c.rbac ||  c.can_access( [node],['delete_Page'] ) %]<li><a href="[% uri %]+delete"><i class="icon-fixed-width icon-trash"></i></a></li>[% END %]
+                    [% IF ! c.rbac || c.can_access( [node],['add_Page'] ) %]<li><a href="/page/[% node.id %]/edit"><i class="glyphicon glyphicon-adjust"></i></a></li>[% END %]
+                    [% IF ! c.rbac ||  c.can_access( [node],['edit_Page'] ) %]<li><a href="[% uri %]+edit"><i class="glyphicon glyphicon-pencil"></i></a></li>[% END %]
+                    [% IF ! c.rbac ||  c.can_access( [node],['delete_Page'] ) %]<li><a href="[% uri %]+delete"><i class="glyphicon glyphicon-trash"></i></a></li>[% END %]
 
                     [% IF action == 'edit' %]
-                    <li><a href="[% uri %]+edit&zoom_in=1"><i class="icon-fixed-width icon-zoom-in"></i></a></li>
+                    <li><a href="[% uri %]+edit&zoom_in=1"><i class="glyphicon glyphicon-zoom-in"></i></a></li>
                     [% END %]
                     <li class="pull-right"><small>[% loc('Revision by') %] [% page.content.creator.name %] - [% c.tz(page.content.created).ymd %] v[% page.version %]</small></li>
                   [% END %]
 
-                   [% IF c.can_access( [node],['permission_Page'] ) %]<li><a href="[% uri %]+permission"><i class="icon-fixed-width icon-lock"></i></a></li>[% END %]
-              </ul>
-
-          </div>
-      </div>
-   </div>
+                   [% IF c.can_access( [node],['permission_Page'] ) %]<li><a href="[% uri %]+permission"><i class="glyphicon  glyphicon-lock"></i></a></li>[% END %]
+              </ol>

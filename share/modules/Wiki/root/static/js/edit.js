@@ -7,7 +7,6 @@ $(document).ready(function() {
     set_split_mode( $.cookies.get('split_edit') );
     setup_formatter_toolbar();
     setup_edit_help();
-    toggleDefaultValue($('#authorName'));  // auto-clear the 'anonymous_user' name for anon edits
 
     split_edit_button
         .attr('href', 'action://' + 'split_edit')
@@ -72,18 +71,18 @@ var set_split_mode = function(split_mode) {
 setup_formatter_toolbar = function() {
     var _create_tolbar_select = function(id, options) {
         var select = $('<select/>');
-    
+
         select.data('opt', options);
         select.attr({ 'id': 'toolbar_' + id.replace(/\s/g, '_'), 'title': loc(id) });
-    
+
         select.append( $('<option>').append(loc(id)) );
-    
+
         $(options).each(function(i) {
             var text = options[i].shift();
             options[i].unshift('body');  // txtarea ID
             select.append( $('<option>').val(i).append(loc(text)) );
         });
-    
+
         select.change(function(){
             var options = select.data('opt');
             if(options[ this.selectedIndex - 1  ]) {
@@ -92,10 +91,10 @@ setup_formatter_toolbar = function() {
             this.selectedIndex = 0;
             return false;
         });
-    
+
         return select;
     }
-    
+
     var toolbar = $('#formatter_toolbar');
     var wiki_type, buttons;
 
@@ -115,7 +114,7 @@ setup_formatter_toolbar = function() {
     // Insert
     toolbar.append(_create_tolbar_select(loc('Insert'), [
         [ loc('toc'), '\n{{toc}}','',''],
-        [ loc('cpan'), '\n{{cpan ', '}}', 'MojoMojo::Formatter']
+        [ loc('cpan'), '\n{{cpan ', '}}', 'Catapulse::Formatter']
     ]));
 
     // make sure it is initialized
@@ -241,7 +240,6 @@ var setup_edit_help = function() {
 
     close.click(function() { edithelp.hide(); return false });
 
-    tabs[0][0].click();
     nav.append(close);
     edithelp.prepend(nav);
 

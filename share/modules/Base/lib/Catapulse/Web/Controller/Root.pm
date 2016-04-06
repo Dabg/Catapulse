@@ -30,20 +30,19 @@ run for all URLs (/)
 
 =cut
 
-sub begin :Private {
+sub auto :Private {
     my ($self, $c) = @_;
 
-    $c->log->debug('Run for all URLs');
     # default css
-    $c->assets->include("static/bootstrap/css/bootstrap.css");
-    $c->assets->include("static/bootstrap/css/bootstrap-responsive.css");
+    $c->assets->include("static/bootstrap-3.3.6/css/bootstrap.min.css");
 
-    # default js
-    $c->assets->include("static/js/jquery-1.7.1.min.js");
-    $c->assets->include("static/bootstrap/js/bootstrap.min.js");
+    # # default js
+    $c->assets->include("static/js/jquery-1.11.1.min.js");
+    $c->assets->include("static/js/jquery-migrate-1.1.1.js");
+    $c->assets->include("static/bootstrap-3.3.6/js/bootstrap.min.js");
     $c->assets->include("static/js/app.js");
 
-    # used by toogle/edit/delete in lists
+    # # # used by toogle/edit/delete in lists
     $c->assets->include("static/js/jquery.livequery.js");
     $c->assets->include("static/js/jquery.pa.list_actions.js");
 }
