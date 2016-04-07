@@ -1,42 +1,42 @@
 [% IF page.name != '/' %]<h4>[% loc('Inherited permissions') %]:</h4>[% END %]
 
+
 [% FOREACH obj IN page.all_nodes %]
    [% NEXT IF ! obj.permissions %]
    [% NEXT IF ( obj.name == page.name ) %]
 
    <h5>[% loc('From page') %]: [% obj.parent.name _ '/' _ obj.name %]</h5>
 
-   <table id="inherited_permissions" class="table table-bordered">
-   <thead>
-   <tr>
-     <th></th>
-     [% FOREACH op IN operations %]
-     <th>[% op.name %]</th>
-     [% END %]
-   </tr>
-   </thead>
+   <table  id="permissions_editor" class="table table-striped table-header-rotated">
+     <thead>
+       <tr>
+         <th></th>
+         [% FOREACH op IN operations %]
+         <th class="rotate-45"><div><span>[% op.name %]</span></div></th>
+         [% END %]
+       </tr>
+     </thead>
+
      [% FOREACH role IN roles %]
      [% NEXT IF ! obj.get_permissions(role) %]
      <tr>
-       <td>[% role.name %]</td>
-
-       [% FOREACH op IN operations %]
+      <td>[% role.name %]</td>
+      [% FOREACH op IN operations %]
          [% SET perm = obj.get_permissions(role,op) %]
            [% Value=perm.value %]
            [% Inherited=perm.inheritable %]
            [% IF Value == 1 && Inherited %]
-           <td class="text-centered"><i class="icon-fixed-width cb_on"></i></td>
+           <td class="text-centered"><i class="glyphicon glyphicon-ok" style="color:green"></i></td>
            [% ELSIF Value == 0 %]
-           <td class="text-centered"><i class="icon-fixed-width cb_off"></i></td>
+           <td class="text-centered"><i class="glyphicon glyphicon-remove" style="color:red"></i></td>
            [% ELSE %]
            <td></td>
            [% END %]
-       [% END %]
+      [% END %]
      </tr>
      [% END %]
-  </table>
+   </table>
 [% END %]
-
 
 
 <h4>[% loc('Edit permissions for this page') %]:</h4>
