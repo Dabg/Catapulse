@@ -129,9 +129,11 @@ sub end : ActionClass('RenderView') {
 
     # Build TTPage
     # Delete parent template if zoom_in
-    $c->stash->{template} = $page->template->file
-        if ( $page->template->active && ! $zoom_in );
-
+    if ( $c->stash->{page_action}) {
+    }
+    elsif ( $page->template->active ){
+        $c->stash->{template} = $page->template->file
+    }
     $c->forward( $c->view('TTPage') );
   }
   # KO page is not in stash
