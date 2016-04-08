@@ -59,12 +59,6 @@ my $pages = [
     },
 ];
 
-my $block = {
-        active => 1,
-        file   => 'blocks/content.tt',
-        name   => 'content',
-        };
-
 my $new_operations = [
     {
         active => 1,
@@ -86,9 +80,6 @@ sub install {
     $self->foc_typeobj($typeobj);
     $self->foc_pagetype($pagetype);
 
-    # Add Comment block to template Main
-    $self->foc_template({name => 'Main'})->add_to_blocks( $block );
-
     # Add Operation ( add_Comment, view_Comment, delete_Comment)
     foreach my $op ( @$new_operations ) {
         $self->foc_operation($op);
@@ -107,8 +98,6 @@ sub uninstall {
 
     $schema->resultset('Typeobj')->search({ name => $typeobj->{name} })->delete_all;
     $schema->resultset('Pagetype')->search({ name => $pagetype->{name} })->delete_all;
-
-    $schema->resultset('Block')->search({ name => $block->{name} })->delete_all;
 
     foreach my $op ( @$new_operations ) {
         $schema->resultset('Operation')->search({ name => $op->{name}})->delete_all;

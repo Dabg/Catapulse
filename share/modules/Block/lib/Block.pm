@@ -39,6 +39,11 @@ my $blocks = [
         file   => 'blocks/links.tt',
         name   => 'links',
         },
+    {
+        active => 1,
+        file   => 'blocks/content.tt',
+        name   => 'content',
+        },
 ];
 
 my $pagetype = {
