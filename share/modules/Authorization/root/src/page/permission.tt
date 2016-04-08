@@ -7,7 +7,7 @@
 
    <h5>[% loc('From page') %]: [% obj.parent.name _ '/' _ obj.name %]</h5>
 
-   <table  id="permissions_editor" class="table table-striped table-header-rotated">
+   <table  id="inherited_permissions" class="table table-striped table-header-rotated">
      <thead>
        <tr>
          <th></th>
