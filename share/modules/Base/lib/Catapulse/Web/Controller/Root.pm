@@ -123,18 +123,20 @@ sub end : ActionClass('RenderView') {
       $c->stash->{content} = $c->view('TTBlock')->render($c, $c->stash->{template}) or die "Error: $!";
     }
 
-    # process Blocks
-    my $pagefactory = Catapulse::Web::PageFactory->new( ctx => $c, template => $page->template);
-    $pagefactory->process;
-
-    # Build TTPage
-    # Delete parent template if zoom_in
+    my $template;
     if ( $c->stash->{page_action}) {
-        $c->stash->{template} = $c->stash->{page_action}->template->file
+        $template = $c->stash->{page_action}->template;
     }
     elsif ( $page->template->active ){
-        $c->stash->{template} = $page->template->file
+        $template = $page->template
     }
+
+    $c->stash->{template} = $template->file;
+    # process Blocks
+    my $pagefactory = Catapulse::Web::PageFactory->new( ctx => $c, template => $template);
+    $pagefactory->process;
+
+
     $c->forward( $c->view('TTPage') );
   }
   # KO page is not in stash
