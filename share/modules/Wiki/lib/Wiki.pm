@@ -17,6 +17,7 @@ my $new_operations = [
     },
 ];
 
+
 my $wiki_pages = [
     {
         path       => '/',
@@ -49,7 +50,7 @@ my $wiki_pages = [
     },
     {
         path       => '/wiki',
-        template   => 'Main',
+        template   => 'Simple',
         title      => 'Help',
         type       => 'from_controller',
         ops_to_access => [ 'edit_Page']
@@ -92,10 +93,8 @@ sub install {
     }
 
     # Add Wiki Page
-    my $pages = {};
     foreach my $p ( @$wiki_pages ) {
-        my $rs = $self->foc_page($p);
-        $pages->{$rs->title} = $rs;
+        $self->foc_page($p);
     }
 
     foreach my $p ( @$permissions ) {

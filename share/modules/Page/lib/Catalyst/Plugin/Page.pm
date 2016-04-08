@@ -146,7 +146,7 @@ around 'dispatch' => sub {
       $c->stash->{page} = $page;
       # if an action is required on the page (+edit/+permission/...)
       if ( $c->stash->{action} ) {
-          $c->stash->{page_action} = $c->model('DBIC::Page')->retrieve_pages_from_path( $internalpath, 1 );
+          $c->stash->{page_action} = $c->model('DBIC::Page')->retrieve_pages_from_path( $internalpath );
           $c->redispatch($internalpath, $ctp_path);
       }
       elsif ( $page->type->name eq 'from_controller' ) {

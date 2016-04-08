@@ -5,16 +5,20 @@ with 'Catapulse::Schema::Utils';
 
 my $templates = [
     {
-        active => 1,
-        file   => 'templates/main.tt',
-        id     => 1,
-        name   => 'Main',
-        parent_id
-            => 0,
-        position
-            => undef,
-        wrapper
-            => 'html',
+        active    => 1,
+        file      => 'templates/main.tt',
+        name      => 'Main',
+        parent_id => 0,
+        position  => undef,
+        wrapper   => 'html',
+    },
+    {
+        active    => 1,
+        file      => 'templates/simple.tt',
+        name      => 'Simple',
+        parent_id => 0,
+        position  => undef,
+        wrapper   => 'html',
     },
 ];
 

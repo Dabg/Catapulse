@@ -41,8 +41,18 @@ my $blocks = [
         },
 ];
 
+my $pagetype = {
+           name   => 'from_controller',
+           path   => '',
+           active => 1,
+       };
+
+
 sub install {
     my ($self, $module, $mi) = @_;
+
+    # Add Pagetype 'from_controller'
+    $self->foc_pagetype($pagetype);
 
     # Add Blocks
     foreach my $block ( @$blocks ) {

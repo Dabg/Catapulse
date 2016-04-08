@@ -1,0 +1,13 @@
+<div class="container-fluid">
+	<div class="row">
+             [% body_breadcrumbs %]
+             [% body_messages %]
+    </div>
+    <div class="row">
+		     [% body_content %]
+    </div>
+    <div class="row">
+             [% body_footer %]
+             [% body_querylog %]
+    </div>
+</div>

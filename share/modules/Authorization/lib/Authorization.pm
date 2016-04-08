@@ -18,6 +18,16 @@ my $new_typeobj =
     };
 
 
+my $newpages = [
+    {
+        path       => '/page/permission',
+        template   => 'Simple',
+        title      => 'Help',
+        type       => 'from_controller',
+        ops_to_access => [ 'permission_Page']
+    },
+];
+
 sub install {
     my ($self, $module) = @_;
 
@@ -28,6 +38,10 @@ sub install {
 
     my $typeobj = $self->foc_typeobj( $new_typeobj );
 
+    # Add Wiki Page
+    foreach my $p ( @$newpages ) {
+        $self->foc_page($p);
+    }
 }
 
 sub uninstall {

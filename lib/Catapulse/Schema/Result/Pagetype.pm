@@ -30,7 +30,7 @@ extends 'DBIx::Class::Core';
 =head2 path
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 100
 
 =head2 active
@@ -49,7 +49,7 @@ __PACKAGE__->add_columns(
     "name",
     { data_type => "VARCHAR", is_nullable => 0, size => 40 },
     "path",
-    { data_type => "VARCHAR", is_nullable => 0, size => 100 },
+    { data_type => "VARCHAR", is_nullable => 1, size => 100 },
     "active",
     { data_type => "tinyint", default_value => 0, is_nullable => 0 },
 );

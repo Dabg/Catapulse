@@ -130,6 +130,7 @@ sub end : ActionClass('RenderView') {
     # Build TTPage
     # Delete parent template if zoom_in
     if ( $c->stash->{page_action}) {
+        $c->stash->{template} = $c->stash->{page_action}->template->file
     }
     elsif ( $page->template->active ){
         $c->stash->{template} = $page->template->file

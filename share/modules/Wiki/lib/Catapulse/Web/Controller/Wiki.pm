@@ -88,7 +88,7 @@ sub edit :PathPart('edit') :Args(0) {
 
   # setup redirect back to edit mode.
   if ( $form->params->{submit} eq $c->localize('Save') ) {
-    $redirect .= '?action=edit';
+    $redirect .= '+edit';
   }
 
   # No need to update if we have no difference between browser and db.
