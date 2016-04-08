@@ -1,4 +1,4 @@
-[% IF c.can_access( [page],['view_Comment'] ) %]
+[% IF c.can_access( [page],['view_Comment'] ) && page.type.name == 'wiki' %]
 <div id="comments">
 [% IF comments.count %]
 <h4>[%comments.count%] [% IF comments.count == 1; loc('Comment'); ELSE; loc('Comments'); END %]</h4>
