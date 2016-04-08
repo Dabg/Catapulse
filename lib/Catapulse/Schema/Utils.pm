@@ -150,13 +150,14 @@ sub foc_template {
     $self->is_exist('template', $template);
     $self->mi->log("  find or create template " . $template->{name});
 
-    my $blocks = delete $template->{blocks};
+    my $blocks_name = delete $template->{blocks};
     my $schema = $self->mi->ctx->model->schema;
 
     my $t = $schema->resultset('Template')->find_or_create($template);
 
-    foreach my $block ( @$blocks ) {
-        $t->add_to_blocks( { name => $block });
+    foreach my $name ( @$blocks_name ) {
+        my $b = $self->foc_block( { name => $name});
+        $t->add_to_blocks( { name => $b->name, file => $b->file });
     }
     return $t
 }
