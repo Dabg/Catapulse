@@ -6,7 +6,7 @@ use HTML::FormHandler::Moose;
 extends 'HTML::FormHandler::Model::DBIC';
 
 with 'HTML::FormHandlerX::Form::JQueryValidator';
-with 'HTML::FormHandler::Widget::Theme::Bootstrap';
+with 'HTML::FormHandler::Widget::Theme::Bootstrap3';
 
 has '+language_handle' => ( builder => 'get_language_handle_from_ctx' );
 

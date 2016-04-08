@@ -4,7 +4,7 @@ use HTML::FormHandler::Moose;
 
 extends 'HTML::FormHandler';
 with 'HTML::FormHandlerX::Form::JQueryValidator';
-with 'HTML::FormHandler::Widget::Theme::Bootstrap';
+with 'HTML::FormHandler::Widget::Theme::Bootstrap3';
 
 =head1 NAME
 

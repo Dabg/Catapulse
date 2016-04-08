@@ -2,7 +2,6 @@ package Catapulse::Web::Form::Role;
 
 use HTML::FormHandler::Moose;
 extends 'Catapulse::Web::Form::Base';
-with 'HTML::FormHandler::Widget::Theme::Bootstrap';
 
 =head1 NAME
 
