@@ -175,7 +175,9 @@ sub save : Private {
     $c->stash->{template} = 'page/form.tt';
     $c->add_message( success => "Page " . $c->stash->{item}->name . " $up_or_sav" );
 
-    $c->res->redirect($c->stash->{path} . '/+edit');
+    # XXX : redirect to edit only when create a new wiki page
+    my $redirect = $c->stash->{path} . '/+edit';
+    $c->res->redirect($redirect);
 }
 
 
