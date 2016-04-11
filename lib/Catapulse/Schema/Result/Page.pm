@@ -253,6 +253,29 @@ Returns the permissions for a role and an operation
 =cut
 
 
+sub path {
+  my $self = shift;
+
+  my @items;
+  my $item = $self;
+  while ($item) {
+      push(@items, $item->name) if $item;
+      $item = $item->parent;
+  }
+  my $ret =  join '/', reverse @items;
+  $ret =~ s|//|/|;
+  return $ret;
+}
+
+=cut
+
+=head2 get_permissions
+
+Returns the permissions for a role and an operation
+
+=cut
+
+
 sub get_permissions {
   my ($self, $role, $operation ) = @_;
 
