@@ -11,7 +11,7 @@ Controller::Login:
   traits:
     - Logout
     - WithRedirect
-    - RenderAsTTTemplate
+    - -RenderAsTTTemplate
   login_form_args:
     authenticate_args:
       active: 1

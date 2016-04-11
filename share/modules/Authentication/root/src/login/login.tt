@@ -1,0 +1,17 @@
+<form id="login_form" method="post">
+    <div class="form_messages"></div>
+    <div>
+        <input type="text" name="username" id="username" value="" tabindex="1"  placeholder="username" />
+    </div>
+    <div>
+        <input type="password" name="password" id="password" value="" tabindex="2" placeholder="password" />
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+    </div>
+    <div>
+        <input type="submit" name="submit" id="submit" value="Login" tabindex="4" class="btn btn-primary btn-md"/>
+    </div>
+</form>
