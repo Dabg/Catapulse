@@ -216,7 +216,7 @@ sub new_page{
       }
   # action eq 'default' ?
   if ( $c->action eq 'default') {
-      $c->stash->{template} = "page/add.tt";
+      $c->stash->{template} = "page/not_found.tt";
       my $url_do_add = $c->uri_for("/page/add",{
                                type    => '2', # 2 => wiki
                                name    => $$pages[-1],
@@ -227,6 +227,9 @@ sub new_page{
 
       $c->stash->{url_do_add} = $url_do_add;
       $c->stash->{path}       = $path;
+
+      my $p = $c->model('DBIC::Page')->retrieve_pages_from_path( '/page/not_found' );
+      $c->stash->{page} = $p;
   }
 }
 

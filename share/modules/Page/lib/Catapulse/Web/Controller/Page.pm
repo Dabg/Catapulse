@@ -216,9 +216,6 @@ Item not found
 =cut
 sub not_found : Local {
     my ($self, $c) = @_;
-    $c->add_message( error => $c->loc("Page not found") );
-    $c->stash->{template} = 'not_found.tt';
-    return $c->res->status(404);
 }
 
 =head1 togle_active
