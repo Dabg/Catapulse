@@ -62,8 +62,6 @@ sub index :Path :Args(0) {
 
 =head2 default
 
-Standard 404 error page
-
 =cut
 
 sub default :Path {
@@ -107,8 +105,6 @@ sub end : ActionClass('RenderView') {
   return 1 if $c->req->method eq 'HEAD';
   return  if $c->response->status =~ /^(?:204|3\d\d)$/;
   return $c->res->output if ( $c->res->output && ! $c->stash->{template} );
-
-  my $zoom_in = $c->req->param('zoom_in');
 
   # If page exist in db
   if ( my $page = $c->stash->{page} ) {
