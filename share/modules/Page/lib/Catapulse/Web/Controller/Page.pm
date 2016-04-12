@@ -151,7 +151,26 @@ sub save : Private {
 
     $c->stash( form => $form, template => 'page/form.tt' );
 
-    return unless $form->process( params => $c->req->params );
+    # Clean the parameter fields.
+    # Else params fields are from POST and GET => ARRAY
+    my $params;
+    if ( $c->stash->{item} ) {
+      $params = $c->req->params;
+      foreach my $k ( keys %$params ) {
+          # XXX: ??? why ops_to_access ???
+          next if ($k eq 'ops_to_access');
+          if ( ref($params->{$k}) eq 'ARRAY'){
+          $params->{$k} = $params->{$k}[0];
+        }
+      }
+    }
+    else {
+      $params = $c->req->body_parameters;
+    }
+
+    # the "process" call has all the saving logic,
+    #   if it returns False, then a validation error happened
+    return unless $form->process( params => $params );
 
     my $up_or_sav = $c->action =~ 'edit$' ? $c->loc('updated')
                                           : $c->loc('saved');
