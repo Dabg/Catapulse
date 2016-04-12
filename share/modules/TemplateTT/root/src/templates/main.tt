@@ -2,7 +2,7 @@
 	<div class="row">
              [% body_navbar %]
              [% body_breadcrumbs %]
-             [% body_messages %]
+             [% body_message %]
     </div>
     <div class="row">
 		<div class="col-sm-8">
