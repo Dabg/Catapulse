@@ -151,24 +151,7 @@ sub save : Private {
 
     $c->stash( form => $form, template => 'page/form.tt' );
 
-    # Clean the parameter fields.
-    # Else params fields are from POST and GET => ARRAY
-    my $params;
-    if ( $c->stash->{item} ) {
-      $params = $c->req->params;
-      foreach my $k ( keys %$params ) {
-        if ( ref($params->{$k}) eq 'ARRAY'){
-          $params->{$k} = $params->{$k}[0];
-        }
-      }
-    }
-    else {
-      $params = $c->req->body_parameters;
-    }
-
-    # the "process" call has all the saving logic,
-    #   if it returns False, then a validation error happened
-    return unless $form->process( params => $params );
+    return unless $form->process( params => $c->req->params );
 
     my $up_or_sav = $c->action =~ 'edit$' ? $c->loc('updated')
                                           : $c->loc('saved');
@@ -177,6 +160,7 @@ sub save : Private {
 
     my $redirect = $c->stash->{item}->path;
     $redirect .= '/+edit' if ( $c->stash->{item}->type->name eq 'wiki' );
+    $redirect =~ s|//|/|g;
     $c->res->redirect($redirect);
 }
 
