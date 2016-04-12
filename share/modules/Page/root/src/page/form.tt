@@ -1,8 +1,4 @@
-<div class="span1"></div>
-<div class="span9">
 [% IF item.path %]<h3>Page '[% item.path | html %]'</h3>
 [% ELSE %]<h3>Add Page</h3>
 [% END %]
 [% form.render %]
-</div>
-
