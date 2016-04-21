@@ -1,14 +1,14 @@
               <ol class="breadcrumb">
                   [% SET node = page || item %]
-                  [% SET mypath = node.name %]
-                  [% FOREACH node IN node.all_nodes %]
-                    [% SET url = url _ node.name _ '/' %]
-                    <li><a href="[% c.uri_for(url) %]">[% node.name %]</a></li>
-                    [% mypath = url %]
+                  [% SET path = node.name %]
+                  [% FOREACH n IN node.all_nodes %]
+                    [% SET url = url _ n.name _ '/' %]
+                    <li><a href="[% c.uri_for(url) %]">[% n.name %]</a></li>
+                    [% path = url %]
                   [% END %]
 
                   [% IF page.type.name == 'wiki' %]
-                    [% SET uri = c.uri_for(mypath) %]
+                    [% SET uri = c.uri_for(path) %]
                     [% IF ! c.rbac || c.can_access( [node],['add_Page'] ) %]<li><a href="/page/[% node.id %]/edit"><i class="glyphicon glyphicon-adjust"></i></a></li>[% END %]
                     [% IF ! c.rbac ||  c.can_access( [node],['edit_Page'] ) %]<li><a href="[% uri %]+edit"><i class="glyphicon glyphicon-pencil"></i></a></li>[% END %]
                     [% IF page.name != '/' && ( ! c.rbac ||  c.can_access( [node],['delete_Page'] ) ) %]<li><a href="[% uri %]+delete"><i class="glyphicon glyphicon-trash"></i></a></li>[% END %]

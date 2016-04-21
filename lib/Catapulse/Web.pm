@@ -83,6 +83,22 @@ sub uri_for_static {
      :  $self->uri_for('/static', $asset) );
 }
 
+
+=head2 tz
+
+Convert timezone
+
+=cut
+
+sub tz {
+  my ($c, $dt) = @_;
+  if ($c->user && $c->user->timezone) {
+    eval { $dt->set_time_zone($c->user->timezone) };
+  }
+  return $dt;
+}
+
+
 sub trace {
     my($self, $msg) = @_;
 
@@ -130,11 +146,11 @@ Catapulse::Web - Catalyst based CMS
 
 =head1 SEE ALSO
 
-L<Catapulse::Web::Controller::Root>, L<Catalyst>
+L<Catalyst>
 
 =head1 AUTHOR
 
-dab,,,
+Daniel Brosseau, 2016, <dab@catapulse.org>
 
 =head1 LICENSE
 
