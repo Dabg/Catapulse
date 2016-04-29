@@ -1,20 +1,20 @@
 <div class="container">
 	<div class="row">
-             [% body_navbar %]
-             [% body_breadcrumbs %]
-             [% body_message %]
+             [% blocks.navbar.content %]
+             [% blocks.breadcrumbs.content %]
+             [% blocks.message.content %]
     </div>
     <div class="row">
 		<div class="col-sm-8">
-		     [% body_content %]
-		     [% body_comment %]
+		     [% blocks.content.content %]
+		     [% blocks.comment.content %]
 		 </div>
 		<div class="col-sm-3 col-sm-offset-1">
-		     [% body_sidebar %]
+		     [% blocks.sidebar.content %]
 		</div>
     </div>
     <div class="row">
-             [% body_footer %]
-             [% body_querylog %]
+             [% blocks.footer.content %]
+             [% blocks.querylog.content %]
     </div>
 </div>
