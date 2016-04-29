@@ -18,3 +18,10 @@ Authorization::RBAC:
   typeobj:
     Page:
       parent_field: parent
+
+Plugin::Page:
+  typepage:
+    wiki:
+      permission: /page/permission
+    from_controller:
+      permission: /page/permission

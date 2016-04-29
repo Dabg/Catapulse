@@ -7,13 +7,3 @@ deps:
 
 catalyst_plugins:
   - Page
-
-Plugin::Page:
-  debug: 0
-  typepage:
-    wiki:
-      edit: /wiki
-      permission: /page/permission
-
-    from_controller:
-      permission: /page/permission

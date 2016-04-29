@@ -2,8 +2,15 @@ name: Wiki
 version: 1
 
 deps:
+  - Page
   - Formatter
   - Authorization
+
+Plugin::Page:
+  debug: 0
+  typepage:
+    wiki:
+      edit: /wiki
 
 Formatter::Dir:
   prefix_url: /myfiles
