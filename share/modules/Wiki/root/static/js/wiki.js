@@ -1,10 +1,6 @@
 
 var on_change_refresh_rate = 1000;
 
-jQuery.uri_for = function(path) { return 'http://localhost:3000' + path }
-jQuery.uri_for_static= function(path) { return '/static//' + path }
-
-
 $( function() {
 
     setupToggleMaximized();
