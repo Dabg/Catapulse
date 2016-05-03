@@ -1,29 +1,21 @@
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li><a href="/">Home</a></li>
+          <div class="list-group">
+              <a href="/" class="list-group-item">Home</a>
               [% IF c.user %]
-              <li><a href="/logout">Logout</a></li>
-              <li><a href="/change_password">Change password</a></li>
+              <a href="/logout" class="list-group-item">Logout</a>
+              <a href="/change_password" class="list-group-item">Change password</a>
               [% ELSE %]
-              <li[% ' class="active"' IF (c.req.path.match("^login")) %]><a href="[% c.uri_for('/login') %]">Login</a></li>
-              <li><a href="/register">Register</a></li>
+              <a href="[% c.uri_for('/login') %]" class="list-group-item">Login</a>
+              <a href="/register" class="list-group-item">Register</a>
               [%- END -%]
-            </ul>
-          </div><!--/.well -->
-
+          </div>
 
           [% IF c.user.username == 'admin' %]
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li[% ' class="active"' IF (c.req.path.match("^admin")) %]><a href="[% c.uri_for('/admin') %]">Administration</a></li>
-            </ul>
-
+          <div class="list-group">
+              <a href="[% c.uri_for('/admin') %]" class="list-group-item" style="height: 30px; padding: 5px 15px;">Administration</a>
               [% IF pagelinks %]
-            <ul>
               [%- FOREACH link IN pagelinks %]
-              <li><a href="[% link.href %]">[% link.label %]</a></li>
+              <a href="[% link.href %]" class="list-group-item" style="height: 30px; padding: 5px 15px;">[% link.label %]</a>
               [%- END -%]
               [% END %]
-            </ul>
-          </div><!--/.well -->
+          </div>
           [%- END -%]
