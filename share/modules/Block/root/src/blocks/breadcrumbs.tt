@@ -17,4 +17,5 @@
                   [% END %]
 
                    [% IF c.can_access( [node],['permission_Page'] ) %]<li><a href="[% uri %]+permission"><i class="glyphicon  glyphicon-lock"></i></a></li>[% END %]
+                   [% IF c.can_access( [node],['add_Attachment'] ) %]<li><a href="[% uri %]+attachment"><i class="glyphicon  glyphicon-upload"></i></a></li>[% END %]
               </ol>

@@ -1,0 +1,12 @@
+name: Attachment
+version: 1
+deps:
+  - Static
+  - Authentication
+  - TemplateTT
+  - DefaultTheme
+
+Plugin::Page:
+  typepage:
+    wiki:
+      attachment: /attachment
