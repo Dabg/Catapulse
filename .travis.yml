@@ -1,8 +1,8 @@
 language: perl
 perl:
   - "5.8"                     # normal pre-installed perl
-  - "5.8.4"                   # installs perl 5.8.4
-  - "5.8.4-thr"               # installs perl 5.8.4 with threading
+  - "5.12"                    # installs latest perl 5.12 (if not already available)
+  - "5.18"                    # installs latest perl 5.18 (if not already available)
   - "5.20"                    # installs latest perl 5.20 (if not already available)
   - "blead"                   # install perl from git
 before_install:
