@@ -4,7 +4,7 @@ perl:
   - "5.12"                    # installs latest perl 5.12 (if not already available)
   - "5.18"                    # installs latest perl 5.18 (if not already available)
   - "5.20"                    # installs latest perl 5.20 (if not already available)
-  - "blead"                   # install perl from git
+  - "5.24"                    # installs latest perl 5.24 (if not already available)
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y  imagemagick libssh2-1-dev libmagickcore-dev # to compile some module on travis
