@@ -35,6 +35,8 @@ sub auto :Private {
 
     # default css
     $c->assets->include("static/bootstrap-3.3.6/css/bootstrap.min.css");
+    $c->assets->include("static/css/font-awesome.min.css");
+
 
     # # default js
     $c->assets->include("static/js/jquery-1.11.1.min.js");
@@ -45,6 +47,11 @@ sub auto :Private {
     # # # used by toogle/edit/delete in lists
     $c->assets->include("static/js/jquery.livequery.js");
     $c->assets->include("static/js/jquery.pa.list_actions.js");
+
+    # comments
+    $c->assets->include("/static/css/jquery-comments.css");
+    $c->assets->include("/static/js/jquery-comments.min.js");
+
 }
 
 =head2 index
@@ -61,6 +68,8 @@ sub index :Path :Args(0) {
 }
 
 =head2 default
+
+Standard 404 error page
 
 =cut
 
@@ -105,6 +114,8 @@ sub end : ActionClass('RenderView') {
   return 1 if $c->req->method eq 'HEAD';
   return  if $c->response->status =~ /^(?:204|3\d\d)$/;
   return $c->res->output if ( $c->res->output && ! $c->stash->{template} );
+
+  my $zoom_in = $c->req->param('zoom_in');
 
   # If page exist in db
   if ( my $page = $c->stash->{page} ) {
