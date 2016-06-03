@@ -1,0 +1,46 @@
+=encoding utf8
+
+=head1 NAME
+
+Catapulse::Web - Catalyst based CMS
+
+=head1 SYNOPSIS
+
+    # use the database self created
+    ./script/catapulse_web.pl
+
+    # OR change Database Model in share/etc/catapulse_web.yml
+    # - Database Model -
+    Model::DBIC:
+     schema_class: Catapulse::Schema
+     connect_info:
+       dsn: dbi:mysql:database=catapulse;host=localhost
+       user: dbadmin
+       password: secret
+
+    # Deploy database
+    ./script/catapulse_spawn.pl
+
+    # Start standalone server
+    # ( populate database the first time )
+    ./script/catapulse_web.pl
+
+    # Go to http://localhost:3000
+
+=head1 DESCRIPTION
+
+
+=head1 SEE ALSO
+
+L<Catalyst>
+
+=head1 AUTHOR
+
+Daniel Brosseau, 2016, <dab@catapulse.org>
+
+=head1 LICENSE
+
+This library is free software. You can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
