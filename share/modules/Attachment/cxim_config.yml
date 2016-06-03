@@ -1,6 +1,7 @@
 name: Attachment
 version: 1
 deps:
+  - ViewJSON
   - Static
   - Authentication
   - TemplateTT
