@@ -131,12 +131,11 @@ Catapulse::Web - Catalyst based CMS
        user: dbadmin
        password: secret
 
-    # Populate database
-    ./script/manage_db.pl install
-    ./script/manage_db.pl populate
-    [ ./script/manage_db.pl help]
+    # Deploy database
+    ./script/catapulse_spawn.pl
 
     # Start standalone server
+    # ( populate database the first time )
     ./script/catapulse_web.pl
 
     # Go to http://localhost:3000
