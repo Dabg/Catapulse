@@ -246,9 +246,9 @@ __PACKAGE__->many_to_many( ops_to_access => 'obj_operations', 'operation',);
 
 =cut
 
-=head2 get_permissions
+=head2 path
 
-Returns the permissions for a role and an operation
+return page path
 
 =cut
 
@@ -266,8 +266,6 @@ sub path {
   $ret =~ s|//|/|;
   return $ret;
 }
-
-=cut
 
 =head2 get_permissions
 
@@ -344,7 +342,14 @@ sub update_content {
 }    # end sub update_content
 
 
+=head2 activate
+
+=cut
 sub activate   { $_[0]->active(1); $_[0]->update(); };
+
+=head2 deactivate
+
+=cut
 sub deactivate { $_[0]->active(0); $_[0]->update(); };
 
 __PACKAGE__->meta->make_immutable;

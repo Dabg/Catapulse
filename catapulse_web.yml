@@ -3,7 +3,7 @@ name: Catapulse
 default_view: TT
 
 CatalystX::InjectModule:
-  debug: 0
+  debug: 0 # 0|1|2
   path:
     - share/modules/
 #    - __INC__
@@ -19,8 +19,8 @@ Model::DBIC:
   install_if_needed:
     default_fixture_sets:
       - all_tables
-  # connect_info:
-  #   dsn: dbi:SQLite:share/catapulse-schema.db
+#  connect_info:
+#    dsn: dbi:SQLite:share/catapulse-schema.db
 
 preferences:
   anonymous_id: 2

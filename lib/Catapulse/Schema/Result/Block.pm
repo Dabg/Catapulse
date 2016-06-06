@@ -14,12 +14,6 @@ extends 'DBIx::Class::Core';
 
 =head1 COMPONENTS LOADED
 
-=over 4
-
-=item * L<>
-
-=back
-
 =cut
 
 __PACKAGE__->load_components( "Tree::AdjacencyList::Ordered" );
@@ -121,7 +115,14 @@ __PACKAGE__->has_many(
 __PACKAGE__->many_to_many("templates", "block_templates", "template");
 
 
+=head2 activate
+
+=cut
 sub activate   { $_[0]->active(1); $_[0]->update(); };
+
+=head2 deactivate
+
+=cut
 sub deactivate { $_[0]->active(0); $_[0]->update(); };
 
 __PACKAGE__->meta->make_immutable;

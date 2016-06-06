@@ -11,7 +11,7 @@ Catapulse::Schema::ResultSet::Block - resultset methods on blocks
 
 =head1 METHODS
 
-=head2 active
+=head2 actived
 
 Get actived blocks
 

@@ -11,7 +11,7 @@ Catapulse::Schema::ResultSet::User - resultset methods on users
 
 =head1 METHODS
 
-=head2 active
+=head2 actived
 
 Get actived users
 

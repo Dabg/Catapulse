@@ -138,7 +138,14 @@ Composing rels: L</template_block> -> block
 __PACKAGE__->many_to_many('blocks', 'template_blocks', 'block');
 
 
+=head2 activate
+
+=cut
 sub activate   { $_[0]->active(1); $_[0]->update(); };
+
+=head2 deactivate
+
+=cut
 sub deactivate { $_[0]->active(0); $_[0]->update(); };
 
 __PACKAGE__->meta->make_immutable;

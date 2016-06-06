@@ -198,7 +198,14 @@ __PACKAGE__->many_to_many(parents => 'map_role_parents', 'parent');
 __PACKAGE__->many_to_many("users", "user_roles", "user" );
 
 
+=head2 activate
+
+=cut
 sub activate   { $_[0]->active(1); $_[0]->update(); };
+
+=head2 deactivate
+
+=cut
 sub deactivate { $_[0]->active(0); $_[0]->update(); };
 
 __PACKAGE__->meta->make_immutable;

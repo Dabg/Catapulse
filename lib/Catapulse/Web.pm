@@ -1,10 +1,46 @@
 use utf8;
 package Catapulse::Web;
+
+=encoding utf8
+
+=head1 NAME
+
+Catapulse::Web - Catalyst based CMS
+
+=cut
+
 use Moose;
 use namespace::autoclean;
 
 use Catalyst::Runtime 5.80;
 use Term::ANSIColor qw(:constants);
+
+=head1 SYNOPSIS
+
+    # use the database self created
+    ./script/catapulse_web.pl
+
+    # OR change Database Model in share/etc/catapulse_web.yml
+    # - Database Model -
+    Model::DBIC:
+     schema_class: Catapulse::Schema
+     connect_info:
+       dsn: dbi:mysql:database=catapulse;host=localhost
+       user: dbadmin
+       password: secret
+
+    # Deploy database
+    ./script/catapulse_spawn.pl
+
+    # Start standalone server
+    # ( populate database the first time )
+    ./script/catapulse_web.pl
+
+    # Go to http://localhost:3000
+
+=head1 DESCRIPTION
+
+=cut
 
 use Catalyst qw/
     Assets
@@ -40,7 +76,7 @@ __PACKAGE__->config->{session} = {
 # Start the application
 __PACKAGE__->setup();
 
-=head1 pref
+=head2 pref
 
 =cut
 sub pref {
@@ -54,7 +90,7 @@ sub pref {
     return $pref->{$setting};
 }
 
-=head1 add_message
+=head2 add_message
 
 Add messages
 
@@ -75,6 +111,9 @@ sub add_message {
     return 1;
 }
 
+=head2 uri_for_static
+
+=cut
 sub uri_for_static {
     my ( $self, $asset ) = @_;
      return
@@ -99,6 +138,9 @@ sub tz {
 }
 
 
+=head2 trace
+
+=cut
 sub trace {
     my($self, $msg) = @_;
 
@@ -109,38 +151,6 @@ sub trace {
     #}
 
 }
-
-
-=encoding utf8
-
-=head1 NAME
-
-Catapulse::Web - Catalyst based CMS
-
-=head1 SYNOPSIS
-
-    # use the database self created
-    ./script/catapulse_web.pl
-
-    # OR change Database Model in share/etc/catapulse_web.yml
-    # - Database Model -
-    Model::DBIC:
-     schema_class: Catapulse::Schema
-     connect_info:
-       dsn: dbi:mysql:database=catapulse;host=localhost
-       user: dbadmin
-       password: secret
-
-    # Deploy database
-    ./script/catapulse_spawn.pl
-
-    # Start standalone server
-    # ( populate database the first time )
-    ./script/catapulse_web.pl
-
-    # Go to http://localhost:3000
-
-=head1 DESCRIPTION
 
 
 =head1 SEE ALSO

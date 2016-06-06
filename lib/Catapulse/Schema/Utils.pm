@@ -3,13 +3,24 @@ package Catapulse::Schema::Utils;
 use Moose::Role;
 use DateTime;
 
+=head1 NAME
+
+Catapulse::Schema::Result::User
+
+=cut
+
 has mi   =>  (is => 'rw',
                isa => 'CatalystX::InjectModule::MI',
               required => 1,
           );
 
 
-# find_or_create user
+=head2 foc_user
+
+find_or_create user
+
+=cut
+
 sub foc_user {
     my $self  = shift;
     my $user  = shift;
@@ -27,6 +38,11 @@ sub foc_user {
     return $u
 }
 
+=head2 del_user
+
+delete user
+
+=cut
 sub del_user {
     my $self  = shift;
     my $user  = shift;
@@ -35,6 +51,12 @@ sub del_user {
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('User')->search( { username => $user->{username} } )->delete_all;
 }
+
+=head2 foc_block
+
+find_or_create block
+
+=cut
 
 sub foc_block {
     my $self  = shift;
@@ -46,6 +68,13 @@ sub foc_block {
     $schema->resultset('Block')->find_or_create($block);
 }
 
+
+=head2 foc_pagetype
+
+find_or_create pagetype
+
+=cut
+
 sub foc_pagetype {
     my $self      = shift;
     my $pagetype  = shift;
@@ -56,6 +85,11 @@ sub foc_pagetype {
     $schema->resultset('Pagetype')->find_or_create($pagetype);
 }
 
+=head2 del_pagetype
+
+delete pagetype
+
+=cut
 sub del_pagetype {
     my $self      = shift;
     my $pagetype  = shift;
@@ -64,6 +98,12 @@ sub del_pagetype {
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('Pagetype')->search( { name => $pagetype->{name} } )->delete_all;
 }
+
+=head2 foc_typeobj
+
+find_or_create typeobj
+
+=cut
 
 sub foc_typeobj {
     my $self      = shift;
@@ -75,6 +115,12 @@ sub foc_typeobj {
     $schema->resultset('Typeobj')->find_or_create($typeobj);
 }
 
+=head2 del_typeobj
+
+delete typeobj
+
+=cut
+
 sub del_typeobj {
     my $self      = shift;
     my $typeobj  = shift;
@@ -83,6 +129,12 @@ sub del_typeobj {
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('Typeobj')->search( { name => $typeobj->{name} } )->delete_all;
 }
+
+=head2 foc_operation
+
+find_or_create operation
+
+=cut
 
 sub foc_operation {
     my $self      = shift;
@@ -94,6 +146,12 @@ sub foc_operation {
     $schema->resultset('Operation')->find_or_create($operation);
 }
 
+=head2 del_operation
+
+delete operation
+
+=cut
+
 sub del_operation {
     my $self      = shift;
     my $operation  = shift;
@@ -103,7 +161,12 @@ sub del_operation {
     $schema->resultset('Operation')->search( { name => $operation->{name} } )->delete_all;
 }
 
-# find_or_create page
+=head2 foc_page
+
+find_or_create page
+
+=cut
+
 sub foc_page {
     my $self  = shift;
     my $page  = shift;
@@ -133,6 +196,12 @@ sub foc_page {
     return $p;
 }
 
+=head2 del_page
+
+delete page
+
+=cut
+
 sub del_page {
     my $self  = shift;
     my $page  = shift;
@@ -142,7 +211,11 @@ sub del_page {
     $schema->resultset('Page')->find( $page->id )->delete;
 }
 
-# find_or_create template
+=head2 foc_template
+
+find_or_create template
+
+=cut
 sub foc_template {
     my $self  = shift;
     my $template  = shift;
@@ -162,6 +235,11 @@ sub foc_template {
     return $t
 }
 
+=head2 del_template
+
+delete template
+
+=cut
 sub del_template {
     my $self  = shift;
     my $template  = shift;
@@ -171,7 +249,11 @@ sub del_template {
     $schema->resultset('Template')->find( $template->id )->delete;
 }
 
-# find_or_create permission
+=head2 foc_permission
+
+find_or_create permission
+
+=cut
 sub foc_permission {
     my $self = shift;
     my $perm = shift;
@@ -229,6 +311,9 @@ sub foc_permission {
 
 }
 
+=head2 is_exist
+
+=cut
 sub is_exist{
     my $self = shift;
     my $name = shift;

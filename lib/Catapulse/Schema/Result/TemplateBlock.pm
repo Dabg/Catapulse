@@ -15,12 +15,6 @@ extends 'DBIx::Class::Core';
 
 =head1 COMPONENTS LOADED
 
-=over 4
-
-=item * L<>
-
-=back
-
 =cut
 
 __PACKAGE__->load_components();
