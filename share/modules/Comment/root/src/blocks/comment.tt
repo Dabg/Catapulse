@@ -1,34 +1,80 @@
 [% IF c.can_access( [page],['view_Comment'] ) && page.type.name == 'wiki' %]
-<div id="comments">
-[% IF comments.count %]
-<h4>[%comments.count%] [% IF comments.count == 1; loc('Comment'); ELSE; loc('Comments'); END %]</h4>
-[% WHILE ( comment = comments.next ) %]
-<div class="comment">
-    <dl>
-        <dt>[% loc('poster') %]</dt>
-        <dd><a href="[%comment.poster.link%]">[%comment.poster.name%]</a></dd>
-        <dt>[% loc('posted') %]</dt>
-        <dd>[% c.tz(comment.posted).ymd %] [% c.tz(comment.posted).hms %]</dd>
+<script type="text/javascript">
+  $.ajaxSetup({
+      data: { page_id: [% page.id %] },
+      scriptCharset: "UTF-8",
+  });
 
-        <dt>
-            [% loc('comment') %]:
-        [% IF c.can_access([comment], ['delete_Comment']) %]
-            [<b class="remove"><a href="[% c.uri_for('/comment','del',comment.id) %]">&times;</a></b>]
-        [% END %]
-        </dt>
-        <dd>[% comment.formatted %]</dd>
-    </dl>
-</div>
-            [% END # WHILE %]
-[% ELSE # comments.count %]
-<h4>[%loc('No Comments posted')%]</h4>
-[% END # comments.count %]
+  $(function() {$('#comments-container').comments({
+         profilePictureURL: '/static/images/user-icon.png',
+         currentUserIsAdmin: true,
+         spinnerIconURL: '/static/images/spinner.gif',
+         fieldMappings: {
+                        id: 'id',
+                        parent: 'parent_id',
+                        created: 'created',
+                        modified: 'modified',
+                        content: 'body',
+                        file: 'file',
+                        fileURL: 'file_url',
+                        fileMimeType: 'file_mime_type',
+                        fullname: 'fullname',
+                        profileURL: 'profile_url',
+                        profilePictureURL: 'profile_picture_url',
+                        createdByAdmin: 'created_by_admin',
+                        createdByCurrentUser: 'created_by_current_user',
+                        upvoteCount: 'upvote_count',
+                        userHasUpvoted: 'user_has_upvoted',
+         },
+         enableReplying: true,
+         enableEditing: true,
+         enableUpvoting: false,
+         enableDeleting: true,
+         enableDeletingCommentWithReplies: false,
+         enableAttachments: false,
+         enableNavigation: true,
 
-[% IF c.can_access( [page],['add_Comment'] ) %]
-<p><small><a href="#" class="toggleInfo" id="commentlink">[% loc('add a comment') %]</a></small></p>
-[% END %]
-<div id="hidden_info"  class="framedpopup">
-            [% PROCESS blocks/comment/post.tt %]
-</div>
-</div>
+
+         getComments: function(success, error) {
+             setTimeout(function() {
+                   $.ajax({
+                     type: 'get',
+                     url: '/comment/',
+                 success: function(json_data) {
+             		var commentsArray = $.parseJSON(JSON.stringify(json_data));
+             		success(commentsArray)
+                 },
+             error: error
+         })},500)},
+
+
+         postComment: function(commentJSON, success, error) {
+          setTimeout(function() {
+	         $.ajax({
+                   type: 'post',
+                   url: '/comment/',
+	           data: commentJSON,
+                   success: function(comment) {
+                       success(comment)
+                   },
+            error: error
+         })},500)},
+
+
+         putComment: function(data, success, error) {
+         		setTimeout(function() {
+         			success(data);
+         		}, 500);
+         	},
+         deleteComment: function(data, success, error) {
+         	setTimeout(function() {
+         		success();
+         	}, 500);
+         },
+    }
+   )
+  }
+);
+</script>
+<div id="comments-container"></div>
 [% END %]

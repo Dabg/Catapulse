@@ -197,7 +197,7 @@ Related object: L<Catapulse::Schema::Result::Comment>
 __PACKAGE__->has_many(
   "comments",
   "Catapulse::Schema::Result::Comment",
-  { "foreign.page" => "self.id" },
+  { "foreign.page_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 

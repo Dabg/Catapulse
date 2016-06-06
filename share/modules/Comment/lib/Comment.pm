@@ -5,11 +5,11 @@ with 'Catapulse::Schema::Utils';
 
 my $pages = [
     {
-        path       => '/comment/del',
+        path       => '/API/comment',
         template   => 'Main',
-        title      => 'delete comment',
+        title      => 'view comment',
         type       => 'from_controller',
-        ops_to_access => [ 'delete_Comment'],
+        ops_to_access => [ 'view_Comment'],
     },
 ];
 
@@ -27,10 +27,10 @@ my $block = {
         };
 
 my $operations = [
-    {
-        active => 1,
-        name   => 'view_Comment'
-    },
+    # {
+    #     active => 1,
+    #     name   => 'view_Comment'
+    # },
     {
         active => 1,
         name   => 'add_Comment'
@@ -54,12 +54,6 @@ my $permissions = [
       typeobj => 'Page',
       obj     => '/*',
       value   => 1,
-    },
-    { role    => 'anonymous',
-      op      => [ 'delete_Comment' ],
-      typeobj => 'Page',
-      obj     => '/comment/del',
-      value   => 0,
     },
 ];
 

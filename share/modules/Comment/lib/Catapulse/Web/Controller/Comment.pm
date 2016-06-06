@@ -3,14 +3,28 @@ package Catapulse::Web::Controller::Comment;
 
 use Moose;
 use namespace::autoclean;
+use YAML;
+use XML::Simple;
+use JSON;
+use JSON::XS;
 
+#BEGIN {extends 'Catalyst::Controller::REST'; }
 BEGIN {extends 'Catalyst::Controller'; }
 
-use Catapulse::Web::Form::Comment;
+
+__PACKAGE__->config(
+    'namespace' => '',
+
+#    'default' => 'text/html',
+    'map'     => {
+        'text/x-yaml'      => 'YAML',
+        'application/json' => 'JSON',
+    },
+);
 
 =head1 NAME
 
-Catapulse::Controller::Comment - Catalyst Controller
+Catapulse::Controller::API::Comment - Catalyst Controller
 
 =head1 DESCRIPTION
 
@@ -28,35 +42,75 @@ Add a comment
 
 =cut
 
-sub index :Path :Args(0) {
+sub comment  :Path('comment') :ActionClass('REST'){}
+
+sub comment_GET  :ActionClass('Serialize') {
     my ( $self, $c ) = @_;
 
-    my $form      = Catapulse::Web::Form::Comment->new( ctx    => $c,
-                                                        item   => $c->model('DBIC::Comment')->new_result({}) );
-    my $poster_id = $c->request->body_parameters->{poster};
-    my $page_id   = $c->request->body_parameters->{page};
+    # my $result = [ {
+    #         'id' => 1,
+    #         'created' => '2015-10-01',
+    #         'content' => 'Lorem ipsum dolort sit amet',
+    #         'fullname' => 'Simon Powell',
+    #         'upvote_count' => 2,
+    #         'user_has_upvoted' => 0,
+    # 		     }];
 
-    if ( $poster_id != $c->user->id) {
-      $c->req->redirect('/access_denied');
-      $c->detach;
+    use Data::Dumper;
+
+
+
+
+    my $page_id = $c->request->params->{page_id};
+    print "PAGE ID=$page_id\n";
+
+    my $rs = $c->model("DBIC::Comment")->search({ page_id => $page_id});
+    my $result = [];
+
+    while ( my $r = $rs->next) {
+        push(@$result, $r->TO_JSON)
     }
 
-    $form->process( init_object => { posted => DateTime->now }, params => $c->request->body_parameters );
-    if ( ! $form->validated ){
-      use Data::Dumper;
-      say STDERR "Errors: " . Dumper($form->errors);
-      return;
-    }
-    else {
-      $c->stash->{comments} =
-        $c->model("DBIC::Comment")
-        ->search( { page => $page_id }, { order_by => 'posted' } );
-      my $comments = $c->view('TTBlock')->render( $c, 'blocks/comment.tt' );
-      $c->stash->{comments} = $comments;
-      return $c->res->body($comments);
-    }
-  }
 
+    print "DATA RETOURNEES:" . Dumper($result);
+
+
+    $c->stash->{'rest'} = $result;
+
+    $c->stash->{json_data} = $result;
+    $c->forward('View::JSON');
+}
+
+
+sub comment_POST   :ActionClass('Serialize'){
+    my ( $self, $c ) = @_;
+
+
+    my $page = $c->stash->{page};
+
+
+    my $params = $c->request->body_parameters;
+    use Data::Dumper;
+    print "PARAM RECEIVED:" . Dumper($params);
+
+
+    my $id = delete $params->{id};
+    my $parent_id = delete $params->{parent_id} || 0;
+
+    my $user_has_upvoted	= delete $params->{user_has_upvoted};
+    my $upvote_count		= delete $params->{upvote_count};
+    my $profile_picture_url	= delete $params->{profile_picture_url};
+    my $created_by_current_user = delete $params->{created_by_current_user};
+    my $fullname		= delete $params->{fullname};
+    $params->{created}		= DateTime->now;
+    $params->{poster}		= $c->user->id || 2;
+
+    my $comment = $c->model("DBIC::Comment")->create($params)->TO_JSON;
+    print "COMMENT RETURNED:" . Dumper($comment);
+
+    $c->stash->{json_data} = $comment;
+    $c->forward('View::JSON');
+}
 
 
 =head2 del
@@ -65,15 +119,15 @@ Remove comments, provided user can edit the page the comment is on.
 
 =cut
 
-sub del : Local {
-    my ( $self, $c, $comment ) = @_;
+# sub del : Local {
+#     my ( $self, $c, $comment ) = @_;
 
-    if ( $comment = $c->model("DBIC::Comment")->find($comment) ) {
-            $comment->delete();
-    }
-    $c->res->redirect('/');
-    $c->detach;
-}
+#     if ( $comment = $c->model("DBIC::Comment")->find($comment) ) {
+#             $comment->delete();
+#     }
+#     $c->res->redirect('/');
+#     $c->detach;
+# }
 
 
 =head1 AUTHOR

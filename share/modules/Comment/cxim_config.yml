@@ -3,8 +3,12 @@ version: 1
 
 deps:
   - Authorization
+  - ViewJSON
 
 Authorization::RBAC:
   typeobj:
     Comment:
       parent_field: page
+
+View::JSON:
+  expose_stash: 'json_data'

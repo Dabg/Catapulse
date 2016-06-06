@@ -10,6 +10,8 @@ Catapulse::Schema::Result::Comment
 use Moose;
 use MooseX::NonMoose;
 use MooseX::MarkAsMethods autoclean => 1;
+use HTML::Entities;
+
 extends 'DBIx::Class::Core';
 
 
@@ -22,7 +24,8 @@ my $textile = Text::Textile->new(
 );
 
 __PACKAGE__->load_components(
-    qw/DateTime::Epoch TimeStamp Core/);
+    qw/ TimeStamp Tree::AdjacencyList InflateColumn::DateTime/);
+
 __PACKAGE__->table("comment");
 __PACKAGE__->add_columns(
     "id",
@@ -32,23 +35,24 @@ __PACKAGE__->add_columns(
         size              => undef,
         is_auto_increment => 1
     },
+    "parent_id",
+    { data_type => "integer", default_value => 0, is_nullable => 1 },
     "poster",
     { data_type => "INTEGER", is_nullable => 0, size => undef },
-    "page",
+    "page_id",
     { data_type => "INTEGER", is_nullable => 0, size => undef },
-    "posted",
-    {
-        data_type        => "BIGINT",
-        is_nullable      => 0,
-        size             => undef,
-        inflate_datetime => 'epoch',
-        set_on_create    => 1,
-    },
+    "created",
+    { data_type => "datetime", is_nullable => 0, set_on_create => 1},
+    "modified",
+    { data_type => "datetime", is_nullable => 1 },
     "body",
     { data_type => "TEXT", is_nullable => 0, size => undef },
 );
 
 __PACKAGE__->set_primary_key("id");
+
+__PACKAGE__->parent_column('parent_id');
+
 __PACKAGE__->belongs_to(
     "poster",
     "Catapulse::Schema::Result::User",
@@ -58,8 +62,9 @@ __PACKAGE__->belongs_to(
 __PACKAGE__->belongs_to(
     "page",
     "Catapulse::Schema::Result::Page",
-    { id => "page" }
+    { id => "page_id" }
 );
+
 
 __PACKAGE__->has_many(
   "obj_operations",
@@ -77,6 +82,22 @@ __PACKAGE__->many_to_many( ops_to_access => 'obj_operations', 'operation',);
 Catapulse::Schema::Result::Comment - store comments
 
 =head1 METHODS
+
+=head2 TO_JSON
+
+=cut
+
+sub TO_JSON {
+    my $self = shift;
+
+    return  { id	=> $self->id,
+	      parent_id	=> $self->parent_id,
+	      body	=> $self->body,
+	      created	=> $self->created->ymd,
+	      #modified	=> $self->modified->ymd,
+
+	    };
+}
 
 =head2 formatted
 
