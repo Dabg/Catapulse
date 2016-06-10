@@ -5,6 +5,8 @@ use warnings;
 use parent qw/Catapulse::Formatter/;
 use utf8;
 
+=encoding utf8
+
 =head1 NAME
 
 Catapulse::Formatter::WikipediaLink - Linked Wikipedia by writing {{wikipedia:<lang> <word>}}

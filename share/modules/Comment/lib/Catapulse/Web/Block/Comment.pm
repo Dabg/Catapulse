@@ -11,7 +11,7 @@ sub process {
 
   my $page = $self->ctx->stash->{page};
   my $comments  = $self->ctx->model('DBIC::Comment')->search(
-                                      { page => $page->id } );
+                                      { page_id => $page->id } );
 
   $self->ctx->stash('comments', $comments);
 }

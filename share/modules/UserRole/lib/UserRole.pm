@@ -1,5 +1,11 @@
 package UserRole;
 
+=head1 NAME
+
+UserRole - UserRole module
+
+=cut
+
 use Moose;
 
 with 'Catapulse::Schema::Utils';
@@ -24,6 +30,12 @@ my $anonymous = {
            active   => 1,
          };
 
+=head2 install
+
+module installer
+
+=cut
+
 sub install {
     my ($self, $module) = @_;
 
@@ -32,6 +44,12 @@ sub install {
     $self->foc_user( $anonymous, [ 'anonymous'] );
 }
 
+=head2 uninstall
+
+module uninstaller
+
+=cut
+
 sub uninstall {
     my ($self, $module) = @_;
 
@@ -39,5 +57,20 @@ sub uninstall {
     $self->del_user( $admin,     [ 'admin'    ] );
     $self->del_user( $anonymous, [ 'anonymous'] );
 }
+
+=head1 SEE ALSO
+
+L<Catapulse>
+
+=head1 AUTHOR
+
+Daniel Brosseau, 2016, <dab@catapulse.org>
+
+=head1 LICENSE
+
+This library is free software. You can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
 
 1;

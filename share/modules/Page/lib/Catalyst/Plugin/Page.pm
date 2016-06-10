@@ -1,6 +1,8 @@
 use utf8;
 package Catalyst::Plugin::Page;
 
+
+
 use Moose::Role;
 use namespace::autoclean;
 
@@ -312,15 +314,13 @@ Catapulse::Web::Admin::Page
 
 Catapulse::Schema::Result::Page
 
-=back
-
 =head1 SEE ALSO
 
 L<Catalyst>.
 
 =head1 AUTHORS
 
-Daniel Brosseau, 2015, <dab@catapulse.org>
+Daniel Brosseau, 2016, <dab@catapulse.org>
 
 =head1 LICENSE
 

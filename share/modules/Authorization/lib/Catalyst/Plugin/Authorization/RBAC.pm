@@ -55,9 +55,6 @@ Catalyst::Plugin::Authorization::RBAC -
 =head1 DESCRIPTION
 
 
-
-=back
-
 =head1 SEE ALSO
 
 L<Catalyst>.

@@ -1,5 +1,12 @@
 package Page;
 
+=head1 NAME
+
+Page - Page module
+
+=cut
+
+
 use Moose;
 with 'Catapulse::Schema::Utils';
 
@@ -74,6 +81,12 @@ my $new_operations = [
     },
 ];
 
+=head2 install
+
+module installer
+
+=cut
+
 sub install {
     my ($self, $module, $mi) = @_;
 
@@ -91,6 +104,12 @@ sub install {
     }
 }
 
+=head2 uninstall
+
+module uninstaller
+
+=cut
+
 sub uninstall {
     my ($self, $module, $mi) = @_;
 
@@ -103,5 +122,20 @@ sub uninstall {
         $schema->resultset('Operation')->search({ name => $op->{name}})->delete_all;
     }
 }
+
+=head1 SEE ALSO
+
+L<Catapulse>
+
+=head1 AUTHOR
+
+Daniel Brosseau, 2016, <dab@catapulse.org>
+
+=head1 LICENSE
+
+This library is free software. You can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
 
 1;

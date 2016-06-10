@@ -5,7 +5,7 @@ extends 'Catapulse::Web::Form::Base';
 
 =head1 NAME
 
-Form object for the Role Controller
+Catapulse::Web::Form::Role : Form object for the Role Controller
 
 =head1 SYNOPSIS
 
@@ -37,5 +37,21 @@ has '+unique_messages' =>    (
 
 __PACKAGE__->meta->make_immutable;
 no HTML::FormHandler::Moose;
+
+
+=head1 SEE ALSO
+
+L<Catapulse>
+
+=head1 AUTHOR
+
+Daniel Brosseau, 2016, <dab@catapulse.org>
+
+=head1 LICENSE
+
+This library is free software. You can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
 
 1;
