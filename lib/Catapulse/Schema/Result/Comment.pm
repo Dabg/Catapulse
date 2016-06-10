@@ -90,13 +90,13 @@ Catapulse::Schema::Result::Comment - store comments
 sub TO_JSON {
     my $self = shift;
 
-    return  { id	=> $self->id,
-	      parent_id	=> $self->parent_id,
-	      body	=> $self->body,
-	      created	=> $self->created->ymd,
-	      #modified	=> $self->modified->ymd,
-
-	    };
+    my $res =  { id	=> $self->id,
+                 parent_id	=> $self->parent_id,
+                 body	    => $self->body,
+                 created	=> $self->created->ymd,
+              };
+    utf8::decode($res->{body});
+    return $res;
 }
 
 =head2 formatted
