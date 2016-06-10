@@ -44,25 +44,16 @@ Add a comment
 
 sub comment  :Path('comment') :ActionClass('REST'){}
 
+=head2 comment_GET
+
+return comments page
+
+=cut
+
 sub comment_GET  :ActionClass('Serialize') {
     my ( $self, $c ) = @_;
 
-    # my $result = [ {
-    #         'id' => 1,
-    #         'created' => '2015-10-01',
-    #         'content' => 'Lorem ipsum dolort sit amet',
-    #         'fullname' => 'Simon Powell',
-    #         'upvote_count' => 2,
-    #         'user_has_upvoted' => 0,
-    # 		     }];
-
-    use Data::Dumper;
-
-
-
-
     my $page_id = $c->request->params->{page_id};
-    print "PAGE ID=$page_id\n";
 
     my $rs = $c->model("DBIC::Comment")->search({ page_id => $page_id});
     my $result = [];
@@ -71,16 +62,15 @@ sub comment_GET  :ActionClass('Serialize') {
         push(@$result, $r->TO_JSON)
     }
 
-
-    print "DATA RETOURNEES:" . Dumper($result);
-
-
-    $c->stash->{'rest'} = $result;
-
     $c->stash->{json_data} = $result;
     $c->forward('View::JSON');
 }
 
+=head2 comment_POST
+
+post a comment on page
+
+=cut
 
 sub comment_POST   :ActionClass('Serialize'){
     my ( $self, $c ) = @_;
@@ -88,46 +78,81 @@ sub comment_POST   :ActionClass('Serialize'){
 
     my $page = $c->stash->{page};
 
-
     my $params = $c->request->body_parameters;
-    use Data::Dumper;
-    print "PARAM RECEIVED:" . Dumper($params);
-
 
     my $id = delete $params->{id};
     my $parent_id = delete $params->{parent_id} || 0;
 
-    my $user_has_upvoted	= delete $params->{user_has_upvoted};
-    my $upvote_count		= delete $params->{upvote_count};
-    my $profile_picture_url	= delete $params->{profile_picture_url};
+    my $user_has_upvoted	    = delete $params->{user_has_upvoted};
+    my $upvote_count		    = delete $params->{upvote_count};
+    my $profile_picture_url	    = delete $params->{profile_picture_url};
     my $created_by_current_user = delete $params->{created_by_current_user};
-    my $fullname		= delete $params->{fullname};
+    my $fullname		        = delete $params->{fullname};
     $params->{created}		= DateTime->now;
     $params->{poster}		= $c->user->id || 2;
 
     my $comment = $c->model("DBIC::Comment")->create($params)->TO_JSON;
-    print "COMMENT RETURNED:" . Dumper($comment);
 
     $c->stash->{json_data} = $comment;
     $c->forward('View::JSON');
 }
 
 
-=head2 del
+=head2 comment_PUT
 
-Remove comments, provided user can edit the page the comment is on.
+update a comment
 
 =cut
 
-# sub del : Local {
-#     my ( $self, $c, $comment ) = @_;
+sub comment_PUT   :ActionClass('Serialize'){
+    my ( $self, $c ) = @_;
 
-#     if ( $comment = $c->model("DBIC::Comment")->find($comment) ) {
-#             $comment->delete();
-#     }
-#     $c->res->redirect('/');
-#     $c->detach;
-# }
+
+    my $page = $c->stash->{page};
+
+    my $params = $c->request->body_parameters;
+
+    my $id = delete $params->{id};
+    my $parent_id = delete $params->{parent_id} || 0;
+
+    my $user_has_upvoted	    = delete $params->{user_has_upvoted};
+    my $upvote_count		    = delete $params->{upvote_count};
+    my $profile_picture_url	    = delete $params->{profile_picture_url};
+    my $created_by_current_user = delete $params->{created_by_current_user};
+    my $fullname		        = delete $params->{fullname};
+    $params->{created}		    = DateTime->now;
+    $params->{poster}		    = $c->user->id;
+
+    my $comment = $c->model("DBIC::Comment")->update($params);
+
+    my $rs = $c->model("DBIC::Comment")->search({ page_id => $page->id});
+    my $result = [];
+
+    while ( my $r = $rs->next) {
+        push(@$result, $r->TO_JSON)
+    }
+
+    $c->stash->{json_data} = {1};#$result;
+
+    $c->forward('View::JSON');
+}
+
+
+
+=head2 comment_DELETE
+
+Remove comment
+
+=cut
+
+sub comment_DELETE   :ActionClass('Serialize'){
+    my ( $self, $c, $comment_id ) = @_;
+
+     if ( my $comment = $c->model("DBIC::Comment")->find($comment_id) ) {
+             $comment->delete();
+     }
+    $c->forward('comment_GET');
+}
 
 
 =head1 AUTHOR
