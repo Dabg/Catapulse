@@ -111,8 +111,11 @@ update a comment
 sub comment_PUT   :ActionClass('Serialize'){
     my ( $self, $c ) = @_;
 
+    my $page = $self->get_page($c);
+    return unless $page;
 
-    my $page = $c->stash->{page};
+    return if ! $c->can_access([$page], ['add_Comment']);
+
 
     my $params = $c->request->body_parameters;
 
@@ -127,7 +130,7 @@ sub comment_PUT   :ActionClass('Serialize'){
     $params->{created}		    = DateTime->now;
     $params->{poster}		    = $c->user->id;
 
-    my $comment = $c->model("DBIC::Comment")->update($params);
+    my $comment = $c->model("DBIC::Comment")->find($id)->update($params);
 
     my $rs = $c->model("DBIC::Comment")->search({ page_id => $page->id});
     my $result = [];
@@ -152,7 +155,12 @@ Remove comment
 sub comment_DELETE   :ActionClass('Serialize'){
     my ( $self, $c, $comment_id ) = @_;
 
-     if ( my $comment = $c->model("DBIC::Comment")->find($comment_id) ) {
+    my $page = $self->get_page($c);
+    return unless $page;
+
+    return if ! $c->can_access([$page], ['delete_Comment']);
+
+    if ( my $comment = $c->model("DBIC::Comment")->find($comment_id) ) {
              $comment->delete();
      }
     $c->forward('comment_GET');
