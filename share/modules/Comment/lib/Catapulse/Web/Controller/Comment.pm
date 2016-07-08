@@ -8,14 +8,12 @@ use XML::Simple;
 use JSON;
 use JSON::XS;
 
-#BEGIN {extends 'Catalyst::Controller::REST'; }
 BEGIN {extends 'Catalyst::Controller'; }
 
 
 __PACKAGE__->config(
     'namespace' => '',
 
-#    'default' => 'text/html',
     'map'     => {
         'text/x-yaml'      => 'YAML',
         'application/json' => 'JSON',
@@ -36,7 +34,7 @@ Catalyst Controller.
 
 =cut
 
-=head2 index
+=head2 comment
 
 Add a comment
 
@@ -53,16 +51,19 @@ return comments page
 sub comment_GET  :ActionClass('Serialize') {
     my ( $self, $c ) = @_;
 
-    my $page_id = $c->request->params->{page_id};
 
-    my $rs = $c->model("DBIC::Comment")->search({ page_id => $page_id});
-    my $result = [];
+    my $page = $self->get_page($c);
+    return unless $page;
 
-    while ( my $r = $rs->next) {
-        push(@$result, $r->TO_JSON)
+    return if ! $c->can_access([$page], ['view_Comment']);
+
+    my $comments = $page->comments;
+    my $results = [];
+    while ( my $comment = $comments->next) {
+        push(@$results, $comment->TO_JSON)
     }
 
-    $c->stash->{json_data} = $result;
+    $c->stash->{json_data} = $results;
     $c->forward('View::JSON');
 }
 
@@ -76,7 +77,10 @@ sub comment_POST   :ActionClass('Serialize'){
     my ( $self, $c ) = @_;
 
 
-    my $page = $c->stash->{page};
+    my $page = $self->get_page($c);
+    return unless $page;
+
+    return if ! $c->can_access([$page], ['add_Comment']);
 
     my $params = $c->request->body_parameters;
 
@@ -89,7 +93,7 @@ sub comment_POST   :ActionClass('Serialize'){
     my $created_by_current_user = delete $params->{created_by_current_user};
     my $fullname		        = delete $params->{fullname};
     $params->{created}		= DateTime->now;
-    $params->{poster}		= $c->user->id || 2;
+    $params->{poster}		= defined $c->user ? $c->user->id : 2;
 
     my $comment = $c->model("DBIC::Comment")->create($params)->TO_JSON;
 
@@ -153,6 +157,27 @@ sub comment_DELETE   :ActionClass('Serialize'){
      }
     $c->forward('comment_GET');
 }
+
+
+=head2 get_page
+
+Add a resultset page
+
+=cut
+
+sub get_page{
+    my ( $self, $c ) = @_;
+
+    my $page_id = $c->request->params->{page_id};
+    return unless $page_id;
+    return $c->model("DBIC::Page")->search({ id => $page_id})->first;
+}
+
+=head2 comment_GET
+
+return comments page
+
+=cut
 
 
 =head1 AUTHOR
