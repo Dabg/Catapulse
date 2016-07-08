@@ -60,16 +60,16 @@
 
 
          putComment: function(commentJSON, success, error) {
-             $.ajax({
-                 type: 'put',
-                 url: '/comment/' + commentJSON.id,
-                 data: commentJSON,
-                 success: function(comment) {
-                     success(comment)
-                 },
-                 error: error
-             });
-         },
+          setTimeout(function() {
+	         $.ajax({
+                   type: 'put',
+                   url: '/comment/' + commentJSON.id,
+	           data: commentJSON,
+                   success: function(comment) {
+                       success(comment)
+                   },
+            error: error
+         })},500)},
 
 
          deleteComment: function(commentJSON, success, error) {
