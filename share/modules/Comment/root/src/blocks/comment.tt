@@ -6,7 +6,7 @@
 
   $(function() {$('#comments-container').comments({
          profilePictureURL: '/static/images/user-icon.png',
-         currentUserIsAdmin: false,
+         currentUserIsAdmin: [% IF c.can_access( [page],['delete_Comment'] ) %]true[%ELSE%]false[%END%],
          spinnerIconURL: '/static/images/spinner.gif',
          fieldMappings: {
                         id: 'id',
