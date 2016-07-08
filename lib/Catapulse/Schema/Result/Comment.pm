@@ -92,7 +92,7 @@ sub TO_JSON {
 
     my $res =  { id	=> $self->id,
                  parent_id	=> $self->parent_id,
-                 body	    => $self->body,
+                 body 	    => $self->body,
                  created	=> $self->created->ymd,
               };
     utf8::decode($res->{body});

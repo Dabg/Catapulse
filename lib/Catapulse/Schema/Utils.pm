@@ -253,12 +253,21 @@ sub del_template {
 
 find_or_create permission
 
+    an example of permission
+    { role    => 'admin',
+      op      => [ 'view_Comment', 'add_Comment', 'delete_Comment' ],
+      typeobj => 'Page',
+      obj     => '/*', # '*' => apply to children
+      value   => 1,
+    },
+
+
 =cut
 sub foc_permission {
     my $self = shift;
     my $perm = shift;
 
-    #$self->mi->log("find or create page " . $page->{title});
+    $self->mi->log("find or create permission " . $perm->{name});
     my $schema = $self->mi->ctx->model->schema;
 
     my $typeobj = $schema->resultset('Typeobj')->search({ name => $perm->{typeobj}})->first
