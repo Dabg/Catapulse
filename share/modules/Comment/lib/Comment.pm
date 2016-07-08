@@ -11,7 +11,7 @@ with 'Catapulse::Schema::Utils';
 
 my $pages = [
     {
-        path       => '/API/comment',
+        path       => '/comment',
         template   => 'Main',
         title      => 'view comment',
         type       => 'from_controller',
