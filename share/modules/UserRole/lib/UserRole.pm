@@ -30,6 +30,16 @@ my $anonymous = {
            active   => 1,
          };
 
+my $admin_role = {
+           name => 'admin',
+           active   => 1,
+};
+
+my $anonymous_role = {
+           name => 'anonymous',
+           active   => 1,
+};
+
 =head2 install
 
 module installer
@@ -51,11 +61,13 @@ module uninstaller
 =cut
 
 sub uninstall {
-    my ($self, $module) = @_;
+    my ($self, $module, $mi) = @_;
 
     # delete admin and anonymous users (and roles)
-    $self->del_user( $admin,     [ 'admin'    ] );
-    $self->del_user( $anonymous, [ 'anonymous'] );
+    $self->del_user( $admin );
+    $self->del_user( $anonymous );
+    $self->del_role( $anonymous_role );
+    $self->del_role( $admin_role );
 }
 
 =head1 SEE ALSO

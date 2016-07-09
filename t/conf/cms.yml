@@ -8,7 +8,7 @@ CatalystX::InjectModule:
     - share/modules/
 #    - __INC__
   inject:
-    - Admin
+    - CMS
 
 Model::DBIC:
   traits:

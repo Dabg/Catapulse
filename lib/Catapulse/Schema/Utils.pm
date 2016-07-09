@@ -11,7 +11,7 @@ Catapulse::Schema::Result::User
 
 has mi   =>  (is => 'rw',
                isa => 'CatalystX::InjectModule::MI',
-              required => 1,
+               required => 1,
           );
 
 
@@ -51,6 +51,38 @@ sub del_user {
     my $schema = $self->mi->ctx->model->schema;
     $schema->resultset('User')->search( { username => $user->{username} } )->delete_all;
 }
+
+=head2 foc_role
+
+find_or_create role
+
+=cut
+
+sub foc_role {
+    my $self  = shift;
+    my $role  = shift;
+
+    $self->mi->log("  find or create role " . $role->{name});
+    my $schema = $self->mi->ctx->model->schema;
+
+    my $r = $schema->resultset('Role')->find_or_create($role);
+    return $r
+}
+
+=head2 del_role
+
+delete role
+
+=cut
+sub del_role {
+    my $self  = shift;
+    my $role  = shift;
+
+    $self->mi->log("delete role " . $role->{name});
+    my $schema = $self->mi->ctx->model->schema;
+    $schema->resultset('Role')->search( { name => $role->{name} } )->delete_all;
+}
+
 
 =head2 foc_block
 
