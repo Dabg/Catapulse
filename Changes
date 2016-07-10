@@ -1,5 +1,12 @@
 Revision history for Catapulse
 
+0.04 2016-07-10
+      - add Attachment and Comment modules
+      - protect some pages
+      - update dependencies
+      - use Catalyst::Plugin::Assets
+      - use travis
+
 0.03 2016-02-15
       - add modules to publish Wiki pages ( see share/modules/ )
       - update dependencies
