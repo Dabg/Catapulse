@@ -6,18 +6,19 @@ use warnings;
 
 =head1 NAME
 
-Catapulse - The great new Catapulse!
+Catapulse - Perl Catalyst CMS
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+    # Start Catapulse
+    ./script/catapulse_spawn.pl
+    ./script/catapulse_server.pl
 
-Perhaps a little code snippet.
+    # Connect to http://localhost:3000
 
-    use Catapulse;
+    # Reinstall Catapulse
+    # rm var/* share/catapulse-schema.db
 
-    my $foo = Catapulse->new();
-    ...
 
 =head1 EXPORT
 
