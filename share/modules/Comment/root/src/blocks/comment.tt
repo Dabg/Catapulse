@@ -25,6 +25,7 @@
                         upvoteCount: 'upvote_count',
                         userHasUpvoted: 'user_has_upvoted',
          },
+         readOnly: [% IF c.can_access( [page],['add_Comment'] ) %]false[%ELSE%]true[%END%],
          enableReplying: true,
          enableEditing: true,
          enableUpvoting: false,
@@ -32,7 +33,6 @@
          enableDeletingCommentWithReplies: false,
          enableAttachments: false,
          enableNavigation: false,
-
 
          getComments: function(success, error) {
              $.ajax({
