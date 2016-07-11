@@ -28,4 +28,7 @@ is( $schema->resultset('Role')->search, 0, '... and no role');
 
 is( ! -e $c->mi->_persist_file_name($module_userrole), 1, 'persistent file is deleted');
 
+ok($c->mi->install_module($module_userrole), 'ReInstall module UserRole');
+
+
 done_testing();
