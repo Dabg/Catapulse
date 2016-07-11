@@ -1,6 +1,6 @@
 -- 
 -- Created by SQL::Translator::Producer::SQLite
--- Created on Wed Dec  2 18:33:07 2015
+-- Created on Mon Jul 11 18:33:33 2016
 -- 
 
 ;
@@ -40,24 +40,12 @@ CREATE TABLE operation (
 );
 CREATE UNIQUE INDEX name ON operation (name);
 --
--- Table: page_roles
---
-CREATE TABLE page_roles (
-  page_id integer NOT NULL,
-  role_id integer NOT NULL,
-  PRIMARY KEY (page_id, role_id),
-  FOREIGN KEY (page_id) REFERENCES pages(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-CREATE INDEX page_roles_idx_page_id ON page_roles (page_id);
-CREATE INDEX page_roles_idx_role_id ON page_roles (role_id);
---
 -- Table: pagetype
 --
 CREATE TABLE pagetype (
   id INTEGER PRIMARY KEY NOT NULL,
   name VARCHAR(40) NOT NULL,
-  path VARCHAR(100) NOT NULL,
+  path VARCHAR(100),
   active tinyint NOT NULL DEFAULT 0
 );
 --
@@ -79,42 +67,6 @@ CREATE INDEX permission_idx_operation_id ON permission (operation_id);
 CREATE INDEX permission_idx_role_id ON permission (role_id);
 CREATE INDEX permission_idx_typeobj_id ON permission (typeobj_id);
 CREATE UNIQUE INDEX object_role_operation_unique ON permission (typeobj_id, obj_id, role_id, operation_id);
---
--- Table: photo
---
-CREATE TABLE photo (
-  id INTEGER PRIMARY KEY NOT NULL,
-  position INTEGER NOT NULL,
-  title TEXT NOT NULL,
-  description TEXT,
-  camera TEXT,
-  taken INTEGER,
-  iso INTEGER,
-  lens TEXT,
-  aperture TEXT,
-  flash TEXT,
-  height INT,
-  width INT
-);
---
--- Table: plugins
---
-CREATE TABLE plugins (
-  id INTEGER PRIMARY KEY NOT NULL,
-  categorie varchar(40) NOT NULL,
-  name varchar(40) NOT NULL,
-  required tinyint NOT NULL DEFAULT 0,
-  active tinyint NOT NULL DEFAULT 0
-);
-CREATE UNIQUE INDEX categorie_name_unique ON plugins (categorie, name);
---
--- Table: preference
---
-CREATE TABLE preference (
-  prefkey VARCHAR(100) NOT NULL,
-  prefvalue VARCHAR(100),
-  PRIMARY KEY (prefkey)
-);
 --
 -- Table: role_roles
 --
@@ -251,30 +203,21 @@ CREATE INDEX pages_idx_template ON pages (template);
 CREATE INDEX pages_idx_type ON pages (type);
 CREATE UNIQUE INDEX name_parent_unique ON pages (name, parent_id);
 --
--- Table: attachment
---
-CREATE TABLE attachment (
-  id INTEGER PRIMARY KEY NOT NULL,
-  uploaded BIGINT NOT NULL,
-  page INTEGER NOT NULL,
-  name VARCHAR(100) NOT NULL,
-  size INTEGER,
-  contenttype VARCHAR(100),
-  FOREIGN KEY (page) REFERENCES pages(id)
-);
-CREATE INDEX attachment_idx_page ON attachment (page);
---
 -- Table: comment
 --
 CREATE TABLE comment (
   id INTEGER PRIMARY KEY NOT NULL,
+  parent_id integer DEFAULT 0,
   poster INTEGER NOT NULL,
-  page INTEGER NOT NULL,
-  posted BIGINT NOT NULL,
+  page_id INTEGER NOT NULL,
+  created datetime NOT NULL,
+  modified datetime,
   body TEXT NOT NULL,
-  FOREIGN KEY (page) REFERENCES pages(id),
+  FOREIGN KEY (parent_id) REFERENCES comment(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (page_id) REFERENCES pages(id),
   FOREIGN KEY (poster) REFERENCES users(id)
 );
-CREATE INDEX comment_idx_page ON comment (page);
+CREATE INDEX comment_idx_parent_id ON comment (parent_id);
+CREATE INDEX comment_idx_page_id ON comment (page_id);
 CREATE INDEX comment_idx_poster ON comment (poster);
 COMMIT;
