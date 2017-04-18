@@ -7,3 +7,12 @@ deps:
 
 catalyst_plugins:
   - Page
+
+Plugin::Cache:
+  backends:
+    Page:
+      class: 'Cache::FileCache'
+      cache_root: "./cache"
+      namespace:  "Pages"
+      default_expires_in: '8 hours'
+      auto_remove_stale: 1

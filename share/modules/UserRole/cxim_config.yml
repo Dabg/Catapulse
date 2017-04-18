@@ -1,3 +1,19 @@
 name: UserRole
 version: 1
 deps:
+
+
+Plugin::Cache:
+  backends:
+    User:
+      class: 'Cache::FileCache'
+      cache_root: "./cache"
+      namespace:  "User"
+      default_expires_in: '8 hours'
+      auto_remove_stale: 1
+    Role:
+      class: 'Cache::FileCache'
+      cache_root: "./cache"
+      namespace:  "Role"
+      default_expires_in: '8 hours'
+      auto_remove_stale: 1
