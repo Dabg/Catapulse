@@ -46,6 +46,7 @@ use Catalyst qw/
     Assets
     ConfigLoader
     I18N
+    Cache
     +CatalystX::InjectModule
     Authentication
     Session
@@ -65,6 +66,17 @@ __PACKAGE__->config(
     # },
     # Disable X-Catalyst header
     enable_catalyst_header => 0,
+
+    'Plugin::Cache' => {
+      'backend' => {
+          'class' => 'Cache::FileCache',
+          'cache_root' => "./cache",
+          'namespace' =>  "default",
+          'default_expires_in' =>'8 hours',
+          'auto_remove_stale' => 1,
+          'debug' =>  2,
+      },
+                     }
 );
 
 __PACKAGE__->config->{session} = {

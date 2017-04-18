@@ -2,8 +2,8 @@ name: CMS
 version: 1
 deps:
   - Base
-  - CacheFastMmap
   - Register
+#  - CacheFastMmap
   - DefaultTheme
   - Wiki
   - Comment
