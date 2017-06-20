@@ -20,7 +20,7 @@ after 'setup_components' => sub {
         schema => $self->model->schema,
     ));
 
-    my $cache = $self->cache if ( $self->rbac->config->{cache} && defined $self->can('cache'));
+    my $cache = $self->get_cache_backend('Authorization') if ( $self->rbac->config->{cache} );
     $self->rbac->cache($cache);
 };
 
