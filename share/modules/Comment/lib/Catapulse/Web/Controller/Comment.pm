@@ -85,7 +85,7 @@ sub comment_POST   :ActionClass('Serialize'){
     my $params = $c->request->body_parameters;
 
     my $id = delete $params->{id};
-    my $parent_id = delete $params->{parent_id} || 0;
+    $params->{parent_id} ||= 0;
 
     my $user_has_upvoted	    = delete $params->{user_has_upvoted};
     my $upvote_count		    = delete $params->{upvote_count};
