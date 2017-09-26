@@ -225,6 +225,7 @@ sub new_page{
                                path    => $path,
                                title   => $path,
                                template => 1,
+                               ops_to_access => 2, # 2 => view_page
                              });
 
       $c->stash->{url_do_add} = $url_do_add;
