@@ -299,7 +299,8 @@ sub foc_permission {
     my $self = shift;
     my $perm = shift;
 
-    $self->mi->log("find or create permission " . $perm->{name});
+    my $name = $perm->{name} || '';
+    $self->mi->log("find or create permission " . $name);
     my $schema = $self->mi->ctx->model->schema;
 
     my $typeobj = $schema->resultset('Typeobj')->search({ name => $perm->{typeobj}})->first
