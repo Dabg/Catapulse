@@ -1,0 +1,305 @@
+#+TITLE: Catapulse
+#+OPTIONS: toc:3
+#+LANGUAGE: fr
+#+STARTUP: showeverything
+
+
+* Catapulse
+
+  Ce document décrit le fonctionnement de Catapulse.
+
+
+** Démarrage de Catapulse:
+
+#+begin_src ditaa :file catapulse_start.png  :cache yes
+     +--------------------+
+     | START CATALYST c267|
+     +--------------------+
+             |
+             v
+     +----------------------+
+     | SETUP_COMPONENTS c204|
+     +----------------------+
+             |
+             v
+     +------------------------+   +--------------------------+     +----------------------------+
+     | AFTER SETUP_COMPONENTS +-->| Catalyst::Plugin::Inject +---> | Load all Catapulse::Plugin |
+     | c204                   |   | c888                     |     | cGRE                       |
+     +------------------------+   +--------------------------+     +----------------------------+
+             |
+             v
+     +---------------------+
+     | SETUP_FINALIZE c204 |
+     +---------------------+
+#+end_src
+
+
+
+
+** Requête
+
+#+begin_src ditaa :file request_start.png  :cache yes
+     +------------------+
+     | NEW REQUEST c267 |
+     +------------------+
+             |
+             v
+     +------------------+           +--------------------+
+     | PREPARE c204     |         /-+ before_dispatch    |
+     +------------------+         | | c888 Plugin::Page  |
+             |                    | +--------------------+
+             v                    |
+     +--------------------------+ | +--------------------+
+     | DISPATCH c204            |-|-+ dispatch from db or|
+     +--------------------------+ | | c888 controller    |
+             |                    | +--------------------+
+             |                    |
+             v                    | +--------------------+    +----------------+
+     +--------------+             \-+ after_end Root.pm  +--> | process blocks |
+     | FINALIZE c204|               | c888               |    | cGRE           |
+     +--------------+               +--------------------+    +----------------+
+#+end_src
+
+
+    * Catalyst::Plugin::Page in 'before dispatch' :
+
+: return if request excluded
+: return cache of page if exist
+: redirect to /access_denied if unauthorized
+: search cpt_path in db
+: exist in db ?
+: yes:
+:     - save page in stash
+:     if type page ne from_controller
+:         => request->path($page->type->path)
+:         => dispatcher->prepare_action($c);
+:         => request->path($ctp_path);
+: no:
+:   - new page
+
+
+
+
+*** Construction de la page
+
+
+    * Controller::Root in 'before end'
+
+: if page in stash
+:     new PageFactory
+:     PageFactory->process
+:     current_view = TTPage
+:     stash template = page.template.file
+
+
+   * PageFactory
+
+: process:
+:     foreach blocks of template of page
+:         new Web::Block
+:
+:         _processblock
+
+
+   * Block::Navbar (example of block)
+
+: inherit from Block::Base
+
+   * Block::Base
+
+: _process:
+:     process if can(process)
+:     render(block.file) if block.file
+
+
+** Wiki
+#+begin_src javascript
+wiki.js : fetch_preview = function()
+            jQuery.ajax({
+                data: {content: $('#body').attr('value')},
+                type: 'POST',
+                url:  $('#preview_url').attr('href'),
+                success: function(r)
+                       $('#content_preview').html(r);
+#+end_src
+
+
+#+begin_src html
+wiki/edit.tt
+    <div id="content_preview">
+    [% IF page.content.formatted(c) %]
+        [% page.content.formatted(c) %]
+    [% ELSE %]
+        <i>[%l('To start editing this page ...
+
+
+    <a href="[%c.uri_for('jsrpc','render')%]" id="preview_url"></a>
+#+end_src
+
+#+begin_src perl
+# Catapulse::Web::Controller::Wiki::Jsrpc
+$output = $c->model("DBIC::Content")->format_content( $c, $input );
+#+end_src
+
+#+begin_src perl
+#Catapulse::Schema::ResultSet::Content
+sub format_content {
+    my ( $self, $c, $content, $page ) = @_;
+    $c->formatter->call_plugins( "format_content", \$content, $c, $page )
+        if ($content);
+    return $content;
+}
+#+end_src
+
+
+
+** Quelques idées ...
+
+   * Dépendance du cache : voir http://www.catapulse.org/articles/view/90
+
+   * Gestion du cache à la Drupal (http://planete.drupalfr.org/node/247, merci yoran )
+L'attribut 'cache' est quant à lui très important à comprendre car il permet de paramétrer la gestion de la mise en cache du bloc. Par défaut, si rien n'est précisé, le mode utilisé est BLOCK_CACHE_PER_ROLE, signifiant que le bloc peut changer de contenu en fonction du rôle l'utilisateur ET de la page visualisée. Cela implique qu'un cache sera créé par combinaison de ces deux facteurs. En mode BLOCK_CACHE_PER_USER le bloc est caché par utilisateur, ce qui améliore les performances lorsque vous avez beaucoup d'utilisateur authentifiés mais qui peut aussi consommer de la ressource. En mode BLOCK_CACHE_PER_PAGE nous indiquons que le bloc peut changer de contenu en fonction de la page. Il y aura donc un cache de ce bloc par URL. Enfin nous avons les deux extrêmes avec BLOCK_NO_CACHE qui demande à ce que le bloc ne soit jamais mis en cache si par exemple il bouge beaucoup trop souvent (attention aux performances !!), et BLOCK_CACHE_GLOBAL pour un bloc qui ne change jamais et qui sera donc tout le temps en cache.
+
+   * Web.pm : use Catalyst qw/ ConfigLoader DBIPluginLoader /;
+
+   * DBD::AnyData ... a voir ...
+
+
+
+* RBAC
+
+** RBAC0
+Modèle de base users, roles, permissions
+
+User  -> Roles
+
+Roles -> Permissions ( opérations sur des objets )
+
+** TODO RBAC1
+RBAC0 + hiérarchie des roles
+
+Le résultat de l'opération sur l'objet peut être mis en cache ( Obj_id/name + roles )
+
+** TODO RBAC2
+RBAC0 + Ajout des contraintes
+
+Pas de limites à celles-ci, elles peuvent être de type horaire, 'TempsTravail' ou 'WeekEnd', ou encore tester la possession de l'objet 'Owner'
+
+Le résultat des contraintes sur l'objet est difficilement mis en cache (ex: dépendence horaire)
+
+
+** TODO RBAC3
+RBAC0 + RBAC1 + RBAC2
+
+
+ Deux niveaux d'autorisation existe:
+
+ Le premier est le plus spécialisé puisqu'il s'applique à un objet précis, par exemple 'La page /contact' ou 'Pièce jointe privée.txt'.
+
+
+
+ TODO: Le second, plus généraliste s'applique globalement à un type d'objet, par exemple 'Page', 'Comment' ou 'Pièce jointe''.
+
+** RBAC et Catapulse
+
+*** Principe
+
+'Authorization::RBAC' assure les accès aux objets protégés.
+
+**** backends
+
+Les données relatives à la protection des objets sont stockées dans un 'backend'. Pour l'instant il en existe 2 (File et DBIX).
+
+Les backends doivent posséder les fonctions suivantes :
+
+#+begin_src perl
+sub get_permission{
+  my ($self, $role, $perm) = @_;
+  ...
+  return ( 0||1, $is_apply_to_children)
+}
+
+sub parent {
+  my ($self,$typeobj,$unique) = @_;
+  ...
+  return $parent;
+}
+
+sub ops_to_access{
+  my ($self, $typeobj, $unique) = @_;
+  ...
+  return $ops
+}
+#+end_src
+
+**** can_access
+#+begin_src perl
+$rbac->can_access($user_or_roles, $objet, $autres_opérations );
+#+end_src
+
+- $user_or_roles est comme son nom l'indique soit un utilisateur soit des roles.
+
+  S'il s'agit d'un utilisateur $user->roles devra en retourner les roles.
+
+- $objet représente l'objet à protéger.
+
+
+- $autres_operations est optionnel. Il permet de vérifier les permissions sur l'objet en y ajoutant d'autres opérations.
+
+
+'can_access' fonctionne de manière récursive c'est à dire que toutes les permissions parentes devront aussi être vérifiées. Ainsi avec l'objet 'Page' '/admin/user/add' les objets suivants seront aussi vérifiés.
+
+: Page /
+: Page /admin
+: Page /admin/user
+
+la méthode 'ops_to_access' retourne les opérations devant être vérifiées sur l'objet.
+
+Nous pourrions avoir [ 'view' ] pour '/' et pour '/admin', et [create] pour /admin/user/add.
+
+Au final nous avons les permissions suivantes à vérifier :
+
+: Page /               view
+: Page /admin          view
+: Page /admin/user/add create
+
+Les permissions dont nous disposons sont stockées dans le backend. Nous les interrogeons avec la fonction 'get_permission'.
+
+Chaque permission est testée et on retourne '0' dès que l'une d'elle n'est pas vérifiée. Si elles sont toutes vérifiées '1' est retourné.
+
+Il faut aussi ajouter que la vérification d'une permission est aussi assurée de manière récursive.
+
+Si nous devons par exemple vérifier que le role 'admin' peut accéder à la permission objet= 'Page' '/admin/user/add' et operation=create
+
+Malheureusement nous ne disposons pas de la permission  'create' sur l'objet 'Page /admin/usr/add'. Dans ce cas nous rechercherons sur /admin/usr puis /admin et enfin /. En fait jusqu'à ce que nous trouvions cette permission et quelle soit héritable (apply_to_children).
+
+Voilà le log du mode 'debug'.
+: [debug] Search if we can access to Page /admin/user/add
+: [debug]   Search permissions on / /admin /admin/user /admin/user/add
+: [debug] - Search if role 'admin' can 'view' on Page /
+: [debug]   [OK] can view on Page /
+: [debug]   return 1
+: [debug] - Search if role 'admin' can 'view' on Page /admin
+: [debug]   [OK] can view on Page /admin
+: [debug]   return 1
+: [debug] - Search if role 'admin' can 'create' on Page /admin/user/add
+: [debug]   [??] Search inherited permissions on parents ...
+: [debug]        Search operation 'create' on Page /admin/user
+: [debug]        Search operation 'create' on Page /admin
+: [debug]        Search operation 'create' on Page /
+: [debug]        [OK] can 'create' and apply_to_children from Page /
+: [debug]        return 1
+: [debug] return 1
+: ok 16 - Role admin can access to Page /admin/user/add
+
+
+*** 'ctp_path' des pages
+
+Quelques exemples:
+
+: URL                ACTION              ctp (Catapulse Path)
+: /                  => index            => /
+: /admin             => admin            => /admin
+: /register          => auth/register    => /auth/register
+: /login             => login/login      => /login/login
+: /admin/role/2/edit => admin/role/edit  => /admin/role/edit
